@@ -1,0 +1,176 @@
+% NAME
+%
+%   emem.sty - a personal LaTeX style file
+%
+% DESCRIPTION
+
+%   emem.sty is an opinionated LaTeX style file meant to be used with
+%   the standard article.cls LaTeX class.
+%
+% USAGE
+%
+%   emem.sty can be loaded like any other package with \usepackage{emem}.
+%
+% OPTIONS
+%
+%   draft   --  disable loading of cosmetic/heavyweight packages
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{emem}[}2020/01/01 v0.1]
+
+%%% Option processing ---------------------------------------------------------
+
+\newif\if@fancy
+\DeclareOption{fancy}\@fancytrue
+\DeclareOption{draft}\@fancyfalse
+
+\ExecuteOptions{fancy}
+\ProcessOptions\relax
+
+%%% Package loading -----------------------------------------------------------
+
+% Only packages included in a standard TeXLive distribution ought to be
+% loaded by default.
+\RequirePackage{mathtools,amsthm,bm}
+\RequirePackage{graphicx}
+
+% Load heavyweights and cosmetic packages by default, but also give an option
+% to disable them.
+\if@fancy
+  \RequirePackage{microtype}
+  \RequirePackage{color}
+
+  % Use the same color (slightly darker blue) for all links.
+  \definecolor{myblue}{rgb}{0.00,0.00,0.75}
+  \RequirePackage[
+    allcolors=myblue,
+    breaklinks,
+    colorlinks,
+    unicode,
+  ]{hyperref}
+  \urlstyle{same}
+\else
+  % Load 'draft' hyperref so that hyperref commands are gracefully ignored.
+  \RequirePackage[draft]{hyperref}
+\fi
+
+% cleveref has to be loaded afer hyperref.
+\RequirePackage[capitalize]{cleveref}
+
+%%% Redefine \maketitle -------------------------------------------------------
+
+% Embolden article title and reduce header.  Adapted from article.cls.
+\def\@maketitle{%
+  \newpage\null%
+  \begin{center}%
+    {\large\bfseries\@title\par}%
+    \vskip 1.5em%
+    {\lineskip .5em\begin{tabular}[t]{c}\@author\end{tabular}\par}%
+    \vskip 1em%
+    \@date%
+  \end{center}%
+  \par%
+  \vskip 1.5em%
+}
+
+%%% Section titles ------------------------------------------------------------
+
+% Smaller fonts in section titles.  Adapted from JHEP's style file.
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                                   {-3.5ex \@plus -1.3ex \@minus -.7ex}%
+                                   {2.3ex \@plus.4ex \@minus .4ex}%
+                                   {\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                   {-2.3ex\@plus -1ex \@minus -.5ex}%
+                                   {1.2ex \@plus .3ex \@minus .3ex}%
+                                   {\normalsize\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                   {-2.3ex\@plus -1ex \@minus -.5ex}%
+                                   {1ex \@plus .2ex \@minus .2ex}%
+                                   {\itshape\normalsize}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                   {1.75ex \@plus1ex \@minus.2ex}%
+                                   {-1em}%
+                                   {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+                                   {1.75ex \@plus1ex \@minus .2ex}%
+                                   {-1em}%
+                                   {\normalfont\normalsize\itshape}}
+
+%%% Fonts ---------------------------------------------------------------------
+
+% Use bold non-extended instead of the default bold extended.  For most fonts,
+% it shouldn't make a difference, but for Computer Modern and its variants, it
+% does.
+\def\bfdefault{b}
+\DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
+\DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
+\DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
+
+%%% Figure captions -----------------------------------------------------------
+
+% Redefine captions in tables, figures, etc., to use sans-serif font and
+% a period after caption identifier (e.g., Figure, Table, etc.) instead of
+% a colon.  Adapted from article.cls.
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip\sffamily\small
+  \sbox\@tempboxa{\textbf{#1.}~#2}%
+  \ifdim \wd\@tempboxa >\hsize
+    \textbf{#1.}~#2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\newcommand{\ab}{\ensuremath\allowbreak}
+
+%%% AMS packages --------------------------------------------------------------
+
+\numberwithin{equation}{section} % per-section eq numbers
+\allowdisplaybreaks              % break display eqs
+
+\newtheorem{prop}{Proposition}
+\newtheorem{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}[subsection]
+
+%%% Whitespace management -----------------------------------------------------
+
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
+
+%%% Custom commands -----------------------------------------------------------
+
+% Dirac bra-ket notation.  Copied from braket.sty.
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left\langle#1\right|}
+\def\Ket#1{\left|#1\right\rangle}
+
+% Matrices in sans.
+\def\tr{\ensuremath{\mathsf{^T}}}
+\def\mat#1{\ensuremath{\mathsf{#1}}}
+
+%%% Environments --------------------------------------------------------------
+
+% Environment for typing right-indented quotes and command for typing the
+% name of the quotee.
+\newenvironment{rightquote}[1]{%
+  \flushright%
+  \begin{minipage}{#1\textwidth}%
+}{%
+  \end{minipage}\par%
+}
+\newcommand{\quotee}[1]{\par\flushright\unskip\normalfont{#1}}
+
+\endinput
+
+% vim: ft=tex et sts=2 sw=2 nospell cole=0

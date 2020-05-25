@@ -1,0 +1,98 @@
+%! TEX program = pdfLaTeX
+
+\documentclass{article}
+
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{mathtime}
+% \usepackage[sans]{mathtime}
+% \usepackage[bm,sans]{mathtime}
+% \usepackage[newtx,sans]{mathtime}
+% \usepackage[newtx,bm,sans]{mathtime}
+
+\title{\texttt{mathtime.sty} test}
+\date{}
+\setlength\parindent{0pt}
+\def\separator{\vskip\baselineskip\hrule\vskip\baselineskip}
+
+\begin{document}
+
+\maketitle
+
+With \verb|\textrm{...}|: \textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textsf{...}|: \textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textbf{...}|: \textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textbf{\textsf{...}}|: \textbf{\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}}
+
+With \verb|\textit{...}|: \textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textsl{...}|: \textsl{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+\separator
+
+\textbf{Bug:} See how the spacing between characters in \verb|\mathord{...}| is
+too small and looks similar to \verb|\mathit{...}| when the \emph{sans version} is
+chosen.  The \verb|sansmath| packages seems to deal with this somehow.  Beamer,
+without loading \verb|sansmath|, also has the same issue.\\
+
+With \verb|\mathord{...}|: $\mathord{123456789}$
+
+With \verb|\mathord{...}|: $ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz$
+
+With \verb|\mathit{...}|: $\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb|\mathrm{...}|: $\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb|\mathsf{...}|: $\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb|\mathbf{...}|: $\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+\separator
+Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+Misc.~Greek: $\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+
+Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+\separator
+After using \verb|\mathversion{bold}|\ldots\\
+
+\mathversion{bold}
+Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+Misc.~Greek: $\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+\mathversion{normal}
+
+\separator
+\verb|\mathbb{...}| capitals: $\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+\verb|\mathbb{...}| small: $\mathbb{abcdefghijklmnopqrstuvwxyz}$
+
+\verb|\mathcal{...}| capitals: $\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+\verb|\mathcal{...}| small: $\mathcal{abcdefghijklmnopqrstuvwxyz}$
+
+\separator
+
+\subsection*{Maxwell's equations}
+
+\bgroup
+\everymath{\displaystyle}
+\begin{center}
+\begin{tabular}{cccc}
+  Gau\ss's law: & $\oiint_{\partial \Omega} \mathbf{E}\cdot d\mathbf{S} = \frac{1}{\epsilon_0}\iiint_{\Omega} \rho\,dV$ & or & $\nabla\cdot\mathbf{E} = \frac{\rho}{\epsilon_0}$\\
+  Gau\ss's law of magnetism: & $\oiint_{\partial \Omega} \mathbf{B}\cdot d\mathbf{S} = 0$ & or & $\nabla\cdot\mathbf{B} = 0$\\
+  Faraday--Maxwell law: & $\oint_{\partial \Gamma} \mathbf{E}\cdot d\mathbf{l} = -\frac{d}{dt}\iint_{\Gamma}\mathbf{B}\cdot d\mathbf{S}$ & or & $\nabla\times\mathbf{E} = -\frac{\partial\mathbf{B}}{\partial{t}}$\\
+  Amp\`{e}re--Maxwell law: & $\oint_{\partial \Gamma} \mathbf{B}\cdot d\mathbf{l} =  \mu_0\iint_{\Gamma} \mathbf{J}\cdot d\mathbf{S} + \epsilon_0\mu_0 \frac{d}{dt}\iint_{\Gamma} \mathbf{E}\cdot d\mathbf{S}$ & or & $\nabla\times\mathbf{B} = \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}$
+\end{tabular}
+\end{center}
+\egroup
+
+\end{document}
