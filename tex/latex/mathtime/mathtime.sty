@@ -51,7 +51,6 @@
 \fi
 
 % Times is a "small" font, thus reduce the line separation.
-\def\familydefault{\rmdefault}
 \def\baselinestretch{0.95}
 
 \if@mtpro
@@ -106,6 +105,9 @@
 % https://github.com/josephwright/beamer/blob/master/base/beamerbasefont.sty
 \if@sans
   \def\familydefault{\sfdefault}
+  %
+  \SetSymbolFont{operators}{normal}{\encodingdefault}{\familydefault}{\mddefault}{n}
+  \SetSymbolFont{operators}{bold}{\encodingdefault}{\familydefault}{\bfdefault}{n}
   %
   \DeclareSymbolFont{numbers}{\encodingdefault}{\familydefault}{\mddefault}{n}
   \SetSymbolFont{numbers}{bold}{\encodingdefault}{\familydefault}{\bfdefault}{n}
@@ -174,6 +176,8 @@
   \DeclareMathSymbol{x}\mathalpha{pureletters}{"78}
   \DeclareMathSymbol{y}\mathalpha{pureletters}{"79}
   \DeclareMathSymbol{z}\mathalpha{pureletters}{"7A}
+\else
+  \def\familydefault{\rmdefault}
 \fi
 
 % Redefine some math alphabets to use \familydefault, \bfdefault, and

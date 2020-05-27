@@ -11,6 +11,12 @@
 % \usepackage[newtx,sans]{mathtime}
 % \usepackage[newtx,bm,sans]{mathtime}
 
+% \usepackage[scaled=0.92]{helvet}
+% \usepackage{amsfonts,bm,esint}
+% \renewcommand{\familydefault}{\sfdefault}
+% \usepackage[EULERGREEK]{sansmath}
+% \sansmath
+
 \title{\texttt{mathtime.sty} test}
 \date{}
 \setlength\parindent{0pt}
@@ -52,6 +58,7 @@ With \verb|\mathsf{...}|: $\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklm
 With \verb|\mathbf{...}|: $\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
 
 \separator
+
 Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
 
 Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
@@ -59,7 +66,15 @@ Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi
 Misc.~Greek: $\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
 
 Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+
 \separator
+
+Trig.~operators: $\sin{\theta}$, $\cos{\phi}$, $\tan{\varphi}$
+
+Misc.~operators: $\log{\theta}$, $\ln{\phi}$
+
+\separator
+
 After using \verb|\mathversion{bold}|\ldots\\
 
 \mathversion{bold}
