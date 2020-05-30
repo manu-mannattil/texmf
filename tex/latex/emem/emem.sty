@@ -3,7 +3,7 @@
 %   emem.sty - a personal LaTeX style file
 %
 % DESCRIPTION
-
+%
 %   emem.sty is an opinionated LaTeX style file meant to be used with
 %   the standard article.cls LaTeX class.
 %
@@ -17,7 +17,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{emem}[}2020/01/01 v0.1]
+\ProvidesPackage{emem}[2020/01/01 v0.1]
 
 %%% Option processing ---------------------------------------------------------
 
@@ -32,15 +32,12 @@
 
 % Only packages included in a standard TeXLive distribution ought to be
 % loaded by default.
-\RequirePackage{mathtools,amsthm,bm}
-\RequirePackage{graphicx}
+\RequirePackage{mathtools,amsthm}
+\RequirePackage{graphicx,color}
 
 % Load heavyweights and cosmetic packages by default, but also give an option
 % to disable them.
 \if@fancy
-  \RequirePackage{microtype}
-  \RequirePackage{color}
-
   % Use the same color (slightly darker blue) for all links.
   \definecolor{myblue}{rgb}{0.00,0.00,0.75}
   \RequirePackage[
@@ -50,6 +47,7 @@
     unicode,
   ]{hyperref}
   \urlstyle{same}
+  \RequirePackage{microtype}
 \else
   % Load 'draft' hyperref so that hyperref commands are gracefully ignored.
   \RequirePackage[draft]{hyperref}
@@ -158,6 +156,8 @@
 % Matrices in sans.
 \def\tr{\ensuremath{\mathsf{^T}}}
 \def\mat#1{\ensuremath{\mathsf{#1}}}
+
+\def\email#1{\href{#1}{\texttt{#1}}}
 
 %%% Environments --------------------------------------------------------------
 

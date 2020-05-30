@@ -1,0 +1,53 @@
+% vim: ft=tex fdm=marker et sts=2 sw=2
+%! TEX program = pdfLaTeX
+
+\documentclass{article}
+
+\usepackage{emem}
+% \usepackage[draft]{emem}
+
+\usepackage{lmodern,geometry,tikz}
+\usepackage{lipsum}
+
+\title{Title of the Article\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
+\author{%
+  A.~Author\thanks{Adress of A.~Author; \email{a.author@mail.zz}} \and%
+  B.~Author\thanks{Adress of B.~Author} \and%
+  C.~Author\thanks{Adress of C.~Author}%
+}
+\date{1 January 1970}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \lipsum[1]
+\end{abstract}
+
+\section{Section}
+
+Section contents\ldots \lipsum[1]
+
+\subsection{Subsection}
+
+Subsection contents\ldots \lipsum[2]
+
+\subsubsection{Subsubsection}
+
+Subsubsection contents\ldots \lipsum[3]
+
+\section{Figures and figure captions}
+
+Captions of figures look a bit different\ldots
+\begin{figure}[h]
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[gray, ultra thick] (0,0) rectangle (3,3);
+      \draw[orange, ultra thick] (4,0) -- (5,3) -- (6,0) -- cycle;
+    \end{tikzpicture}
+  \end{center}
+  \caption{The caption of the figure is set in sans font in ``small'' font size.}
+\end{figure}
+
+\end{document}

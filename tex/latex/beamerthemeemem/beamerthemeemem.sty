@@ -1,0 +1,47 @@
+% NAME
+%
+%   beamerthemeemem.sty - a custom Beamer theme
+%
+% USAGE
+%
+%   Load like any other Beamer theme using \usetheme{emem}
+%
+
+\RequirePackage{mathtools}
+\mathtoolsset{showonlyrefs}
+
+%%% Style ---------------------------------------------------------------------
+
+\setbeamercolor{frametitle}{bg=gray!10!white}
+
+% Use dashes instead of triangles for itemize items.
+\setbeamertemplate{itemize items}{{\bf--}}
+
+%%% Title page ----------------------------------------------------------------
+
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\small}
+
+%%% Footer --------------------------------------------------------------------
+
+% To get rid of page numbers globally use \setbeamertemplate{footline}{}
+
+% Show <current page>/<total pages> at the lower-right corner of the page.
+% Adapted from beamerouterthemeinfolines.sty.
+\setbeamercolor{page number in head/foot}{fg=gray}
+\setbeamerfont{page number in head/foot}{size=\footnotesize}
+\setbeamertemplate{page number in head/foot}[totalframenumber]%
+\defbeamertemplate{footline}{pagecount}
+{%
+  \hspace*{\fill}%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \usebeamertemplate{page number in head/foot}%
+  \hspace*{1em}\vskip1em%
+}
+\setbeamertemplate{footline}[pagecount]
+
+% Get rid of PDF navigation symbols at the bottom.
+\setbeamertemplate{navigation symbols}{}
+
+% vim: ft=tex et sts=2 sw=2 nospell cole=0

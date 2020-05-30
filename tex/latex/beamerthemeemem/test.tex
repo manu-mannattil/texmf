@@ -1,0 +1,57 @@
+% vim: ft=tex fdm=marker et sts=2 sw=2
+%! TEX program = pdfLaTeX
+
+\documentclass[noamssymb,noamsmath,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sans]{mathtime}
+
+\usetheme{emem}
+
+\title{Title of Talk}
+\author{\texorpdfstring{\textbf{A.~Author}}{A.~Author} \and B.~Author \and C.~Author}
+\institute{Untitled Department, Untitled Institute}
+\date{1 January 1970}
+
+\begin{document}
+
+\begin{frame}[noframenumbering,plain]
+  \titlepage
+  \begin{center}
+    {\small 1970 Conference on Untitled Subject, Untitled City\\[\baselineskip]}
+    {\footnotesize Supported by ABC 123456 (A.A.) and XYZ 123456 (B.B.)}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Canonical partition function}
+Consider $N$ identical particles in 3D.
+The canonical partition function $\mathcal{Z}$ is defined as
+\begin{equation}
+  \mathcal{Z} = \frac{1}{N! h^{3N}}\int d^{N}\mathbf{p}\, d^{N}\mathbf{q}\, e^{-\beta H(\mathbf{p},\mathbf{q})}\,.
+\end{equation}
+%
+If $H(\mathbf{p},\mathbf{q}) = \mathbf{p}^2/2m + U(\mathbf{q})$, one can integrate out the momentum contribution to the partition function and write
+\begin{equation}
+  \mathcal{Z} = \frac{1}{N! h^{3N}}\left(\frac{2\pi m}{\beta}\right)^{3N/2}\int d^{N}\mathbf{q}\, e^{-\beta U(\mathbf{q})}\,.
+\end{equation}
+%
+Thus, up to multiplicative constants that are \emph{independent} of the coordinates $\mathbf{q}$,
+\begin{equation}
+  \mathcal{Z} \sim \int d^{N}\mathbf{q}\, e^{-\beta U(\mathbf{q})}\,.
+\end{equation}
+\end{frame}
+
+\begin{frame}{Remark}
+
+\begin{block}{Remark}
+Sample text
+\end{block}
+
+\end{frame}
+
+\begin{frame}[noframenumbering,plain]{Backup slide}
+  Backup slides should not have page numbers.
+\end{frame}
+
+\end{document}
