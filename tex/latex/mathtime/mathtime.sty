@@ -34,6 +34,9 @@
 \IfFileExists{mtpro2.sty}{\ExecuteOptions{mtpro}}{\ExecuteOptions{newtx}}
 \ProcessOptions\relax
 
+% Prevent Beamer from overwriting fonts.
+\@ifclassloaded{beamer}{\usefonttheme{professionalfonts}}
+
 % Times for Roman, CM Typewriter for fixed-width text, and
 % Helvetica for sans serif.
 \RequirePackage{ifxetex,ifluatex}
