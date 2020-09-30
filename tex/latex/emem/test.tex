@@ -3,11 +3,11 @@
 
 \documentclass{article}
 
-\usepackage{emem}
-% \usepackage[draft]{emem}
+\usepackage{lmodern,geometry,tikz,lipsum}
 
-\usepackage{lmodern,geometry,tikz}
-\usepackage{lipsum}
+% \usepackage[draft]{emem}
+\usepackage{emem}
+\usepackage{mathtime}
 
 \title{Title of the Article\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
 \author{%
@@ -49,5 +49,21 @@ Captions of figures look a bit different\ldots
   \end{center}
   \caption{The caption of the figure is set in sans font in ``small'' font size.}
 \end{figure}
+
+\section{Mathematics}
+
+\subsection{Operators}
+
+Examples of new math operators:
+\begin{equation}
+  \trace{A}\quad \Trace{A}\quad \erf{x}\quad \Residue{f} \corank{A} \rank{B}
+\end{equation}
+
+\subsection{Bold letters}
+
+Check when Computer Modern, or its variant, is used. \textbf{This is TEXT bold}.  Math version:
+\begin{equation}
+  \mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\quad \mathbf{abcdefghijklmnopqrstuvwxyz}
+\end{equation}
 
 \end{document}

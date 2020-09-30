@@ -33,12 +33,51 @@
 \ExecuteOptions{fancy}
 \ProcessOptions\relax
 
+%%% Custom commands -----------------------------------------------------------
+
+\RequirePackage{mathtools}
+
+% Dirac bra-ket notation (from braket.sty).
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left\langle#1\right|}
+\def\Ket#1{\left|#1\right\rangle}
+
+% Matrices in sans.
+\def\tr{\ensuremath{\mathsf{^T}}}
+\def\mat#1{\ensuremath{\mathsf{#1}}}
+
+% New operators.
+\DeclareMathOperator{\coker}{coker}   % cokernel of a matrix
+\DeclareMathOperator{\corank}{corank} % corank of a matrix
+\DeclareMathOperator{\erf}{erf}       % Gauss error function
+\DeclareMathOperator{\rank}{rank}     % rank of a matrix
+\DeclareMathOperator{\Residue}{Res}   % residue
+\DeclareMathOperator{\trace}{tr}      % trace of a matrix
+\DeclareMathOperator{\Trace}{Tr}      % trace of a matrix (alternate)
+
+%%% Environments --------------------------------------------------------------
+
+% Environment for typing right-indented quotes and command for typing the
+% name of the quotee.
+\newenvironment{rightquote}[1]{%
+  \flushright%
+  \begin{minipage}{#1\textwidth}%
+}{%
+  \end{minipage}\par%
+}
+\def\quotee#1{\par\flushright\unskip\normalfont{#1}}
+
+% NOTE: Lines following this apply to the article.cls LaTeX class.  Thus,
+% terminate processing at this point if `cmd' option is given.
+\if@cmd\endinput\fi
+
 %%% Package loading -----------------------------------------------------------
 
 % Only packages included in a standard TeXLive distribution ought to be
 % loaded by default.
-\RequirePackage{mathtools,amsthm}
-\RequirePackage{graphicx,color}
+\RequirePackage{amsthm,color,graphicx}
 
 % Load heavyweights and cosmetic packages by default, but also give an option
 % to disable them.
@@ -61,47 +100,25 @@
 % cleveref has to be loaded afer hyperref.
 \RequirePackage[capitalize]{cleveref}
 
+%%% Custom package-depended commands ------------------------------------------
+
+\def\email#1{\href{#1}{\texttt{#1}}}
+
+\def\alturl#1#2{\href{#1}{\nolinkurl{#2}}}
+
 %%% AMS packages --------------------------------------------------------------
 
 \numberwithin{equation}{section} % per-section eq numbers
 \allowdisplaybreaks              % break display eqs
 
-\newtheorem{prop}{Proposition}
 \newtheorem{claim}{Claim}
+\newtheorem{prop}{Proposition}
+\newtheorem{theorem}{Theorem}
 
+% Problem + solution as theorem/proof style environments.
 \theoremstyle{definition}
-\newtheorem{problem}{Problem}[subsection]
-
-%%% Custom commands -----------------------------------------------------------
-
-% Dirac bra-ket notation.  Copied from braket.sty.
-\def\bra#1{\mathinner{\langle{#1}|}}
-\def\ket#1{\mathinner{|{#1}\rangle}}
-\def\braket#1{\mathinner{\langle{#1}\rangle}}
-\def\Bra#1{\left\langle#1\right|}
-\def\Ket#1{\left|#1\right\rangle}
-
-% Matrices in sans.
-\def\tr{\ensuremath{\mathsf{^T}}}
-\def\mat#1{\ensuremath{\mathsf{#1}}}
-
-\def\email#1{\href{#1}{\texttt{#1}}}
-
-%%% Environments --------------------------------------------------------------
-
-% Environment for typing right-indented quotes and command for typing the
-% name of the quotee.
-\newenvironment{rightquote}[1]{%
-  \flushright%
-  \begin{minipage}{#1\textwidth}%
-}{%
-  \end{minipage}\par%
-}
-\def\quotee#1{\par\flushright\unskip\normalfont{#1}}
-
-% NOTE: Lines following this apply to the article.cls LaTeX class.  Thus,
-% terminate processing at this point if `cmd' option is given.
-\if@cmd\endinput\fi
+\newtheorem{problem}{Problem}
+\newenvironment{solution}{\proof[Solution]}{\endproof}
 
 %%% Whitespace management -----------------------------------------------------
 
