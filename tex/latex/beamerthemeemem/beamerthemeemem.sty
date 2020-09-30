@@ -44,4 +44,10 @@
 % Get rid of PDF navigation symbols at the bottom.
 \setbeamertemplate{navigation symbols}{}
 
+%%% Custom commands -----------------------------------------------------------
+
+% Alternate alert command.  With the default Beamer colors, this
+% produces a blue alerted text.
+\def\altalert#1{{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
+
 % vim: ft=tex et sts=2 sw=2 nospell cole=0

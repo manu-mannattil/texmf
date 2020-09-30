@@ -1,16 +1,15 @@
 % vim: ft=tex fdm=marker et sts=2 sw=2
 %! TEX program = pdfLaTeX
 
-\documentclass[noamssymb,noamsmath,aspectratio=169]{beamer}
+\documentclass[noamssymb,noamsmath,aspectratio=169,10pt]{beamer}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[sans]{mathtime}
-
 \usetheme{emem}
 
 \title{Title of Talk}
-\author{\texorpdfstring{\textbf{A.~Author}}{A.~Author} \and B.~Author \and C.~Author}
+\author{\texorpdfstring{\altalert{\textbf{A.~Author}}}{A.~Author} \and B.~Author \and C.~Author}
 \institute{Untitled Department, Untitled Institute}
 \date{1 January 1970}
 
@@ -43,6 +42,8 @@ Thus, up to multiplicative constants that are \emph{independent} of the coordina
 \end{frame}
 
 \begin{frame}{Remark}
+
+\alert{Hello world!}
 
 \begin{block}{Remark}
 Sample text
