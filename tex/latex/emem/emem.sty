@@ -33,29 +33,36 @@
 \ExecuteOptions{fancy}
 \ProcessOptions\relax
 
-%%% Custom commands -----------------------------------------------------------
+%%% Mathematics ---------------------------------------------------------------
 
 \RequirePackage{mathtools}
 
 % Dirac bra-ket notation (from braket.sty).
-\def\bra#1{\mathinner{\langle{#1}|}}
-\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\bra#1{\mathinner{\langle{#1}\rvert}}
+\def\ket#1{\mathinner{\lvert{#1}\rangle}}
 \def\braket#1{\mathinner{\langle{#1}\rangle}}
 \def\Bra#1{\left\langle#1\right|}
 \def\Ket#1{\left|#1\right\rangle}
 
-% Matrices in sans.
-\def\tr{\ensuremath{\mathsf{^T}}}
-\def\mat#1{\ensuremath{\mathsf{#1}}}
+% Linear algebra
+\def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
+\def\mat#1{\ensuremath{\mathsf{#1}}}                % matrix
+\def\tr{\ensuremath{^\intercal}}                    % trace
 
 % New operators.
 \DeclareMathOperator{\coker}{coker}   % cokernel of a matrix
 \DeclareMathOperator{\corank}{corank} % corank of a matrix
 \DeclareMathOperator{\erf}{erf}       % Gauss error function
+\DeclareMathOperator{\im}{im}         % image of a map
 \DeclareMathOperator{\rank}{rank}     % rank of a matrix
 \DeclareMathOperator{\Residue}{Res}   % residue
 \DeclareMathOperator{\trace}{tr}      % trace of a matrix
 \DeclareMathOperator{\Trace}{Tr}      % trace of a matrix (alternate)
+
+% Absolute value sign.  Simply using |...| results in poor spacing, e.g., see
+% the output of $|-1|$ vs $|{-1}|$.  It's the second kind of spacing that we
+% want.  Source: https://tex.stackexchange.com/q/43008
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 
 %%% Environments --------------------------------------------------------------
 
@@ -102,8 +109,12 @@
 
 %%% Custom package-depended commands ------------------------------------------
 
-\def\email#1{\href{#1}{\texttt{#1}}}
+% Command to typeset emails that obeys \urlstyle.
+\def\email#1{\href{mailto:#1}{\nolinkurl{#1}}}
 
+% Define \alturl to get a \url-like command that can accept an
+% alternative text.  This is not equivalent to \href since the text gets
+% hyphenated (and treated like ordinary text) with \href.
 \def\alturl#1#2{\href{#1}{\nolinkurl{#2}}}
 
 %%% AMS packages --------------------------------------------------------------
