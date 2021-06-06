@@ -1,75 +1,45 @@
-% apsrmp4-1.bst -- custom version of the original apsrmp4-1.bst
+% emem.bst - a custom BiBTeX style file
 %
-% By default, apsrmp4-1.bst does not use the full article title in
-% bibliographies.  One can force REVTeX to use the full article title by
-% using the `longbibliography' option of REVTeX.  However, this also
-% results in the first names of the authors being expanded, which
-% I don't want.  And in any case, this is only possible if you use
-% REVTeX as your main LaTeX class.  This BST file takes care of these
-% issues [1].
+% emem.bst is based on apsrmp4-1.bst (used by Rev. Mod. Phys.) from the
+% REVTeX 4.1 LaTeX class.  By default, apsrmp4-1.bst does not use the
+% full article title in bibliographies.  One can force REVTeX to use the
+% full article title by using the `longbibliography' option of REVTeX.
+% However, this also results in the first names of the authors being
+% expanded, which I don't want.  And in any case, this is only possible
+% if you use REVTeX as your main LaTeX class.  This BST file takes care
+% of these issues [1].
+%
+% Additionally, support for two new BiBTeX entries, viz., "archived" and
+% "original", have been implemented.  These fields are meant to be used for
+% including URLs and their Wayback Machine archival versions.
+%
+% This file can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt; either
+% version 1 of the License, or any later version.
+%
+% The \cite command functions as follows:
+%
+%   \citet{key}                 ->    Jones et al. (1990)
+%   \citet*{key}                ->    Jones, Baker, and Smith (1990)
+%   \citep{key}                 ->    (Jones et al., 1990)
+%   \citep*{key}                ->    (Jones, Baker, and Smith, 1990)
+%   \citep[chap. 2]{key}        ->    (Jones et al., 1990, chap. 2)
+%   \citep[e.g.][]{key}         ->    (e.g. Jones et al., 1990)
+%   \citep[e.g.][p. 32]{key}    ->    (e.g. Jones et al., p. 32)
+%   \citeauthor{key}            ->    Jones et al.
+%   \citeauthor*{key}           ->    Jones, Baker, and Smith
+%   \citeyear{key}              ->    1990
 %
 % [1]: https://tex.stackexchange.com/q/15677
-%%
-%% This is file `apsrmp4-1.bst',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% merlin.mbs  (with options: `head,ay,nat,lang,pres,pres-bf,vonx,nm-rev1,jnrlst,nmft,nmft-def,fnm-def,nmfted,nmand-rm,lab,lab-def,and-rm,keyxyr,dt-beg,yr-par,dtrev,date-nil-x,tit-qq,inproceedings-chapter,jtit-x,inproceedings-chapter,article-booktitle,article-series,jttl-rm,journal-address,book-bt,thesis-title-o,trtit-b,techreport-institution-par,vol-bf,vnum-sp,volp-com,jpg-1,pp-last,book-editor-booktitle,inbook-editor-booktitle,bookaddress,num-xser,number-cap,chapter-cap,series-number,numser-booktitle,ser-vol,ser-rm,volume-cap,ser-ed,jnm-x,pg-bk,book-chapter-pages,pub-par,ay-empty-pub-parens-x,pre-edn,school-par,doi-link,doi,bkedcap,edby,blk-com,fin-endbibitem,pp,ed,abr,ednx,ord,jabr,and-com,etal-it,revdata,eprint,url,url-blk,translation,SLACcitation,numpages-x,url,url-prefix-x,bibinfo,bibfield,nfss,,{}')
-%% physjour.mbs  (with options: `ay,nat,lang,pres,pres-bf,vonx,nm-rev1,jnrlst,nmft,nmft-def,fnm-def,nmfted,nmand-rm,lab,lab-def,and-rm,keyxyr,dt-beg,yr-par,dtrev,date-nil-x,tit-qq,inproceedings-chapter,jtit-x,inproceedings-chapter,article-booktitle,article-series,jttl-rm,journal-address,book-bt,thesis-title-o,trtit-b,techreport-institution-par,vol-bf,vnum-sp,volp-com,jpg-1,pp-last,book-editor-booktitle,inbook-editor-booktitle,bookaddress,num-xser,number-cap,chapter-cap,series-number,numser-booktitle,ser-vol,ser-rm,volume-cap,ser-ed,jnm-x,pg-bk,book-chapter-pages,pub-par,ay-empty-pub-parens-x,pre-edn,school-par,doi-link,doi,bkedcap,edby,blk-com,fin-endbibitem,pp,ed,abr,ednx,ord,jabr,and-com,etal-it,revdata,eprint,url,url-blk,translation,SLACcitation,numpages-x,url,url-prefix-x,bibinfo,bibfield,nfss,,{}')
-%% geojour.mbs  (with options: `ay,nat,lang,pres,pres-bf,vonx,nm-rev1,jnrlst,nmft,nmft-def,fnm-def,nmfted,nmand-rm,lab,lab-def,and-rm,keyxyr,dt-beg,yr-par,dtrev,date-nil-x,tit-qq,inproceedings-chapter,jtit-x,inproceedings-chapter,article-booktitle,article-series,jttl-rm,journal-address,book-bt,thesis-title-o,trtit-b,techreport-institution-par,vol-bf,vnum-sp,volp-com,jpg-1,pp-last,book-editor-booktitle,inbook-editor-booktitle,bookaddress,num-xser,number-cap,chapter-cap,series-number,numser-booktitle,ser-vol,ser-rm,volume-cap,ser-ed,jnm-x,pg-bk,book-chapter-pages,pub-par,ay-empty-pub-parens-x,pre-edn,school-par,doi-link,doi,bkedcap,edby,blk-com,fin-endbibitem,pp,ed,abr,ednx,ord,jabr,and-com,etal-it,revdata,eprint,url,url-blk,translation,SLACcitation,numpages-x,url,url-prefix-x,bibinfo,bibfield,nfss,,{}')
-%% photjour.mbs  (with options: `ay,nat,lang,pres,pres-bf,vonx,nm-rev1,jnrlst,nmft,nmft-def,fnm-def,nmfted,nmand-rm,lab,lab-def,and-rm,keyxyr,dt-beg,yr-par,dtrev,date-nil-x,tit-qq,inproceedings-chapter,jtit-x,inproceedings-chapter,article-booktitle,article-series,jttl-rm,journal-address,book-bt,thesis-title-o,trtit-b,techreport-institution-par,vol-bf,vnum-sp,volp-com,jpg-1,pp-last,book-editor-booktitle,inbook-editor-booktitle,bookaddress,num-xser,number-cap,chapter-cap,series-number,numser-booktitle,ser-vol,ser-rm,volume-cap,ser-ed,jnm-x,pg-bk,book-chapter-pages,pub-par,ay-empty-pub-parens-x,pre-edn,school-par,doi-link,doi,bkedcap,edby,blk-com,fin-endbibitem,pp,ed,abr,ednx,ord,jabr,and-com,etal-it,revdata,eprint,url,url-blk,translation,SLACcitation,numpages-x,url,url-prefix-x,bibinfo,bibfield,nfss,,{}')
-%% merlin.mbs  (with options: `tail,ay,nat,lang,pres,pres-bf,vonx,nm-rev1,jnrlst,nmft,nmft-def,fnm-def,nmfted,nmand-rm,lab,lab-def,and-rm,keyxyr,dt-beg,yr-par,dtrev,date-nil-x,tit-qq,inproceedings-chapter,jtit-x,inproceedings-chapter,article-booktitle,article-series,jttl-rm,journal-address,book-bt,thesis-title-o,trtit-b,techreport-institution-par,vol-bf,vnum-sp,volp-com,jpg-1,pp-last,book-editor-booktitle,inbook-editor-booktitle,bookaddress,num-xser,number-cap,chapter-cap,series-number,numser-booktitle,ser-vol,ser-rm,volume-cap,ser-ed,jnm-x,pg-bk,book-chapter-pages,pub-par,ay-empty-pub-parens-x,pre-edn,school-par,doi-link,doi,bkedcap,edby,blk-com,fin-endbibitem,pp,ed,abr,ednx,ord,jabr,and-com,etal-it,revdata,eprint,url,url-blk,translation,SLACcitation,numpages-x,url,url-prefix-x,bibinfo,bibfield,nfss,,{}')
-%% ----------------------------------------
-%% *** REVTeX-compatible RMP 2010-07-25 ***
-%%
-%% Copyright 1994-2007 Patrick W Daly
- % ===============================================================
- % IMPORTANT NOTICE:
- % This bibliographic style (bst) file has been generated from one or
- % more master bibliographic style (mbs) files, listed above.
- %
- % This generated file can be redistributed and/or modified under the terms
- % of the LaTeX Project Public License Distributed from CTAN
- % archives in directory macros/latex/base/lppl.txt; either
- % version 1 of the License, or any later version.
- % ===============================================================
- % Name and version information of the main mbs file:
- %   For use with BibTeX version 0.99a or later
- %-------------------------------------------------------------------
- % This bibliography style file is intended for texts in ENGLISH
- % This is an author-year citation style bibliography. As such, it is
- % non-standard LaTeX, and requires a special package file to function properly.
- % Such a package is    natbib.sty   by Patrick W. Daly
- % The form of the \bibitem entries is
- %   \bibitem[Jones et al.(1990)]{key}...
- %   \bibitem[Jones et al.(1990)Jones, Baker, and Smith]{key}...
- % The essential feature is that the label (the part in brackets) consists
- % of the author names, as they should appear in the citation, with the year
- % in parentheses following. There must be no space before the opening
- % parenthesis!
- % With natbib v5.3, a full list of authors may also follow the year.
- % In natbib.sty, it is possible to define the type of enclosures that is
- % really wanted (brackets or parentheses), but in either case, there must
- % be parentheses in the label.
- % The \cite command functions as follows:
- %   \citet{key} ==>>                Jones et al. (1990)
- %   \citet*{key} ==>>               Jones, Baker, and Smith (1990)
- %   \citep{key} ==>>                (Jones et al., 1990)
- %   \citep*{key} ==>>               (Jones, Baker, and Smith, 1990)
- %   \citep[chap. 2]{key} ==>>       (Jones et al., 1990, chap. 2)
- %   \citep[e.g.][]{key} ==>>        (e.g. Jones et al., 1990)
- %   \citep[e.g.][p. 32]{key} ==>>   (e.g. Jones et al., p. 32)
- %   \citeauthor{key} ==>>           Jones et al.
- %   \citeauthor*{key} ==>>          Jones, Baker, and Smith
- %   \citeyear{key} ==>>             1990
- %---------------------------------------------------------------------
+%
 
-FUNCTION {id.bst} {"merlin.mbs apsrmp4-1.bst 2010-07-25 4.21a (PWD, AO, DPC) hacked"}
+FUNCTION {id.bst} {"merlin.mbs emem.bst 2021-06-05"}
 ENTRY
 {
     address
     archive
+    archived
     archivePrefix
     author
     bookaddress
@@ -92,12 +62,13 @@ ENTRY
     note
     number
     organization
+    original
     pages
     primaryClass
     publisher
     school
-    SLACcitation
     series
+    SLACcitation
     title
     translation
     type
@@ -1376,7 +1347,7 @@ FUNCTION {format.eprint}
         archivePrefix duplicate$ empty$ { pop$ "" } { ":" * } if$ *
         swap$ *
         primaryClass  duplicate$ empty$ { pop$ "" } { " [" swap$ * "]" * } if$ *
-        "{" swap$ * "} " *
+        "{" swap$ * "}" *
       *
       eprint.command swap$ *
     }
@@ -1890,6 +1861,22 @@ FUNCTION {format.note}
   if$
 }
 
+FUNCTION {format.archived}
+{
+ archived empty$
+    { original empty$
+      { "" }
+      { "\url{" original * "}" * }
+      if$
+    }
+    { original empty$
+      { "\url{" archived * "}" * }
+      { "\href{" archived * "}" * "{\nolinkurl{" * original * "}}" * }
+      if$
+    }
+  if$
+}
+
 FUNCTION {bbl.enquote}
 {
   "\enquote "
@@ -2361,7 +2348,7 @@ FUNCTION {eid.or.pages}
   if$
 }
 
-FUNCTION {format.ser.vol.num}
+FUNCTION {format.ser.vol}
 {
   series "series" bibinfo.check output
   volume field.or.null
@@ -2371,16 +2358,6 @@ FUNCTION {format.ser.vol.num}
     }
   if$
   bolden
-  number "number" bibinfo.check duplicate$ empty$ 'skip$
-    {
-      swap$ duplicate$ empty$
-        { "there's a number but no volume in " cite$ * warning$ }
-        'skip$
-      if$
-      swap$
-      "~(" swap$ * ")" *
-    }
-  if$ *
 }
 
 FUNCTION {format.chapter.pages}
@@ -2617,7 +2594,7 @@ FUNCTION {article}
       "journal" 'bibfield :=
       output
       add.blank
-      format.ser.vol.num
+      format.ser.vol
       output
       eid.or.pages
       pages empty$ {
@@ -2681,6 +2658,7 @@ FUNCTION {book}
   new.sentence.comma
   format.note output
   format.eprint output
+  format.archived output
   fin.entry
 }
 
@@ -2865,6 +2843,7 @@ FUNCTION {misc}
   new.sentence.comma
   format.note output
   format.eprint output
+  format.archived output
   fin.entry
 }
 
@@ -3456,4 +3435,4 @@ EXECUTE {end.bib}
 
 %% End of customized bst file
 %%
-%% End of file `apsrmp4-1.bst'.
+%% End of file `emem.bst'.
