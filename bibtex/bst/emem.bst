@@ -2852,14 +2852,14 @@ FUNCTION {phdthesis}
   format.authors "author" output.check
   author format.key output
   format.date.output.check date.block
+  link.open
   format.btitle
   output
+  link.shut
   new.block.comma
-  link.open
   bbl.phdthesis
   format.thesis.type
   output.nonnull
-  link.shut
   format.school.address.output
   new.block.comma
   new.sentence.comma
