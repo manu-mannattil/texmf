@@ -1,22 +1,25 @@
 % emem.bst - a custom BiBTeX style file
 %
-% emem.bst is based on apsrmp4-1.bst (used by Rev. Mod. Phys.) from the
-% REVTeX 4.1 LaTeX class.  By default, apsrmp4-1.bst does not use the
-% full article title in bibliographies.  One can force REVTeX to use the
-% full article title by using the `longbibliography' option of REVTeX.
-% However, this also results in the first names of the authors being
-% expanded, which I don't want.  And in any case, this is only possible
-% if you use REVTeX as your main LaTeX class.  This BST file takes care
-% of these issues [1].
+% emem.bst is based on apsrmp4-2.bst (used by Rev. Mod. Phys.) from the
+% REVTeX 4.2 LaTeX class.  Some changes are
 %
-% Additionally, support for two new BiBTeX entries, viz., "archived" and
-% "original", have been implemented.  These fields are meant to be used for
-% including URLs and their Wayback Machine archival versions.
+% * Uses full article title in bibliographies [1].  If one is using
+%   REVTeX as the main document class, full article titles can be forced
+%   by using the `longbibliography' option of REVTeX.  However, this
+%   also results in the first names of the authors being expanded, which
+%   I don't want.  And in any case, this is only possible if you use
+%   REVTeX as your main LaTeX class.
 %
-% This file can be redistributed and/or modified under the terms
-% of the LaTeX Project Public License Distributed from CTAN
-% archives in directory macros/latex/base/lppl.txt; either
-% version 1 of the License, or any later version.
+% * Supports two new BiBTeX entries, viz., "archived" and "original".
+%   These fields are meant to be used for including URLs and their
+%   Wayback Machine archival versions.
+%
+% * Omits journal issue numbers when formatting article citations.
+%
+% This file can be redistributed and/or modified under the terms of the
+% LaTeX Project Public License Distributed from CTAN archives in
+% directory macros/latex/base/lppl.txt; either version 1 of the License,
+% or any later version.
 %
 % The \cite command functions as follows:
 %
@@ -34,7 +37,7 @@
 % [1]: https://tex.stackexchange.com/q/15677
 %
 
-FUNCTION {id.bst} {"merlin.mbs emem.bst 2021-06-05"}
+FUNCTION {id.bst} {"emem.bst 2021-06-05"}
 ENTRY
 {
     address
@@ -67,8 +70,8 @@ ENTRY
     primaryClass
     publisher
     school
-    series
     SLACcitation
+    series
     title
     translation
     type
@@ -936,30 +939,6 @@ FUNCTION {bbl.rd}
 FUNCTION {bbl.th}
 { "th" }
 
-MACRO {jan} {"Jan."}
-
-MACRO {feb} {"Feb."}
-
-MACRO {mar} {"Mar."}
-
-MACRO {apr} {"Apr."}
-
-MACRO {may} {"May"}
-
-MACRO {jun} {"Jun."}
-
-MACRO {jul} {"Jul."}
-
-MACRO {aug} {"Aug."}
-
-MACRO {sep} {"Sep."}
-
-MACRO {oct} {"Oct."}
-
-MACRO {nov} {"Nov."}
-
-MACRO {dec} {"Dec."}
-
 FUNCTION {bbl.url.prefix}
 {
   "\urlprefix "
@@ -985,294 +964,6 @@ FUNCTION {eng.ord}
      }
    if$
 }
-
- %-------------------------------------------------------------------
- % Begin module:
- % \ProvidesFile{physjour.mbs}[2002/01/14 2.2 (PWD)]
-MACRO {aa}{"Astron. \& Astrophys."}
-MACRO {aasup}{"Astron. \& Astrophys. Suppl. Ser."}
-MACRO {aj} {"Astron. J."}
-MACRO {aph} {"Acta Phys."}
-MACRO {advp} {"Adv. Phys."}
-MACRO {ajp} {"Amer. J. Phys."}
-MACRO {ajm} {"Amer. J. Math."}
-MACRO {amsci} {"Amer. Sci."}
-MACRO {anofd} {"Ann. Fluid Dyn."}
-MACRO {am} {"Ann. Math."}
-MACRO {ap} {"Ann. Phys. (NY)"}
-MACRO {adp} {"Ann. Phys. (Leipzig)"}
-MACRO {ao} {"Appl. Opt."}
-MACRO {apl} {"Appl. Phys. Lett."}
-MACRO {app} {"Astroparticle Phys."}
-MACRO {apj} {"Astrophys. J."}
-MACRO {apjsup} {"Astrophys. J. Suppl."}
-MACRO {apss} {"Astrophys. Space Sci."}
-MACRO {araa} {"Ann. Rev. Astron. Astrophys."}
-MACRO {baas} {"Bull. Amer. Astron. Soc."}
-MACRO {baps} {"Bull. Amer. Phys. Soc."}
-MACRO {cmp} {"Comm. Math. Phys."}
-MACRO {cpam} {"Commun. Pure Appl. Math."}
-MACRO {cppcf} {"Comm. Plasma Phys. \& Controlled Fusion"}
-MACRO {cpc} {"Comp. Phys. Comm."}
-MACRO {cqg} {"Class. Quant. Grav."}
-MACRO {cra} {"C. R. Acad. Sci. A"}
-MACRO {fed} {"Fusion Eng. \& Design"}
-MACRO {ft} {"Fusion Tech."}
-MACRO {grg} {"Gen. Relativ. Gravit."}
-MACRO {ieeens} {"IEEE Trans. Nucl. Sci."}
-MACRO {ieeeps} {"IEEE Trans. Plasma Sci."}
-MACRO {ijimw} {"Interntl. J. Infrared \& Millimeter Waves"}
-MACRO {ip} {"Infrared Phys."}
-MACRO {irp} {"Infrared Phys."}
-MACRO {jap} {"J. Appl. Phys."}
-MACRO {jasa} {"J. Acoust. Soc. America"}
-MACRO {jcp} {"J. Comp. Phys."}
-MACRO {jetp} {"Sov. Phys.--JETP"}
-MACRO {jfe} {"J. Fusion Energy"}
-MACRO {jfm} {"J. Fluid Mech."}
-MACRO {jmp} {"J. Math. Phys."}
-MACRO {jne} {"J. Nucl. Energy"}
-MACRO {jnec} {"J. Nucl. Energy, C: Plasma Phys., Accelerators, Thermonucl. Res."}
-MACRO {jnm} {"J. Nucl. Mat."}
-MACRO {jpc} {"J. Phys. Chem."}
-MACRO {jpp} {"J. Plasma Phys."}
-MACRO {jpsj} {"J. Phys. Soc. Japan"}
-MACRO {jsi} {"J. Sci. Instrum."}
-MACRO {jvst} {"J. Vac. Sci. \& Tech."}
-MACRO {nat} {"Nature"}
-MACRO {nature} {"Nature"}
-MACRO {nedf} {"Nucl. Eng. \& Design/Fusion"}
-MACRO {nf} {"Nucl. Fusion"}
-MACRO {nim} {"Nucl. Inst. \& Meth."}
-MACRO {nimpr} {"Nucl. Inst. \& Meth. in Phys. Res."}
-MACRO {np} {"Nucl. Phys."}
-MACRO {npb} {"Nucl. Phys. B"}
-MACRO {nt/f} {"Nucl. Tech./Fusion"}
-MACRO {npbpc} {"Nucl. Phys. B (Proc. Suppl.)"}
-MACRO {inc} {"Nuovo Cimento"}
-MACRO {nc} {"Nuovo Cimento"}
-MACRO {pf} {"Phys. Fluids"}
-MACRO {pfa} {"Phys. Fluids A: Fluid Dyn."}
-MACRO {pfb} {"Phys. Fluids B: Plasma Phys."}
-MACRO {pl} {"Phys. Lett."}
-MACRO {pla} {"Phys. Lett. A"}
-MACRO {plb} {"Phys. Lett. B"}
-MACRO {prep} {"Phys. Rep."}
-MACRO {pnas} {"Proc. Nat. Acad. Sci. USA"}
-MACRO {pp} {"Phys. Plasmas"}
-MACRO {ppcf} {"Plasma Phys. \& Controlled Fusion"}
-MACRO {phitrsl} {"Philos. Trans. Roy. Soc. London"}
-MACRO {prl} {"Phys. Rev. Lett."}
-MACRO {pr} {"Phys. Rev."}
-MACRO {physrev} {"Phys. Rev."}
-MACRO {pra} {"Phys. Rev. A"}
-MACRO {prb} {"Phys. Rev. B"}
-MACRO {prc} {"Phys. Rev. C"}
-MACRO {prd} {"Phys. Rev. D"}
-MACRO {pre} {"Phys. Rev. E"}
-MACRO {ps} {"Phys. Scripta"}
-MACRO {procrsl} {"Proc. Roy. Soc. London"}
-MACRO {rmp} {"Rev. Mod. Phys."}
-MACRO {rsi} {"Rev. Sci. Inst."}
-MACRO {science} {"Science"}
-MACRO {sciam} {"Sci. Am."}
-MACRO {sam} {"Stud. Appl. Math."}
-MACRO {sjpp} {"Sov. J. Plasma Phys."}
-MACRO {spd} {"Sov. Phys.--Doklady"}
-MACRO {sptp} {"Sov. Phys.--Tech. Phys."}
-MACRO {spu} {"Sov. Phys.--Uspeki"}
-MACRO {st} {"Sky and Telesc."}
- % End module: physjour.mbs
- %-------------------------------------------------------------------
- % Begin module:
- % \ProvidesFile{geojour.mbs}[2002/07/10 2.0h (PWD)]
-MACRO {aisr} {"Adv. Space Res."}
-MACRO {ag} {"Ann. Geophys."}
-MACRO {anigeo} {"Ann. Geofis."}
-MACRO {angl} {"Ann. Glaciol."}
-MACRO {andmet} {"Ann. d. Meteor."}
-MACRO {andgeo} {"Ann. d. Geophys."}
-MACRO {andphy} {"Ann. Phys.-Paris"}
-MACRO {afmgb} {"Arch. Meteor. Geophys. Bioklimatol."}
-MACRO {atph} {"Atm\'osphera"}
-MACRO {aao} {"Atmos. Ocean"}
-MACRO {ass}{"Astrophys. Space Sci."}
-MACRO {atenv} {"Atmos. Environ."}
-MACRO {aujag} {"Aust. J. Agr. Res."}
-MACRO {aumet} {"Aust. Meteorol. Mag."}
-MACRO {blmet} {"Bound.-Lay. Meteorol."}
-MACRO {bams} {"Bull. Amer. Meteorol. Soc."}
-MACRO {cch} {"Clim. Change"}
-MACRO {cdyn} {"Clim. Dynam."}
-MACRO {cbul} {"Climatol. Bull."}
-MACRO {cap} {"Contrib. Atmos. Phys."}
-MACRO {dsr} {"Deep-Sea Res."}
-MACRO {dhz} {"Dtsch. Hydrogr. Z."}
-MACRO {dao} {"Dynam. Atmos. Oceans"}
-MACRO {eco} {"Ecology"}
-MACRO {empl}{"Earth, Moon and Planets"}
-MACRO {envres} {"Environ. Res."}
-MACRO {envst} {"Environ. Sci. Technol."}
-MACRO {ecms} {"Estuarine Coastal Mar. Sci."}
-MACRO {expa}{"Exper. Astron."}
-MACRO {geoint} {"Geofis. Int."}
-MACRO {geopub} {"Geofys. Publ."}
-MACRO {geogeo} {"Geol. Geofiz."}
-MACRO {gafd} {"Geophys. Astrophys. Fluid Dyn."}
-MACRO {gfd} {"Geophys. Fluid Dyn."}
-MACRO {geomag} {"Geophys. Mag."}
-MACRO {georl} {"Geophys. Res. Lett."}
-MACRO {grl} {"Geophys. Res. Lett."}
-MACRO {ga} {"Geophysica"}
-MACRO {gs} {"Geophysics"}
-MACRO {ieeetap} {"IEEE Trans. Antenn. Propag."}
-MACRO {ijawp} {"Int. J. Air Water Pollut."}
-MACRO {ijc} {"Int. J. Climatol."}
-MACRO {ijrs} {"Int. J. Remote Sens."}
-MACRO {jam} {"J. Appl. Meteorol."}
-MACRO {jaot} {"J. Atmos. Ocean. Technol."}
-MACRO {jatp} {"J. Atmos. Terr. Phys."}
-MACRO {jastp} {"J. Atmos. Solar-Terr. Phys."}
-MACRO {jce} {"J. Climate"}
-MACRO {jcam} {"J. Climate Appl. Meteor."}
-MACRO {jcm} {"J. Climate Meteor."}
-MACRO {jcy} {"J. Climatol."}
-MACRO {jgr} {"J. Geophys. Res."}
-MACRO {jga} {"J. Glaciol."}
-MACRO {jh} {"J. Hydrol."}
-MACRO {jmr} {"J. Mar. Res."}
-MACRO {jmrj} {"J. Meteor. Res. Japan"}
-MACRO {jm} {"J. Meteor."}
-MACRO {jpo} {"J. Phys. Oceanogr."}
-MACRO {jra} {"J. Rech. Atmos."}
-MACRO {jaes} {"J. Aeronaut. Sci."}
-MACRO {japca} {"J. Air Pollut. Control Assoc."}
-MACRO {jas} {"J. Atmos. Sci."}
-MACRO {jmts} {"J. Mar. Technol. Soc."}
-MACRO {jmsj} {"J. Meteorol. Soc. Japan"}
-MACRO {josj} {"J. Oceanogr. Soc. Japan"}
-MACRO {jwm} {"J. Wea. Mod."}
-MACRO {lao} {"Limnol. Oceanogr."}
-MACRO {mwl} {"Mar. Wea. Log"}
-MACRO {mau} {"Mausam"}
-MACRO {meteor} {"``Meteor'' Forschungsergeb."}
-MACRO {map} {"Meteorol. Atmos. Phys."}
-MACRO {metmag} {"Meteor. Mag."}
-MACRO {metmon} {"Meteor. Monogr."}
-MACRO {metrun} {"Meteor. Rundsch."}
-MACRO {metzeit} {"Meteor. Z."}
-MACRO {metgid} {"Meteor. Gidrol."}
-MACRO {mwr} {"Mon. Weather Rev."}
-MACRO {nwd} {"Natl. Weather Dig."}
-MACRO {nzjmfr} {"New Zeal. J. Mar. Freshwater Res."}
-MACRO {npg} {"Nonlin. Proc. Geophys."}
-MACRO {om} {"Oceanogr. Meteorol."}
-MACRO {ocac} {"Oceanol. Acta"}
-MACRO {oceanus} {"Oceanus"}
-MACRO {paleoc} {"Paleoceanography"}
-MACRO {pce} {"Phys. Chem. Earth"}
-MACRO {pmg} {"Pap. Meteor. Geophys."}
-MACRO {ppom} {"Pap. Phys. Oceanogr. Meteor."}
-MACRO {physzeit} {"Phys. Z."}
-MACRO {pps} {"Planet. Space Sci."}
-MACRO {pss} {"Planet. Space Sci."}
-MACRO {pag} {"Pure Appl. Geophys."}
-MACRO {qjrms} {"Quart. J. Roy. Meteorol. Soc."}
-MACRO {quatres} {"Quat. Res."}
-MACRO {rsci} {"Radio Sci."}
-MACRO {rse} {"Remote Sens. Environ."}
-MACRO {rgeo} {"Rev. Geophys."}
-MACRO {rgsp} {"Rev. Geophys. Space Phys."}
-MACRO {rdgeo} {"Rev. Geofis."}
-MACRO {revmeta} {"Rev. Meteorol."}
-MACRO {sgp}{"Surveys in Geophys."}
-MACRO {sp} {"Solar Phys."}
-MACRO {ssr} {"Space Sci. Rev."}
-MACRO {tellus} {"Tellus"}
-MACRO {tac} {"Theor. Appl. Climatol."}
-MACRO {tagu} {"Trans. Am. Geophys. Union (EOS)"}
-MACRO {wrr} {"Water Resour. Res."}
-MACRO {weather} {"Weather"}
-MACRO {wafc} {"Weather Forecast."}
-MACRO {ww} {"Weatherwise"}
-MACRO {wmob} {"WMO Bull."}
-MACRO {zeitmet} {"Z. Meteorol."}
- % End module: geojour.mbs
- %-------------------------------------------------------------------
- % Begin module:
- % \ProvidesFile{photjour.mbs}[1999/02/24 2.0b (PWD)]
-
-MACRO {appopt} {"Appl. Opt."}
-MACRO {bell} {"Bell Syst. Tech. J."}
-MACRO {ell} {"Electron. Lett."}
-MACRO {jasp} {"J. Appl. Spectr."}
-MACRO {jqe} {"IEEE J. Quantum Electron."}
-MACRO {jlwt} {"J. Lightwave Technol."}
-MACRO {jmo} {"J. Mod. Opt."}
-MACRO {josa} {"J. Opt. Soc. America"}
-MACRO {josaa} {"J. Opt. Soc. Amer.~A"}
-MACRO {josab} {"J. Opt. Soc. Amer.~B"}
-MACRO {jdp} {"J. Phys. (Paris)"}
-MACRO {oc} {"Opt. Commun."}
-MACRO {ol} {"Opt. Lett."}
-MACRO {phtl} {"IEEE Photon. Technol. Lett."}
-MACRO {pspie} {"Proc. Soc. Photo-Opt. Instrum. Eng."}
-MACRO {sse} {"Solid-State Electron."}
-MACRO {sjot} {"Sov. J. Opt. Technol."}
-MACRO {sjqe} {"Sov. J. Quantum Electron."}
-MACRO {sleb} {"Sov. Phys.--Leb. Inst. Rep."}
-MACRO {stph} {"Sov. Phys.--Techn. Phys."}
-MACRO {stphl} {"Sov. Techn. Phys. Lett."}
-MACRO {vr} {"Vision Res."}
-MACRO {zph} {"Z. f. Physik"}
-MACRO {zphb} {"Z. f. Physik~B"}
-MACRO {zphd} {"Z. f. Physik~D"}
-
-MACRO {CLEO} {"CLEO"}
-MACRO {ASSL} {"Adv. Sol.-State Lasers"}
-MACRO {OSA}  {"OSA"}
- % End module: photjour.mbs
-%% Copyright 1994-2007 Patrick W Daly
-MACRO {acmcs} {"ACM Comput. Surv."}
-
-MACRO {acta} {"Acta Inf."}
-
-MACRO {cacm} {"Commun. ACM"}
-
-MACRO {ibmjrd} {"IBM J. Res. Dev."}
-
-MACRO {ibmsj} {"IBM Syst.~J."}
-
-MACRO {ieeese} {"IEEE Trans. Software Eng."}
-
-MACRO {ieeetc} {"IEEE Trans. Comput."}
-
-MACRO {ieeetcad}
- {"IEEE Trans. Comput. Aid. Des."}
-
-MACRO {ipl} {"Inf. Process. Lett."}
-
-MACRO {jacm} {"J.~ACM"}
-
-MACRO {jcss} {"J.~Comput. Syst. Sci."}
-
-MACRO {scp} {"Sci. Comput. Program."}
-
-MACRO {sicomp} {"SIAM J. Comput."}
-
-MACRO {tocs} {"ACM Trans. Comput. Syst."}
-
-MACRO {tods} {"ACM Trans. Database Syst."}
-
-MACRO {tog} {"ACM Trans. Graphic."}
-
-MACRO {toms} {"ACM Trans. Math. Software"}
-
-MACRO {toois} {"ACM Trans. Office Inf. Syst."}
-
-MACRO {toplas} {"ACM Trans. Progr. Lang. Syst."}
-
-MACRO {tcs} {"Theor. Comput. Sci."}
 
 FUNCTION {bibinfo.command} { "\bibinfo " }
 
@@ -1316,7 +1007,7 @@ FUNCTION {bibinfo.warn}
 
 FUNCTION {archiv.base}
 {
-  "http://arxiv.org/abs"
+  "https://arxiv.org/abs"
 }
 
 FUNCTION {archiv.prefix.base}
@@ -1329,10 +1020,10 @@ FUNCTION {eprint.command}
   "\Eprint "
 }
 
-FUNCTION {format.eprint}
+FUNCTION {format.eprint.controlled}
 {
   eprint duplicate$ empty$
-  control.eprint #0 <
+  control.eprint #1 =
   or
     { pop$ "" }
     {
@@ -1347,7 +1038,30 @@ FUNCTION {format.eprint}
         archivePrefix duplicate$ empty$ { pop$ "" } { ":" * } if$ *
         swap$ *
         primaryClass  duplicate$ empty$ { pop$ "" } { " [" swap$ * "]" * } if$ *
-        "{" swap$ * "}" *
+        "{" swap$ * "} " *
+      *
+      eprint.command swap$ *
+    }
+  if$
+}
+
+FUNCTION {format.eprint}
+{
+  eprint duplicate$ empty$
+    { pop$ "" }
+    {
+      duplicate$
+      ""
+        archive duplicate$ empty$ { pop$ archiv.base } 'skip$ if$ *
+        "/" *
+        swap$ *
+        "{" swap$ * "} " *
+      swap$
+      ""
+        archivePrefix duplicate$ empty$ { pop$ "" } { ":" * } if$ *
+        swap$ *
+        primaryClass  duplicate$ empty$ { pop$ "" } { " [" swap$ * "]" * } if$ *
+        "{" swap$ * "} " *
       *
       eprint.command swap$ *
     }
@@ -1562,7 +1276,7 @@ FUNCTION {format.names}
                     *
                   } {
                     bbl.and
-                    space.word *
+                    word.space * *
                     t *
                   }
                 if$
@@ -1772,7 +1486,7 @@ FUNCTION {format.issn.output}
 
 FUNCTION {doi.base}
 {
-  "http://dx.doi.org/"
+  "https://doi.org/"
 }
 
 FUNCTION {doi.base.command}
@@ -1804,7 +1518,7 @@ FUNCTION {link.tag.open}
       if$
     }
     {
-      doi.base.command swap$ *
+      "https://doi.org/" swap$ *
       href.command
     }
   if$
@@ -2606,11 +2320,10 @@ FUNCTION {article}
       eid.or.pages
     }
   if$
-  format.issn.output
   new.block.comma
   new.sentence.comma
   format.note output
-  format.eprint output
+  format.eprint.controlled output
   format.translation output
   fin.entry
 }
@@ -2947,6 +2660,29 @@ FUNCTION {unpublished}
   new.sentence.comma
   format.note "note" output.check
   format.eprint output
+  fin.entry
+}
+
+FUNCTION {dataset}
+{
+  output.bibitem
+  format.authors "author" output.check
+  author format.key output
+  format.date.output date.block
+  article.title.produce
+  doi missing$
+  url missing$ not and
+  {
+    link.open
+    url "url" output.check
+    link.shut
+  }
+  {
+    link.open
+    doi "doi" output.check
+    link.shut
+  } if$
+  format.note output
   fin.entry
 }
 
@@ -3432,7 +3168,3 @@ FUNCTION {end.bib}
 }
 
 EXECUTE {end.bib}
-
-%% End of customized bst file
-%%
-%% End of file `emem.bst'.
