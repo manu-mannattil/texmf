@@ -104,6 +104,24 @@
 \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{\mddefault}{n}
 \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{\bfdefault}{n}
 
+% True sans-serif accents: use \textsf in math mode with italic text and
+% text-based accents.  Also, insert an empty superscript ^{} to produce
+% better kerning.
+\def\sacute#1{\ensuremath\textsf{\it\'#1}^{}}
+\def\sbar#1{\ensuremath\textsf{\it\=#1}^{}}
+\def\sbreve#1{\ensuremath\textsf{\it\u#1}^{}}
+\def\scheck#1{\ensuremath\textsf{\it\v#1}^{}}
+\def\sddot#1{\ensuremath\textsf{\it\"#1}^{}}
+\def\sdot#1{\ensuremath\textsf{\it\.#1}^{}}
+\def\sgrave#1{\ensuremath\textsf{\it\`#1}^{}}
+\def\shat#1{\ensuremath\textsf{\it\^#1}^{}}
+\def\stilde#1{\ensuremath\textsf{\it\~#1}^{}}
+
+% Convenient aliases.
+\def\supscr#1{\textsuperscript{#1}}
+\def\subscr#1{\textsubscript{#1}}
+\def\textsfit#1{\ensuremath\textsf{\it#1}}
+
 \endinput
 
 % vim: ft=tex fdm=marker et sts=2 sw=2 nospell cole=0

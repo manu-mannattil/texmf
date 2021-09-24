@@ -1,0 +1,111 @@
+% latinsans.sty test document.
+
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{mathtools,mathpazo,helvet}
+\usepackage{latinsans}
+
+\title{\texttt{latinsans.sty} test}
+\date{}
+\setlength\parindent{0pt}
+\def\separator{\vskip\baselineskip\hrule\vskip\baselineskip}
+
+\begin{document}
+  \maketitle
+
+  \begin{align*}
+    \nabla\cdot\mathbf{E} &= \frac{\rho}{\epsilon_0}\\
+    \nabla\cdot\mathbf{B} &= 0\\
+    \nabla\times\mathbf{E} &= -\frac{\partial\mathbf{B}}{\partial{t}}\\
+    \nabla\times\mathbf{B} &= \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}
+  \end{align*}
+
+  \begin{equation}
+  \acute{p}
+  \bar{p}
+  \breve{p}
+  \check{p}
+  \ddot{p}
+  \dot{p}
+  \grave{p}
+  \hat{p}
+  \tilde{p}
+  %
+  \acute{q}
+  \bar{q}
+  \breve{q}
+  \check{q}
+  \ddot{q}
+  \dot{q}
+  \grave{q}
+  \hat{q}
+  \tilde{q}
+  %
+  \acute{r}
+  \bar{r}
+  \breve{r}
+  \check{r}
+  \ddot{r}
+  \dot{r}
+  \grave{r}
+  \hat{r}
+  \tilde{r}
+  %
+  \acute{t}
+  \bar{t}
+  \breve{t}
+  \check{t}
+  \ddot{t}
+  \dot{t}
+  \grave{t}
+  \hat{t}
+  \tilde{t}
+  %
+  \qquad{\text{(default accents)}}
+  \end{equation}
+
+  \begin{equation}
+  \sacute{p}
+  \sbar{p}
+  \sbreve{p}
+  \scheck{p}
+  \sddot{p}
+  \sdot{p}
+  \sgrave{p}
+  \shat{p}
+  \stilde{p}
+  %
+  \sacute{q}
+  \sbar{q}
+  \sbreve{q}
+  \scheck{q}
+  \sddot{q}
+  \sdot{q}
+  \sgrave{q}
+  \shat{q}
+  \stilde{q}
+  %
+  \sacute{r}
+  \sbar{r}
+  \sbreve{r}
+  \scheck{r}
+  \sddot{r}
+  \sdot{r}
+  \sgrave{r}
+  \shat{r}
+  \stilde{r}
+  %
+  \sacute{t}
+  \sbar{t}
+  \sbreve{t}
+  \scheck{t}
+  \sddot{t}
+  \sdot{t}
+  \sgrave{t}
+  \shat{t}
+  \stilde{t}
+  %
+  \qquad{\text{(sans accents)}}
+  \end{equation}
+\end{document}
