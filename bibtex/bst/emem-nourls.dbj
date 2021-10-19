@@ -31,15 +31,15 @@ End of customized bst file
 % babel,%: Babel
 %--------------------
 %STYLE OF CITATIONS:
-%   %: (def) Numerical
-  ay,%: Author-year
+    %: (def) Numerical
+% ay,%: Author-year
 % alph,%: Alpha style, Jon90 or JWB90
 % alph,alf-1,%: Alpha style, Jon90
 % alph,alf-f,%: Alpha style, Jones90
 % cite,%: Cite key
 %--------------------
 %HTML OUTPUT (if non author-year citations)
-%   %: (def) Normal LaTeX
+    %: (def) Normal LaTeX
 % html,%: Hypertext
 % html,htlist,%: Hypertext list
 % html,htdes,%: Hypertext with keys
@@ -100,13 +100,13 @@ End of customized bst file
 % ed-au,%: Full, surname last
 % nm-revf,%: Full, surname first
 % nm-init,ed-au,%: Initials + surname
-  nm-rev,%: Surname + initials
+% nm-rev,%: Surname + initials
 % nm-rv,%: Surname + dotless initials
 % nm-rvvc,%: Surname + comma + spaceless initials
 % nm-rvx,%: Surname + pure initials
 % nm-rvcx,%: Surname + comma + pure initials
 % nm-rvv,%: Surname + spaceless initials
-% nm-rev1,%: Only first name reversed, initials
+  nm-rev1,%: Only first name reversed, initials
 % nm-revv1,%: First name reversed, with full names
 %--------------------
 %EDITOR NAMES IN COLLECTIONS (if author names reversed)
@@ -199,14 +199,14 @@ End of customized bst file
 % blkyear,%: Missing date left blank
 %--------------------
 %DATE POSITION:
-    %: (def) Date at end
-  dt-beg,%: Date after authors
+%   %: (def) Date at end
+% dt-beg,%: Date after authors
 % dt-jnl,%: Date part of journal spec.
 % dt-end,%: Date at very end
 %--------------------
 %DATE FORMAT (if non author-year citations)
 %   %: (def) Plain month and year
-% yr-par,%: Date in parentheses
+  yr-par,%: Date in parentheses
 % yr-brk,%: Date in brackets
 % yr-col,%: Date preceded by colon
 % yr-per,%: Date preceded by period
@@ -215,7 +215,7 @@ End of customized bst file
 %--------------------
 %SUPPRESS MONTH:
 %   %: (def) Date is month and year
-% xmth,%: Date is year only
+  xmth,%: Date is year only
 %--------------------
 %REVERSED DATE (if including month)
 %   %: (def) Date as month year
@@ -223,7 +223,7 @@ End of customized bst file
 %--------------------
 %DATE FORMAT (if author-year citations)
 %   %: (def) Year plain
-  yr-par,%: Year in parentheses
+% yr-par,%: Year in parentheses
 % yr-brk,%: Year in brackets
 % yr-col,%: Year preceded by colon
 % yr-per,%: Year preceded by period
@@ -391,7 +391,7 @@ End of customized bst file
 %--------------------
 %PUBLISHER IN PARENTHESES:
 %   %: (def) Publisher as normal block
-  pub-par,%: Publisher in parentheses
+% pub-par,%: Publisher in parentheses
 % pub-date,%: Publisher and date in parentheses
 % pub-date,pub-xc,%: Publisher and date in parentheses, no comma
 % pub-date,pub-xpar,%: Publisher and date without parentheses
@@ -539,7 +539,7 @@ End of customized bst file
 %--------------------
 %E-PRINT DATA FIELD: (without REVTeX fields)
     %: (def) Do not include eprint field
-% eprint,%: Include eprint and archive fields
+  eprint,%: Include eprint and archive fields
 %--------------------
 %URL ADDRESS: (without REVTeX fields)
 %   %: (def) No URL
