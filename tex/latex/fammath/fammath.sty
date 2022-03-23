@@ -1,11 +1,13 @@
 % NAME
 %
-%   latinsans.sty - force Latin characters to use the sans font
+%   fammath.sty - force Latin characters and Arabic numerals to use
+%                 the same font as the rest of the document
 %
 % DESCRIPTION
 %
-%   latinsans.sty is a LaTeX style file that forces all Latin characters
-%   to use the default sans-serif font.
+%   fammath.sty is a LaTeX style file that forces all Latin characters
+%   and Arabic numerals in math environments to use the same font as the
+%   rest of the document.
 %
 
 \NeedsTeXFormat{LaTeX2e}
@@ -14,7 +16,15 @@
 % Prevent Beamer from overwriting fonts.
 \@ifclassloaded{beamer}{\beamer@suppressreplacementstrue}
 
-\def\familydefault{\sfdefault}
+% Option to use default sans-serif fonts.
+\newif\if@sans
+\DeclareOption{sans}\@sanstrue
+\ProcessOptions\relax
+\def\@textrmsf{\textrm}
+\if@sans
+  \def\familydefault{\sfdefault}
+  \def\@textrmsf{\textsf}
+\fi
 
 % Math symbol definitions stolen from Beamer's beamerbasefont.sty file:
 % https://github.com/josephwright/beamer/blob/master/base/beamerbasefont.sty
@@ -104,23 +114,35 @@
 \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{\mddefault}{n}
 \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{\bfdefault}{n}
 
-% True sans-serif accents: use \textsf in math mode with italic text and
+% True sans-serif accents: use \@textrmsf in math mode with italic text and
 % text-based accents.  Also, insert an empty superscript ^{} to produce
 % better kerning.
-\def\sacute#1{\ensuremath\textsf{\it\'#1}^{}}
-\def\sbar#1{\ensuremath\textsf{\it\=#1}^{}}
-\def\sbreve#1{\ensuremath\textsf{\it\u#1}^{}}
-\def\scheck#1{\ensuremath\textsf{\it\v#1}^{}}
-\def\sddot#1{\ensuremath\textsf{\it\"#1}^{}}
-\def\sdot#1{\ensuremath\textsf{\it\.#1}^{}}
-\def\sgrave#1{\ensuremath\textsf{\it\`#1}^{}}
-\def\shat#1{\ensuremath\textsf{\it\^#1}^{}}
-\def\stilde#1{\ensuremath\textsf{\it\~#1}^{}}
+\def\sacute#1{\ensuremath\@textrmsf{\it\'#1}^{}}
+\def\sbar#1{\ensuremath\@textrmsf{\it\=#1}^{}}
+\def\sbreve#1{\ensuremath\@textrmsf{\it\u#1}^{}}
+\def\scheck#1{\ensuremath\@textrmsf{\it\v#1}^{}}
+\def\sddot#1{\ensuremath\@textrmsf{\it\"#1}^{}}
+\def\sdot#1{\ensuremath\@textrmsf{\it\.#1}^{}}
+\def\sgrave#1{\ensuremath\@textrmsf{\it\`#1}^{}}
+\def\shat#1{\ensuremath\@textrmsf{\it\^#1}^{}}
+\def\stilde#1{\ensuremath\@textrmsf{\it\~#1}^{}}
+
+% Bold version.
+\def\sbacute#1{\ensuremath\@textrmsf{\textbf{\textit{\'#1}}}^{}}
+\def\sbbar#1{\ensuremath\@textrmsf{\textbf{\textit{\=#1}}}^{}}
+\def\sbbreve#1{\ensuremath\@textrmsf{\textbf{\textit{\u#1}}}^{}}
+\def\sbcheck#1{\ensuremath\@textrmsf{\textbf{\textit{\v#1}}}^{}}
+\def\sbddot#1{\ensuremath\@textrmsf{\textbf{\textit{\"#1}}}^{}}
+\def\sbdot#1{\ensuremath\@textrmsf{\textbf{\textit{\.#1}}}^{}}
+\def\sbgrave#1{\ensuremath\@textrmsf{\textbf{\textit{\`#1}}}^{}}
+\def\sbhat#1{\ensuremath\@textrmsf{\textbf{\textit{\^#1}}}^{}}
+\def\sbtilde#1{\ensuremath\@textrmsf{\textbf{\textit{\~#1}}}^{}}
 
 % Convenient aliases.
 \def\supscr#1{\textsuperscript{#1}}
 \def\subscr#1{\textsubscript{#1}}
 \def\textsfit#1{\ensuremath\textsf{\it#1}}
+\def\textrmit#1{\ensuremath\textrm{\it#1}}
 
 \endinput
 

@@ -1,12 +1,13 @@
-% latinsans.sty test document.
+% fammath.sty test document.
 
 \documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage[margin=0.5in]{geometry}
 \usepackage{mathtools,mathpazo,helvet}
-\usepackage{latinsans}
+\usepackage{times}
+\usepackage[sans]{fammath}
 
-\title{\texttt{latinsans.sty} test}
+\title{\texttt{fammath.sty} test}
 \date{}
 \setlength\parindent{0pt}
 \def\separator{\vskip\baselineskip\hrule\vskip\baselineskip}
@@ -20,6 +21,13 @@
     \nabla\times\mathbf{E} &= -\frac{\partial\mathbf{B}}{\partial{t}}\\
     \nabla\times\mathbf{B} &= \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}
   \end{align*}
+
+  \begin{equation}
+    \alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega
+  \end{equation}
+  \begin{equation}
+    abcdefghijklmnopqrstuvwxyz
+  \end{equation}
 
   \begin{equation}
   \acute{p}
@@ -106,6 +114,6 @@
   \shat{t}
   \stilde{t}
   %
-  \qquad{\text{(sans accents)}}
+  \qquad{\text{(accents from text font)}}
   \end{equation}
 \end{document}
