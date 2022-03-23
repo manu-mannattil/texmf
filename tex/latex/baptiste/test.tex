@@ -1,0 +1,167 @@
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{baptiste}
+
+\def\separator{\vskip\baselineskip\hrule\vskip\baselineskip}
+
+\begin{document}
+
+Sans-serif (Roboto) font scaling:\\
+
+\textsf{a}a
+\textsf{b}b
+\textsf{c}c
+\textsf{d}d
+\textsf{e}e
+\textsf{f}f
+\textsf{g}g
+\textsf{h}h
+\textsf{i}i
+\textsf{j}j
+\textsf{k}k
+\textsf{l}l
+\textsf{m}m
+\textsf{n}n
+\textsf{o}o
+\textsf{p}p
+\textsf{q}q
+\textsf{r}r
+\textsf{s}s
+\textsf{t}t
+\textsf{u}u
+\textsf{v}v
+\textsf{w}w
+\textsf{x}x
+\textsf{y}y
+\textsf{z}z
+
+\textsf{A}A
+\textsf{B}B
+\textsf{C}C
+\textsf{D}D
+\textsf{E}E
+\textsf{F}F
+\textsf{G}G
+\textsf{H}H
+\textsf{I}I
+\textsf{J}J
+\textsf{K}K
+\textsf{L}L
+\textsf{M}M
+\textsf{N}N
+\textsf{O}O
+\textsf{P}P
+\textsf{Q}Q
+\textsf{R}R
+\textsf{S}S
+\textsf{T}T
+\textsf{U}U
+\textsf{V}V
+\textsf{W}W
+\textsf{X}X
+
+\separator
+
+The calligraphic math font from Latin Modern has to be scaled to 92\% to match the width/height of Utopia.
+%
+\begin{equation*}
+A\mathcal{A}B\mathcal{B}C\mathcal{C}D\mathcal{D}E\mathcal{E}F\mathcal{F}G\mathcal{G}H\mathcal{H}I\mathcal{I}J\mathcal{J}K\mathcal{K}L\mathcal{L}M\mathcal{M}N\mathcal{N}O\mathcal{O}P\mathcal{P}Q\mathcal{Q}R\mathcal{R}S\mathcal{S}T\mathcal{T}U\mathcal{U}V\mathcal{V}W\mathcal{W}X\mathcal{X}Y\mathcal{Y}Z\mathcal{Z}
+\end{equation*}
+
+With \verb|\bm{...}|
+%
+\begin{equation*}
+\bm{A\mathcal{A}B\mathcal{B}C\mathcal{C}D\mathcal{D}E\mathcal{E}F\mathcal{F}G\mathcal{G}H\mathcal{H}I\mathcal{I}J\mathcal{J}K\mathcal{K}L\mathcal{L}M\mathcal{M}N\mathcal{N}O\mathcal{O}P\mathcal{P}Q\mathcal{Q}R\mathcal{R}S\mathcal{S}T\mathcal{T}U\mathcal{U}V\mathcal{V}W\mathcal{W}X\mathcal{X}Y\mathcal{Y}Z\mathcal{Z}}
+\end{equation*}
+
+With \verb|\mathscr{...}|
+\begin{equation*}
+A\mathscr{A}B\mathscr{B}C\mathscr{C}D\mathscr{D}E\mathscr{E}F\mathscr{F}G\mathscr{G}H\mathscr{H}I\mathscr{I}J\mathscr{J}K\mathscr{K}L\mathscr{L}M\mathscr{M}N\mathscr{N}O\mathscr{O}P\mathscr{P}Q\mathscr{Q}R\mathscr{R}S\mathscr{S}T\mathscr{T}U\mathscr{U}V\mathscr{V}W\mathscr{W}X\mathscr{X}Y\mathscr{Y}Z\mathscr{Z}
+\end{equation*}
+
+\separator
+
+With \verb|\textrm{...}|: \textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textsf{...}|: \textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textbf{...}|: \textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textbf{\textsf{...}}|: \textbf{\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}}
+
+With \verb|\textit{...}|: \textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\emph{...}|: \emph{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+With \verb|\textsl{...}|: \textsl{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+\separator
+
+With \verb|\mathord{...}|: $\mathord{123456789}$
+
+With \verb|\mathord{...}|: $ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz$
+
+With \verb| \mathit{...}|: $\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb| \mathrm{...}|: $\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb| \mathsf{...}|: $\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+With \verb| \mathbf{...}|: $\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+\separator
+
+Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+Misc.~Greek: $\varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+
+Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+
+Integrals: $\displaystyle \int \iint \iiint \oint \oiint \oiiint$
+
+\separator
+
+Trig.~operators: $\sin{\theta}$, $\cos{\phi}$, $\tan{\varphi}$
+
+Misc.~operators: $\log{\theta}$, $\ln{\phi}$, $\max{a}$, $\min{b}$
+
+\separator
+
+After using \verb|\mathversion{bold}|\ldots\\
+
+\mathversion{bold}
+Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+Misc.~Greek: $\varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+
+Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+\mathversion{normal}
+
+\separator
+\verb|\mathbb{...}| capitals: $\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+\verb|\mathcal{...}| capitals: $\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+\separator
+
+\subsection*{Maxwell's equations}
+
+\bgroup
+\everymath{\displaystyle}
+\begin{center}
+\begin{tabular}{cccc}
+  Gau\ss's law: & $\oiint_{\partial \Omega} \mathbf{E}\cdot d\mathbf{S} = \frac{1}{\epsilon_0}\iiint_{\Omega} \rho\,dV$ & or & $\nabla\cdot\mathbf{E} = \frac{\rho}{\epsilon_0}$\\
+  Gau\ss's law of magnetism: & $\oiint_{\partial \Omega} \mathbf{B}\cdot d\mathbf{S} = 0$ & or & $\nabla\cdot\mathbf{B} = 0$\\
+  Faraday--Maxwell law: & $\oint_{\partial \Gamma} \mathbf{E}\cdot d\mathbf{l} = -\frac{d}{dt}\iint_{\Gamma}\mathbf{B}\cdot d\mathbf{S}$ & or & $\nabla\times\mathbf{E} = -\frac{\partial\mathbf{B}}{\partial{t}}$\\
+  Amp\`{e}re--Maxwell law: & $\oint_{\partial \Gamma} \mathbf{B}\cdot d\mathbf{l} =  \mu_0\iint_{\Gamma} \mathbf{J}\cdot d\mathbf{S} + \epsilon_0\mu_0 \frac{d}{dt}\iint_{\Gamma} \mathbf{E}\cdot d\mathbf{S}$ & or & $\nabla\times\mathbf{B} = \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}$
+\end{tabular}
+\end{center}
+\egroup
+
+\end{document}
