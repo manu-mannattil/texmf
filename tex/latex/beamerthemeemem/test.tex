@@ -1,11 +1,12 @@
 % vim: ft=tex fdm=marker et sts=2 sw=2
-%! TEX program = pdfLaTeX
 
-\documentclass[noamssymb,noamsmath,aspectratio=169,10pt]{beamer}
+\documentclass[noamssymb,noamsmath,aspectratio=169,9pt]{beamer}
 
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[sans]{mathtime}
+\usepackage[widespace]{fourier}
+\usepackage[scaled=0.92]{helvet}
+%\usepackage{latinsans}
+\usepackage{bm}
 \usetheme{emem}
 
 \title{Title of Talk}
@@ -23,32 +24,78 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Canonical partition function}
-Consider $N$ identical particles in 3D.
-The canonical partition function $\mathcal{Z}$ is defined as
-\begin{equation}
-  \mathcal{Z} = \frac{1}{N! h^{3N}}\int d^{N}\mathbf{p}\, d^{N}\mathbf{q}\, e^{-\beta H(\mathbf{p},\mathbf{q})}\,.
-\end{equation}
-%
-If $H(\mathbf{p},\mathbf{q}) = \mathbf{p}^2/2m + U(\mathbf{q})$, one can integrate out the momentum contribution to the partition function and write
-\begin{equation}
-  \mathcal{Z} = \frac{1}{N! h^{3N}}\left(\frac{2\pi m}{\beta}\right)^{3N/2}\int d^{N}\mathbf{q}\, e^{-\beta U(\mathbf{q})}\,.
-\end{equation}
-%
-Thus, up to multiplicative constants that are \emph{independent} of the coordinates $\mathbf{q}$,
-\begin{equation}
-  \mathcal{Z} \sim \int d^{N}\mathbf{q}\, e^{-\beta U(\mathbf{q})}\,.
-\end{equation}
+\begin{frame}{Equations}
+  A set of \emph{very} famous equations in physics.
+  \begin{align*}
+    \nabla\cdot\mathbf{E} &= \frac{\rho}{\epsilon_0}\\
+    \nabla\cdot\mathbf{B} &= 0\\
+    \nabla\times\mathbf{E} &= -\frac{\partial\mathbf{B}}{\partial{t}}\\
+    \nabla\times\mathbf{B} &= \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}
+  \end{align*}
 \end{frame}
 
-\begin{frame}{Remark}
+\begin{frame}{Blocks}
 
-\alert{Hello world!}
+\alert{Normal alert text.} \altalert{Alt alert text.}
 
 \begin{block}{Remark}
 Sample text
 \end{block}
 
+\end{frame}
+
+\begin{frame}{Definitions \& Examples}
+  \begin{definition}
+    A \alert{prime number} is a number that has exactly two divisors.
+  \end{definition}
+  \begin{example}
+  \begin{itemize}
+    \item 2 is prime (two divisors: 1 and 2).
+    \item 3 is prime (two divisors: 1 and 3).
+    \item 4 is not prime (\alert{three} divisors: 1, 2, and 4).
+  \end{itemize}
+  \end{example}
+\end{frame}
+
+\begin{frame}{Blocks \& Columns}
+
+  We'll now look at blocks and columns!
+  \pause
+
+  \begin{block}{Block Title}
+    Block contents.
+  \end{block}
+
+  \pause
+  \begin{block}{}
+    \begin{center}
+      \textsc{Blocks Without Borders}\textsuperscript{TM}
+    \end{center}
+  \end{block}
+
+  \pause
+  \begin{columns}
+    \column{.45\textwidth}
+    \begin{block}{Small Block 1}
+      Block contents.
+    \end{block}
+
+    \column{.45\textwidth}
+    \begin{block}{Small Block 1}
+      Block contents.
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Bullet Points}
+
+\begin{itemize}
+  \item First bullet point.
+    \pause
+  \item Second bullet point.
+    \pause
+  \item Third bullet point.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[noframenumbering,plain]{Backup slide}

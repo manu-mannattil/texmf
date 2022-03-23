@@ -14,6 +14,14 @@
 
 \setbeamercolor{frametitle}{bg=gray!10!white}
 
+% Blocks.
+\setbeamercolor{block body alerted}{bg=alerted text.fg!10}
+\setbeamercolor{block title alerted}{bg=alerted text.fg!20}
+\setbeamercolor{block body}{bg=structure!10}
+\setbeamercolor{block title}{bg=structure!20}
+\setbeamercolor{block body example}{bg=green!10}
+\setbeamercolor{block title example}{bg=green!20}
+
 % Use dashes instead of triangles for itemize items.
 \setbeamertemplate{itemize items}{{\bf--}}
 
@@ -49,5 +57,12 @@
 % Alternate alert command.  With the default Beamer colors, this
 % produces a blue alerted text.
 \def\altalert#1{{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
+
+% Command to typeset emails.
+\def\email#1{\href{mailto:#1}{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
+
+% Postit environment for a colored box without a title.
+\setbeamercolor{postit}{fg=black,bg=structure!10}
+\newenvironment{postit}[1][\textwidth]{\begin{beamercolorbox}[sep=0.75em,wd=#1]{postit}}{\par\end{beamercolorbox}}
 
 % vim: ft=tex et sts=2 sw=2 nospell cole=0
