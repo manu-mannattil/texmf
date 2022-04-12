@@ -1,13 +1,12 @@
 % vim: ft=tex fdm=marker et sts=2 sw=2
 %! TEX program = pdfLaTeX
 
-\documentclass[11pt]{article}
+\documentclass[10pt,oneside,article]{memoir}
 
-\usepackage{lmodern,geometry,tikz,lipsum}
-
+\usepackage{tikz,lipsum}
 % \usepackage[draft]{emem}
 \usepackage{emem}
-\usepackage{mathtime}
+\usepackage{fourierx}
 
 \title{Title of the Article\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
 \author{%
@@ -29,13 +28,19 @@
 \lipsum[1]
 
 \subsection{Subsection Title}
-\lipsum[1]
+\lipsum[2]
 
 \subsubsection{Subsubsection Title}
-\lipsum[1]
+\lipsum[3]
 
 \paragraph{Paragraph}
-\lipsum[1]
+\lipsum[4]
+
+
+\makeatletter
+  \def\Inter@scale{0.8}
+\makeatother
+{\fontseries{semibold}\fontfamily{Inter-LF}\selectfont Hello world}
 
 \section{Figures and figure captions}
 
@@ -47,7 +52,7 @@ Captions of figures look a bit different\ldots
       \draw[orange, ultra thick] (4,0) -- (5,3) -- (6,0) -- cycle;
     \end{tikzpicture}
   \end{center}
-  \caption{The caption of the figure is set in sans font in ``small'' font size.}
+  \caption{The caption of the figure is set in sans font (if the \texttt{sanscaptions} option is given) in ``small'' font size.  Mathematics is typed like this: $E^2=p^2c^2 + m^2c^4$.}
 \end{figure}
 
 \section{Mathematics}

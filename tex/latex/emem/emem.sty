@@ -5,7 +5,8 @@
 % DESCRIPTION
 %
 %   emem.sty is an opinionated LaTeX style file meant to be used with
-%   the standard article.cls LaTeX class.
+%   the memoir LaTeX class.  This style file monkey patches some
+%   commands to typeset things the way I want.
 %
 % USAGE
 %
@@ -44,10 +45,14 @@
 \def\Bra#1{\left\langle#1\right|}
 \def\Ket#1{\left|#1\right\rangle}
 
+% Upright derivates and partials.
+\def\dd{\ensuremath\mathrm{d}}
+\def\Dd{\ensuremath\mathrm{D}}
+\def\pd{\ensuremath\partial}
+
 % Linear algebra
 \def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
-\def\mat#1{\ensuremath{\mathsf{#1}}}                % matrix
-\def\tr{\ensuremath{^\intercal}}                    % trace
+\def\trans{\ensuremath{^\mathsf{T}}}                % transpose
 
 % New operators.
 \DeclareMathOperator{\coker}{coker}   % cokernel of a matrix
@@ -59,10 +64,19 @@
 \DeclareMathOperator{\trace}{tr}      % trace of a matrix
 \DeclareMathOperator{\Trace}{Tr}      % trace of a matrix (alternate)
 
+\def\id{\mathrm{id}}                  % identity map
+
 % Absolute value sign.  Simply using |...| results in poor spacing, e.g., see
 % the output of $|-1|$ vs $|{-1}|$.  It's the second kind of spacing that we
 % want.  Source: https://tex.stackexchange.com/q/43008
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\Abs}{\|}{\|} % || ... || version
+
+%%% Miscellaneous -------------------------------------------------------------
+
+\def\etal{\emph{et al.}}
+
+\def\blankpage{\newpage\phantom{}\thispagestyle{empty}}
 
 %%% Environments --------------------------------------------------------------
 
@@ -76,63 +90,129 @@
 }
 \def\quotee#1{\par\flushright\unskip\normalfont{#1}}
 
-% NOTE: Lines following this apply to the article.cls LaTeX class.  Thus,
-% terminate processing at this point if `cmd' option is given.
+% Environment to vertically/horizontally center text.
+\newenvironment{center*}
+  {\hspace{0pt}\vfill\begin{center}}
+  {\end{center}\vfill\hspace{0pt}}
+
+%%% Git info ------------------------------------------------------------------
+
+% An NIH-hack to avoid using the gitinfo2 package.  To generate the
+% gitInfo.in file, within the root directory of the repository, run
+%
+%   git --no-pager log -1 --date=short --decorate=short --pretty=format:'
+%     \def\gitHash{%H}
+%     \def\gitShortHash{%h}
+%     \def\gitRefName{%D}
+%     \def\gitAuthorName{%an}
+%     \def\gitAuthorEmail{%ae}
+%     \def\gitAuthorDate{%ai}
+%     \def\gitAuthorAltDate{%aD}
+%     \def\gitCommitterName{%cn}
+%     \def\gitCommitterEmail{%ce}
+%     \def\gitCommitterDate{%ci}
+%     \def\gitCommitterAltDate{%cD}
+%   ' HEAD >.git/gitInfo.in
+%
+\ifdefined\gitInfo\else\def\gitInfo{.git/gitInfo.in}\fi
+\IfFileExists{\gitInfo}{\input{\gitInfo}}{
+  \def\gitError{$\heartsuit\heartsuit\heartsuit$}
+  \def\gitHash{\gitError}
+  \def\gitShortHash{\gitError}
+  \def\gitRefName{\gitError}
+  \def\gitAuthorName{\gitError}
+  \def\gitAuthorEmail{\gitError}
+  \def\gitAuthorDate{\gitError}
+  \def\gitAuthorAltDate{\gitError}
+  \def\gitCommitterName{\gitError}
+  \def\gitCommitterEmail{\gitError}
+  \def\gitCommitterDate{\gitError}
+  \def\gitCommitterAltDate{\gitError}
+}
+
+% NOTE: Lines following this apply to the article and book LaTeX classes.
+% Thus, terminate processing at this point if the `cmd' option is given.
 \if@cmd\endinput\fi
 
 %%% Package loading -----------------------------------------------------------
 
 % Only packages included in a standard TeXLive distribution ought to be
 % loaded by default.
-\RequirePackage{amsthm,color,graphicx}
+\RequirePackage{color}
+
+\definecolor{gray}{rgb} {0.5,0.5,0.5}
+\definecolor{grey}{rgb} {0.5,0.5,0.5}
+\definecolor{steel}{rgb}{0.2,0.4,0.6}
+
+% Highlights
+\definecolor{hlcolor}{rgb}{0.7,0.1,0.0}
+\def\hl#1{{\color{hlcolor}#1}}
+\newenvironment{hlblock}{\color{hlcolor}}{}
 
 % Load heavyweights and cosmetic packages by default, but also give an option
 % to disable them.
 \if@fancy
-  % Use the same color (slightly darker blue) for all links.
-  \definecolor{myblue}{rgb}{0.00,0.00,0.75}
+  % % Use the same color for all links.
   \RequirePackage[
-    allcolors=myblue,
+    allcolors=steel,
     breaklinks,
     colorlinks,
     unicode,
   ]{hyperref}
   \urlstyle{same}
   \RequirePackage{microtype}
+  \RequirePackage{graphicx}
 \else
-  % Load 'draft' hyperref so that hyperref commands are gracefully ignored.
   \RequirePackage[draft]{hyperref}
+  \RequirePackage[draft]{graphicx}
+  \RequirePackage[draft]{microtype}
 \fi
-
-% cleveref has to be loaded afer hyperref.
-\RequirePackage[capitalize]{cleveref}
 
 %%% Custom package-depended commands ------------------------------------------
 
-% Command to typeset emails that obeys \urlstyle.
+% % Commands to typeset emails/DOI links that obeys \urlstyle.
 \def\email#1{\href{mailto:#1}{\nolinkurl{#1}}}
+\def\doi#1#2{\href{https://dx.doi.org/#1}{\nolinkurl{#2}}}
 
 % Define \alturl to get a \url-like command that can accept an
 % alternative text.  This is not equivalent to \href since the text gets
 % hyphenated (and treated like ordinary text) with \href.
 \def\alturl#1#2{\href{#1}{\nolinkurl{#2}}}
 
-%%% AMS packages --------------------------------------------------------------
+% AMS packages ----------------------------------------------------------------
 
-\numberwithin{equation}{section} % per-section eq numbers
-\allowdisplaybreaks              % break display eqs
+\RequirePackage{amsthm}
 
+% Break display eqs
+\allowdisplaybreaks
+
+% Theorem style with period after the theorem head removed and bold theorem
+% spec: https://tex.stackexchange.com/a/185168.
+\newtheoremstyle{ememstyle}%                      % name
+  {}%                                             % space above
+  {}%                                             % space below
+  {\itshape}%                                     % body font
+  {}%                                             % indent amount
+  {\bfseries}%                                    % theorem head font
+  {.}%                                            % punctuation after theorem head
+  {1.2em}%                                        % space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%   % theorem head spec (can be left empty, meaning `normal')
+
+\theoremstyle{ememstyle}
 \newtheorem{claim}{Claim}
 \newtheorem{prop}{Proposition}
 \newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
 
 % Problem + solution as theorem/proof style environments.
 \theoremstyle{definition}
 \newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
 \newenvironment{solution}{\proof[Solution]}{\endproof}
 
 %%% Whitespace management -----------------------------------------------------
 
+% From Section 3.5 of memoir's documentation.
 \clubpenalty=9996
 \widowpenalty=9999
 \brokenpenalty=4991
@@ -140,71 +220,45 @@
 \postdisplaypenalty=1549
 \displaywidowpenalty=1602
 
-%%% Redefine \maketitle -------------------------------------------------------
+%%% Memoir customization -----------------------------------------------
 
-% Embolden article title and reduce header.  Adapted from article.cls.
-\def\@maketitle{%
-  \newpage\null%
-  \begin{center}%
-    {\large\bfseries\@title\par}%
-    \vskip 1.5em%
-    {\lineskip .5em\begin{tabular}[t]{c}\@author\end{tabular}\par}%
-    \vskip 1em%
-    \@date%
-  \end{center}%
-  \par%
-  \vskip 1.5em%
-}
+\def\cap@family{\sffamily}
+\def\cap@altfamily{\bfseries\sffamily}
 
-%%% Section titles ------------------------------------------------------------
+% Use smaller sans-serif fonts in chapter headings.
+\def\chapnumfont{\large\cap@family}
+\def\chapnamefont{\large\cap@family}
+\def\chaptitlefont{\Large\cap@altfamily}
+\setlength{\beforechapskip}{4em}
+\setlength{\midchapskip}{0.25em}
+\setlength{\afterchapskip}{3em}
 
-% Smaller fonts in section titles.  Adapted from JHEP's style file.
-\def\section{\@startsection{section}{1}{\z@}%
-                {-3.5ex \@plus -1.3ex \@minus -.7ex}%
-                {2.3ex \@plus.4ex \@minus .4ex}%
-                {\large\bfseries}}
-\def\subsection{\@startsection{subsection}{2}{\z@}%
-                {-2.3ex\@plus -1ex \@minus -.5ex}%
-                {1.2ex \@plus .3ex \@minus .3ex}%
-                {\normalsize\bfseries}}
-\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-                {-2.3ex\@plus -1ex \@minus -.5ex}%
-                {1ex \@plus .2ex \@minus .2ex}%
-                {\itshape\normalsize}}
-\def\paragraph{\@startsection{paragraph}{4}{\z@}%
-                {1.75ex \@plus1ex \@minus.2ex}%
-                {-1em}%
-                {\normalfont\normalsize\bfseries}}
-\def\subparagraph{\@startsection{subparagraph}{5}{\z@}%
-                {1.75ex \@plus1ex \@minus .2ex}%
-                {-1em}%
-                {\normalfont\normalsize\itshape}}
+% sans-serif fonts for section titles.
+\setsecheadstyle{\large\cap@altfamily}
+\setsubsecheadstyle{\cap@altfamily}
+\setsubsubsecheadstyle{\itshape\cap@family}
 
-%%% Fonts ---------------------------------------------------------------------
+% Table of Contents.
+\def\cftchapterfont{\cap@altfamily}          % bold sans-serif for chapters
+\def\cftchapterpagefont{\cftchapterfont}    % also for page numbers
+\def\cftdotsep{1234}                        % no dotted lines
 
-% Use bold non-extended instead of the default bold extended.  For most fonts,
-% it shouldn't make a difference, but for Computer Modern and its variants, it
-% does.
-\def\bfdefault{b}
-\DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
-\DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
-\DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
+% Make captions in tables, figures, etc., to use a period after the caption
+% identifier (e.g., Figure, Table, etc.) instead of a colon.  Also use sans
+% font for the identifier.
+\captionnamefont{\bfseries\sffamily}
+\captiondelim{.\enspace}
 
-%%% Figure captions -----------------------------------------------------------
+% Number everything from sections to subsections.
+\setsecnumdepth{subsection}
 
-% Redefine captions in tables, figures, etc., to use sans-serif font and
-% a period after caption identifier (e.g., Figure, Table, etc.) instead of
-% a colon.  Adapted from article.cls.
-\long\def\@makecaption#1#2{%
-  \vskip\abovecaptionskip\sffamily\small
-  \sbox\@tempboxa{\textbf{#1.}~#2}%
-  \ifdim \wd\@tempboxa >\hsize
-    \textbf{#1.}~#2\par
-  \else
-    \global \@minipagefalse
-    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-  \vskip\belowcaptionskip}
+% Article-specific tweaks.
+\@ifclasswith{memoir}{article}{
+  % Omit chapter numbers from section titles.
+  \counterwithout{section}{chapter}
+  % Number subsubsections as well.
+  \setsecnumdepth{subsubsection}
+}{}
 
 \endinput
 
