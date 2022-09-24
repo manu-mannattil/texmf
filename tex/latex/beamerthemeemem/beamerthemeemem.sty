@@ -4,26 +4,41 @@
 %
 % USAGE
 %
-%   Load like any other Beamer theme using \usetheme{emem}
+%   Load like any other Beamer theme using \usetheme{emem}.  You will
+%   also need some color/command definitions from the emem package for
+%   this to work.
 %
+
+\mode<presentation>
 
 \RequirePackage{mathtools}
 \mathtoolsset{showonlyrefs}
+\RequirePackage[cmd]{emem}
 
 %%% Style ---------------------------------------------------------------------
 
-\setbeamercolor{frametitle}{bg=gray!10!white}
+\setbeamercolor{structure}{fg=bs2}
+
+\setbeamercolor{alerted text}{fg=nord11}
+\setbeamercolor{alt alerted text}{fg=C4}
+
+\setbeamercolor{frametitle}{bg=nord6}
+
+\setbeamercolor{example text}{fg=nord3}
+\setbeamercolor{block body example}{bg=nord7!20}
+\setbeamercolor{block title example}{bg=nord7!40,fg=nord3}
+\setbeamerfont{block body example}{size=\small}
+\setbeamerfont{block title example}{size=\small}
 
 % Blocks.
-\setbeamercolor{block body alerted}{bg=alerted text.fg!10}
-\setbeamercolor{block title alerted}{bg=alerted text.fg!20}
-\setbeamercolor{block body}{bg=structure!10}
-\setbeamercolor{block title}{bg=structure!20}
-\setbeamercolor{block body example}{bg=green!10}
-\setbeamercolor{block title example}{bg=green!20}
+\setbeamercolor{block body}{bg=nord9!20}
+\setbeamercolor{block title}{bg=nord9!40,fg=nord3}
 
 % Use dashes instead of triangles for itemize items.
 \setbeamertemplate{itemize items}{{\bf--}}
+
+% TOC sections will be "bulleted" with circles.
+\setbeamertemplate{sections/subsections in toc}[circle]
 
 %%% Title page ----------------------------------------------------------------
 
@@ -36,7 +51,7 @@
 
 % Show <current page>/<total pages> at the lower-right corner of the page.
 % Adapted from beamerouterthemeinfolines.sty.
-\setbeamercolor{page number in head/foot}{fg=gray}
+\setbeamercolor{page number in head/foot}{fg=grey3}
 \setbeamerfont{page number in head/foot}{size=\footnotesize}
 \setbeamertemplate{page number in head/foot}[totalframenumber]%
 \defbeamertemplate{footline}{pagecount}
@@ -54,17 +69,17 @@
 
 %%% Custom commands -----------------------------------------------------------
 
-% Alternate alert command.  With the default Beamer colors, this
-% produces a blue alerted text.
-\def\altalert#1{{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
+% Alternate alert command.
+\def\altalert#1{{\usebeamercolor[fg]{alt alerted text}\usebeamerfont{alerted text}#1}}
 
 % Command to typeset emails.
 \def\email#1{\href{mailto:#1}{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
 
 % Postit environment for a colored box without a title.
-\setbeamercolor{postit}{fg=black,bg=structure!10}
+\setbeamercolor{postit}{fg=nord2,bg=nord13!35}
 \newenvironment{postit}[1][\textwidth]{\begin{beamercolorbox}[sep=0.75em,wd=#1]{postit}}{\par\end{beamercolorbox}}
 
-\endinput
+\mode
+<all>
 
 % vim: ft=tex et sts=2 sw=2 nospell cole=0
