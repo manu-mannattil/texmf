@@ -20,7 +20,8 @@
 \setbeamercolor{structure}{fg=bs2}
 
 \setbeamercolor{alerted text}{fg=nord11}
-\setbeamercolor{alt alerted text}{fg=C4}
+\setbeamercolor{alt alerted text}{fg=C0}
+\setbeamercolor{faded}{fg=nord10}
 
 \setbeamercolor{frametitle}{bg=nord6}
 
@@ -29,6 +30,8 @@
 \setbeamercolor{block title example}{bg=nord7!40,fg=nord3}
 \setbeamerfont{block body example}{size=\small}
 \setbeamerfont{block title example}{size=\small}
+
+\setbeamerfont{block title}{size=\normalsize}
 
 % Blocks.
 \setbeamercolor{block body}{bg=nord9!20}
@@ -40,10 +43,21 @@
 % TOC sections will be "bulleted" with circles.
 \setbeamertemplate{sections/subsections in toc}[circle]
 
-%%% Title page ----------------------------------------------------------------
+%%% Title, sectioning, etc. ---------------------------------------------------
 
 \setbeamerfont{institute}{size=\small}
 \setbeamerfont{date}{size=\small}
+
+% If we're using sections to organize our documents, add an outline
+% slide right after the section begins.
+\def\toctitle{Outline}
+\AtBeginSection[]
+{
+  \begin{frame}[noframenumbering,plain]
+    \frametitle{\toctitle}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 
 %%% Footer --------------------------------------------------------------------
 
@@ -72,11 +86,14 @@
 % Alternate alert command.
 \def\altalert#1{{\usebeamercolor[fg]{alt alerted text}\usebeamerfont{alerted text}#1}}
 
+% Faded text (for footnotes).
+\def\faded#1{{\usebeamercolor[fg]{faded}\usebeamerfont{alerted text}#1}}
+
 % Command to typeset emails.
 \def\email#1{\href{mailto:#1}{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
 
 % Postit environment for a colored box without a title.
-\setbeamercolor{postit}{fg=nord2,bg=nord13!35}
+\setbeamercolor{postit}{fg=black,bg=nord13!35}
 \newenvironment{postit}[1][\textwidth]{\begin{beamercolorbox}[sep=0.75em,wd=#1]{postit}}{\par\end{beamercolorbox}}
 
 \mode

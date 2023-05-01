@@ -13,6 +13,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fourierx}[2022/03/22 v0.1]
 
+% Ask beamer to leave fonts untouched.
+\@ifclassloaded{beamer}{\beamer@suppressreplacementstrue}
+
 \RequirePackage{amssymb}
 \RequirePackage[widespace]{fourier}
 

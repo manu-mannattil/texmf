@@ -43,14 +43,14 @@
 \RequirePackage{mathtools}
 
 % Dirac bra-ket notation (from braket.sty).
-\def\bra#1{\mathinner{\langle{#1}\rvert}}
-\def\ket#1{\mathinner{\lvert{#1}\rangle}}
-\def\Bra#1{\left\langle#1\right|}
-\def\Ket#1{\left|#1\right\rangle}
+\def\bra#1{\ensuremath\mathinner{\langle{#1}\rvert}}
+\def\ket#1{\ensuremath\mathinner{\lvert{#1}\rangle}}
+\def\Bra#1{\ensuremath\left\langle#1\right|}
+\def\Ket#1{\ensuremath\left|#1\right\rangle}
 
 % Usage: \braket{x|y} and \Braket{X\middle|Y}.
-\def\braket#1{\mathinner{\langle{#1}\rangle}}
-\def\Braket#1{\left\langle#1\right\rangle}
+\def\braket#1{\ensuremath\mathinner{\langle{#1}\rangle}}
+\def\Braket#1{\ensuremath\left\langle#1\right\rangle}
 
 % Upright derivates and partials.
 \def\dd{\ensuremath\mathrm{d}}
@@ -70,7 +70,13 @@
 \DeclareMathOperator{\trace}{tr}                    % trace of a matrix
 \DeclareMathOperator{\Trace}{Tr}                    % trace of a matrix (alternate)
 
-\def\id{\mathrm{id}}                                % identity map
+\def\id{\ensuremath\mathrm{id}}                     % identity map
+
+\DeclareMathOperator{\sech}{sech}                   % hyperbolic sec
+\DeclareMathOperator{\csch}{csch}                   % hyperbolic csc
+
+\DeclareMathOperator*{\argmax}{argmax}              % argmax (without space and underneath limits)
+\DeclareMathOperator*{\argmin}{argmin}              % argmin (without space and underneath limits)
 
 % Absolute value sign.  Simply using |...| results in poor spacing, e.g., see
 % the output of $|-1|$ vs $|{-1}|$.  It's the second kind of spacing that we
@@ -83,6 +89,10 @@
 \def\etal{\emph{et al.}}
 
 \def\blankpage{\newpage\phantom{}\thispagestyle{empty}}
+
+\newenvironment{flushright*}
+  {\null\hfill\begin{tabular}{l@{}}}
+  {\end{tabular}}
 
 %%% Environments --------------------------------------------------------------
 
@@ -217,6 +227,7 @@
     breaklinks,
     colorlinks,
     unicode,
+    linktocpage=true
   ]{hyperref}
   \urlstyle{same}
   \RequirePackage{microtype}
@@ -347,7 +358,16 @@
 % Table of Contents.
 \def\cftchapterfont{\cap@altfamily}         % bold sans-serif for chapters
 \def\cftchapterpagefont{\cftchapterfont}    % also for page numbers
-\def\cftdotsep{1234}                        % no dotted lines
+
+% Remove dots in TOC and bring page numbers closer to
+% chapter/section titles.  Another alternative is
+% just \def\cftdotsep{1234}, which would keep the space, but
+% remove all the dots.
+\def\cftdotsep{1234}
+\def\cftchapterleader{\quad}
+\def\cftsectionleader{\quad}
+\def\cftchapterafterpnum{\cftparfillskip}
+\def\cftsectionafterpnum{\cftparfillskip}
 
 % Make captions in tables, figures, etc., to use a period after the caption
 % identifier (e.g., Figure, Table, etc.) instead of a colon.  Also use sans
