@@ -64,11 +64,12 @@
 \DeclareMathOperator{\coker}{coker}                 % cokernel of a matrix
 \DeclareMathOperator{\corank}{corank}               % corank of a matrix
 \DeclareMathOperator{\erf}{erf}                     % Gauss error function
+\DeclareMathOperator{\diag}{diag}                   % diagonal matrix
 \DeclareMathOperator{\im}{im}                       % image of a map
 \DeclareMathOperator{\rank}{rank}                   % rank of a matrix
 \DeclareMathOperator{\Residue}{Res}                 % residue
-\DeclareMathOperator{\trace}{tr}                    % trace of a matrix
-\DeclareMathOperator{\Trace}{Tr}                    % trace of a matrix (alternate)
+\DeclareMathOperator{\tr}{tr}                       % trace of a matrix
+\DeclareMathOperator{\Tr}{Tr}                       % trace of a matrix (alternate)
 
 \def\id{\ensuremath\mathrm{id}}                     % identity map
 
@@ -230,7 +231,15 @@
     linktocpage=true
   ]{hyperref}
   \urlstyle{same}
-  \RequirePackage{microtype}
+  \RequirePackage[
+    kerning=true,
+    spacing=true,
+    tracking=true,
+    factor=1100,
+    stretch=10,
+    shrink=10,
+  ]{microtype}
+  \microtypecontext{spacing=nonfrench}
   \RequirePackage{graphicx}
 \else
   \RequirePackage[draft]{hyperref}
@@ -329,34 +338,51 @@
 
 %%% Whitespace management -----------------------------------------------------
 
-% From Section 3.5 of memoir's documentation.
-\clubpenalty=9996
-\widowpenalty=9999
-\brokenpenalty=4991
-\predisplaypenalty=10000
-\postdisplaypenalty=1549
-\displaywidowpenalty=1602
+\if@fancy
+  % From Section 3.5 of memoir's documentation.
+  \clubpenalty=9996
+  \widowpenalty=9999
+  \brokenpenalty=4991
+  \predisplaypenalty=10000
+  \postdisplaypenalty=1549
+  \displaywidowpenalty=1602
+\fi
 
 %%% Memoir customization -----------------------------------------------
 
-\def\cap@family{\sffamily}
-\def\cap@altfamily{\bfseries\sffamily}
+\providecommand{\altsf@family}{\sffamily}
+\providecommand{\altsf@family@medium}{\sffamily}
+\providecommand{\altsf@family@bold}{\bfseries\sffamily}
 
 % Use smaller sans-serif fonts in chapter headings.
-\def\chapnumfont{\large\cap@family}
-\def\chapnamefont{\large\cap@family}
-\def\chaptitlefont{\Large\cap@altfamily}
+\def\chapnumfont{\large\altsf@family}
+\def\chapnamefont{\large\altsf@family}
+\def\chaptitlefont{\Large\altsf@family@bold}
 \setlength{\beforechapskip}{4em}
 \setlength{\midchapskip}{0.25em}
 \setlength{\afterchapskip}{3em}
 
 % sans-serif fonts for section titles.
-\setsecheadstyle{\large\cap@altfamily}
-\setsubsecheadstyle{\cap@altfamily}
-\setsubsubsecheadstyle{\itshape\cap@family}
+\setsecheadstyle{\large\altsf@family@bold}
+\setsubsecheadstyle{\altsf@family@bold}
+% Use a slightly smaller medium italic sans type; 10pt
+% italic sans looks somewhat bigger to me.
+\setsubsubsecheadstyle{\fontsize{9.75}{10}\selectfont\itshape\altsf@family@medium}
+
+% AFAIK memoir doesn't provide a direct command to customize paragraphs,
+% so we steal REVTeX's definition.
+\def\paragraph{%
+  \@startsection
+  {paragraph}%
+  {4}%
+  {\parindent}%
+  {\z@}%
+  {-1em}%
+  {\normalfont\normalsize\itshape}%
+}
 
 % Table of Contents.
-\def\cftchapterfont{\cap@altfamily}         % bold sans-serif for chapters
+\def\cftchapterfont{\altsf@family@bold}     % bold sans-serif for chapters
 \def\cftchapterpagefont{\cftchapterfont}    % also for page numbers
 
 % Remove dots in TOC and bring page numbers closer to
@@ -365,14 +391,16 @@
 % remove all the dots.
 \def\cftdotsep{1234}
 \def\cftchapterleader{\quad}
-\def\cftsectionleader{\quad}
+\def\cftsectionleader{\enspace}
+\def\cftsubsectionleader{\enspace}
 \def\cftchapterafterpnum{\cftparfillskip}
 \def\cftsectionafterpnum{\cftparfillskip}
+\def\cftsubsectionafterpnum{\cftparfillskip}
 
 % Make captions in tables, figures, etc., to use a period after the caption
 % identifier (e.g., Figure, Table, etc.) instead of a colon.  Also use sans
 % font for the identifier.
-\captionnamefont{\cap@altfamily\small}
+\captionnamefont{\altsf@family@bold\small}
 \captiondelim{.\enspace}
 
 % Title
@@ -392,4 +420,4 @@
 
 \endinput
 
-% vim: ft=tex et sts=2 sw=2 nospell cole=0
+% vim: ft=tex fdm=manual et sts=2 sw=2 nospell cole=0

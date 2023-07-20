@@ -53,11 +53,12 @@
 
 \RequirePackage{bm}
 
-% If we're using emem.sty, define fonts for captions.
+% If we're using emem.sty, define fonts for captions and headers.
 \@ifpackageloaded{emem}{%
   \def\Inter@scale{0.88}
-  \def\cap@family{\fontfamily{Inter-LF}\selectfont}
-  \def\cap@altfamily{\fontseries{semibold}\fontfamily{Inter-LF}\selectfont}
+  \def\altsf@family{\fontfamily{Inter-LF}\selectfont}
+  \def\altsf@family@bold{\fontseries{semibold}\fontfamily{Inter-LF}\selectfont}
+  \def\altsf@family@medium{\fontseries{medium}\fontfamily{Inter-LF}\selectfont}
 }
 
 \endinput
