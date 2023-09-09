@@ -1,0 +1,61 @@
+% NAME
+%
+%   ugly.sty - make LaTeX documents look ugly
+%
+% DESCRIPTION
+%
+%   Makes a LaTeX document as ugly as possible.  Why?  Because sometimes
+%   it's easy to get carried away with making the document look good.
+%
+%       I can't go to a restaurant and order
+%       food because I keep looking at the
+%       fonts on the menu.
+%
+%             -- Donald E. Knuth
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ugly}[2023/09/04 v0.1]
+
+% Font requirements: must not be spindly like Computer Modern Roman
+% and must look reasonably ugly (while being legible).
+\RequirePackage[osf,scale=1.05]{notomath}
+\RequirePackage[scaled]{DejaVuSans}
+\def\familydefault{\sfdefault}
+
+\widowpenalty10000
+\clubpenalty10000
+\interdisplaylinepenalty=10000
+
+\sloppy
+\raggedbottom
+\raggedright
+
+\setlength{\parskip}{0.75\baselineskip}
+\parindent=1.5em
+
+\@ifpackageloaded{hyperref}{%
+  \hypersetup{colorlinks=false}%
+  \urlstyle{same}%
+}
+
+% Increase interword spacing.
+\spaceskip=1.75\fontdimen2\font plus 1.75\fontdimen3\font minus 1.75\fontdimen4\font
+
+\def\baselinestretch{1.05}
+
+\let\oldemph\emph
+\def\emph#1{\underline{\oldemph{#1}}}
+
+\def\TeX{TeX}
+\def\LaTeX{LaTeX}
+\def\hat#1{\ensuremath\widehat{#1}}
+\def\tilde#1{\ensuremath\widetilde{#1}}
+
+\RequirePackage{color}
+\definecolor{DeepCharcoal}{rgb}{0.2,0.2,0.2}
+\color{DeepCharcoal}
+
+\endinput
+
+% vim: ft=tex fdm=manual et sts=2 sw=2 nospell cole=0
