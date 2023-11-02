@@ -1,23 +1,18 @@
 % vim: ft=tex fdm=marker et sts=2 sw=2
 %! TEX program = pdfLaTeX
 
-\documentclass[10pt,oneside,article]{memoir}
+\documentclass{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-
-\usepackage{tikz,lipsum}
-% \usepackage[draft]{emem}
 \usepackage{emem}
-\usepackage{fourierx}
+\usepackage{lipsum}
 
-\title{Title of the Article\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
-\author{%
-  A.~Author\thanks{Adress of A.~Author; \email{a.author@mail.zz}} \and%
-  B.~Author\thanks{Adress of B.~Author} \and%
-  C.~Author\thanks{Adress of C.~Author}%
-}
+\title[Custom Head Title Appears Here]{Example {\LaTeX} Document\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
+%\title{Example {\LaTeX} Document\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
+\author{A.~Lastname\thanks{University Name, Address, State 123456, Country; \email{a.lastname@mail.zz}}}
 \date{1 January 1970}
+\pagestyle{headings}
 
 \begin{document}
 
@@ -27,36 +22,63 @@
   \lipsum[1]
 \end{abstract}
 
-\section{Section Title}
+\tableofcontents
+
+\section{Example section title}
 \lipsum[1]
 
-\subsection{Subsection Title}
+\subsection{Example subsection title}
 \lipsum[2]
 
-\subsubsection{Subsubsection Title}
+\subsubsection{Example subsubsection title}
 \lipsum[3]
 
-\paragraph{Paragraph}
-\lipsum[4]
+\paragraph{Paragraph ending with a period}
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+
+\paragraph{Paragraph ending with a question mark?}
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+
+\paragraph{Paragraph ending with an exclamation mark!}
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
+Paragraph text.
 
 
-\makeatletter
-  \def\Inter@scale{0.8}
-\makeatother
-{\fontseries{semibold}\fontfamily{Inter-LF}\selectfont Hello world}
+
+\lipsum[5-8]
 
 \section{Figures and figure captions}
 
 Captions of figures look a bit different\ldots
-\begin{figure}[h]
+\begin{figure}
   \begin{center}
-    \begin{tikzpicture}
-      \draw[gray, ultra thick] (0,0) rectangle (3,3);
-      \draw[orange, ultra thick] (4,0) -- (5,3) -- (6,0) -- cycle;
-    \end{tikzpicture}
+    \includegraphics[scale=0.5]{example-image-a}
   \end{center}
   \caption{The caption of the figure is set in sans font (if the \texttt{sanscaptions} option is given) in ``small'' font size.  Mathematics is typed like this: $E^2=p^2c^2 + m^2c^4$.}
 \end{figure}
+
+\begin{SCfigure}
+  \includegraphics[scale=0.5]{example-image-b}
+  \caption{Side captions for figures.
+Side captions for figures.
+Side captions for figures.
+Side captions for figures.
+Side captions for figures.}
+\end{SCfigure}
 
 \section{Mathematics}
 
@@ -64,7 +86,7 @@ Captions of figures look a bit different\ldots
 
 Examples of new math operators:
 \begin{equation}
-  \trace{A}\quad \Trace{A}\quad \erf{x}\quad \Residue{f}\quad \corank{A}\quad \rank{B}
+  \tr{A}\quad \Tr{A}\quad \erf{x}\quad \Residue{f}\quad \corank{A}\quad \rank{B}
 \end{equation}
 
 \subsection{Bold letters}
@@ -73,5 +95,103 @@ Check when Computer Modern, or its variant, is used. \textbf{This is TEXT bold}.
 \begin{equation}
   \mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\quad \mathbf{abcdefghijklmnopqrstuvwxyz}
 \end{equation}
+
+\section{Quotations}
+
+\thetitle
+
+\theheadtitle
+
+To typeset quotations, use the \verb|rightquote| environment and the \verb|quotee| command.
+The environment styling was partially inspired by Knuth's \emph{The Art of Computer Programming}.
+For instance, the listing below
+
+\begin{verbatim}
+  \begin{rightquote}
+  The formulation is mathematically
+  equivalent to the more usual
+  formulations.  There are, therefore, no
+  fundamentally new results.  However,
+  there is a pleasure in recognizing old
+  things from a new point of view.
+
+  \quotee{--- Richard P.~Feynman,
+  Rev.~Mod.~Phys.~\textbf{20}, 367 (1948)}
+  \end{rightquote}
+\end{verbatim}
+
+\noindent would render as\ldots
+
+\begin{rightquote}
+The formulation is mathematically
+equivalent to the more usual
+formulations.  There are, therefore, no
+fundamentally new results.  However,
+there is a pleasure in recognizing old
+things from a new point of view.
+
+\quotee{--- Richard P.~Feynman,
+Rev.~Mod.~Phys.~\textbf{20}, 367 (1948)}\par
+\end{rightquote}
+
+A quote with equations...
+
+\begin{rightquote}
+  A famous equation in physics is $E^{2} = p^{2}{c}^{2} + m^{2}c^{4}$.
+
+  \quotee{--- Doesn't switch between math and LaTeX}, 367 (1948)\par
+\end{rightquote}
+
+
+But sometimes, it's important to manually introduce linebreaks, e.g., to typeset poetry, as in the example below.
+
+\begin{rightquote}
+They fuck you up, your mum and dad.\\
+  They may not mean to, but they do.\\
+They fill you with the faults they had\\
+  And add some extra, just for you.
+
+But they were fucked up in their turn\\
+  By fools in old-style hats and coats,\\
+Who half the time were soppy-stern\\
+  And half at one another's throats.
+
+Man hands on misery to man.\\
+  It deepens like a coastal shelf.\\
+Get out as early as you can,\\
+  And don't have any kids yourself.
+
+  \quotee{--- Philip Larkin, \emph{``This Be The Verse''}}
+\end{rightquote}\par
+
+A \verb|rightquote| environment ends a paragraph.
+But there's extra vertical space after the quote and a new paragraph.
+
+\begin{SCfigure}
+  \includegraphics[scale=0.5]{example-image-c}
+  \caption{Side captions for figures.
+Side captions for figures.
+Side captions for figures.
+Side captions for figures.
+Side captions for figures.}
+\end{SCfigure}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|}
+ \hline
+ Col1 & Col2 & Col2 & Col3 \\
+ \hline
+ \hline
+ 1 & 6 & 87837 & 787 \\
+ 2 & 7 & 78 & 5415 \\
+ 3 & 545 & 778 & 7507 \\
+ 4 & 545 & 18744 & 7560 \\
+ 5 & 88 & 788 & 6344 \\
+ \hline
+\end{tabular}
+\caption{Table to test captions and labels.}
+\label{table:1}
+\end{table}
 
 \end{document}

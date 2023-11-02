@@ -5,8 +5,8 @@
 % DESCRIPTION
 %
 %   emem.sty is an opinionated LaTeX style file meant to be used with
-%   the memoir LaTeX class.  This style file monkey patches some
-%   commands to typeset things the way I want.
+%   the standard article.cls LaTeX class.  This style file monkey
+%   patches some commands to typeset things the way I want.
 %
 % USAGE
 %
@@ -16,18 +16,19 @@
 %
 %   cmd     --  define custom commands and load a minimum set of
 %               packages, but don't do anything else
-%   draft   --  disable loading of cosmetic/heavyweight packages
-%   fancy   --  load everything (default)
+%   draft   --  disable loading of cosmetic/heavyweight packages and
+%               suppress aesthetic features
+%   nofonts --  do not load any fonts
+%   natbib  --  load the natbib package
 %
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{emem}[2022/09/22 v0.3]
 
-%%% Option processing ---------------------------------------------------------
+%%% Option processing --------------------------------------------------
 
-\newif\if@fancy
-\DeclareOption{fancy}\@fancytrue
-\DeclareOption{draft}\@fancyfalse
+\newif\if@draft
+\DeclareOption{draft}\@drafttrue
 
 \newif\if@cmd
 \DeclareOption{cmd}\@cmdtrue
@@ -35,10 +36,13 @@
 \newif\if@natbib
 \DeclareOption{natbib}\@natbibtrue
 
-\ExecuteOptions{fancy}
+\newif\if@fonts
+\@fontstrue
+\DeclareOption{nofonts}\@fontsfalse
+
 \ProcessOptions\relax
 
-%%% Mathematics ---------------------------------------------------------------
+%%% Mathematics --------------------------------------------------------
 
 \RequirePackage{mathtools}
 
@@ -70,6 +74,8 @@
 \DeclareMathOperator{\Residue}{Res}                 % residue
 \DeclareMathOperator{\tr}{tr}                       % trace of a matrix
 \DeclareMathOperator{\Tr}{Tr}                       % trace of a matrix (alternate)
+\DeclareMathOperator{\trace}{trace}                 % trace of a matrix
+\DeclareMathOperator{\Trace}{Trace}                 % trace of a matrix (alternate)
 
 \def\id{\ensuremath\mathrm{id}}                     % identity map
 
@@ -104,7 +110,7 @@
   \thickmuskip\muexpr\thickmuskip*#1%
 }
 
-%%% Miscellaneous -------------------------------------------------------------
+%%% Miscellaneous ------------------------------------------------------
 
 \def\etal{\emph{et al.}}
 
@@ -120,29 +126,50 @@
   \setcounter{footnote}{0}%
 }
 
-%%% Environments --------------------------------------------------------------
+%%% Environments -------------------------------------------------------
 
 \newenvironment{flushright*}
   {\null\hfill\begin{tabular}{l@{}}}
   {\end{tabular}}
 
 % Environment for typing right-indented quotes and command for typing the
-% name of the quotee.
+% name of the quotee.  Inspired by quotes in TAOCP.
+\def\@quotefont{\sffamily}
 \newenvironment{rightquote}[1][0.8]{%
   \flushright%
   \begin{minipage}{#1\textwidth}%
+  \raggedleft%
+  \parskip=0.333\baselineskip%
+  \@quotefont%
   \small%
+  \slshape%
 }{%
-  \end{minipage}\par%
+  \end{minipage}\par\bigskip
 }
-\def\quotee#1{\par\flushright\unskip\small{#1}}
+\def\quotee#1{%
+  \smallskip%
+  \flushright%
+  \unskip%
+  \upshape%
+  \par#1\par%
+}
 
 % Environment to vertically/horizontally center text.
 \newenvironment{center*}
   {\hspace{0pt}\vfill\begin{center}}
   {\end{center}\vfill\hspace{0pt}}
 
-%%% Git info ------------------------------------------------------------------
+% Environment to flush equations to the left.
+% Of course, one could pass fleqn directly to the amsmath
+% package, but in that case _all_ equations would be
+% flushed to the left.  This environment is for situations
+% where a specific equation is to be flushed to the left,
+% e.g., to fit it more tightly.
+\newenvironment{fleqn}
+  {\@fleqntrue\@mathmargin0pt}
+  {\@fleqnfalse}
+
+%%% Git info -----------------------------------------------------------
 
 % An NIH-hack to avoid using the gitinfo2 package.  To generate the
 % gitInfo.in file, within the root directory of the repository, run
@@ -177,7 +204,7 @@
   \def\gitCommitterAltDate{\gitError}
 }
 
-%%% Color definitions ---------------------------------------------------------
+%%% Color definitions --------------------------------------------------
 
 \RequirePackage{color}
 
@@ -237,20 +264,27 @@
 \definecolor{C8}{rgb}{0.737255,0.741176,0.133333}     % lime green
 \definecolor{C9}{rgb}{0.090196,0.745098,0.811765}     % cyan
 
+% Alternative basic colors
+\definecolor{altred}{rgb}{0.8,0.1,0.1}
+\definecolor{altblue}{rgb}{0.1,0.1,0.8}
+
 % NOTE: Lines following this apply to the memoir LaTeX class.
 % Thus, terminate processing at this point if the `cmd' option is given
 % or if memoir is not loaded.
 \if@cmd\endinput\fi
-\@ifclassloaded{memoir}{}{\endinput}
 
-%%% Package loading -----------------------------------------------------------
+%%% Package loading ----------------------------------------------------
 
 % Only packages included in a standard TeXLive distribution ought to be
 % loaded by default.
 
 % Load heavyweights and cosmetic packages by default, but also give an option
 % to disable them.
-\if@fancy
+\if@draft
+  \RequirePackage[draft]{hyperref}
+  \RequirePackage[draft]{graphicx}
+  \RequirePackage[draft]{microtype}
+\else
   % Use the same color for all links.
   \RequirePackage[
     allcolors=bs1,
@@ -262,34 +296,28 @@
   \urlstyle{same}
   \usepackage{microtype}
   \RequirePackage{graphicx}
-\else
-  \RequirePackage[draft]{hyperref}
-  \RequirePackage[draft]{graphicx}
-  \RequirePackage[draft]{microtype}
 \fi
 
-%%% References ----------------------------------------------------------------
+\RequirePackage[raggedright]{sidecap}
+% Separation between caption and figure.
+\def\sidecaptionsep{1.5em}
+% A value of 50 indicates that the full \textwidth would be
+% used up to display the figure and caption.
+\def\sidecaptionrelwidth{50}
+
+%%% References ---------------------------------------------------------
 
 \if@natbib
-  \ifartopt
-    \RequirePackage[square,merge,numbers,sort&compress,sectionbib]{natbib}
-    % This is an undocumented command used by memoir to typeset
-    % references when natbib is loaded with the sectionbib option.
-    % For some reason, redefining \bibsection doesn't work.
-    \def\@memb@bsec{\section*{\bibname}\prebibhook}
-  \else
-    \RequirePackage[square,merge,numbers,sort&compress]{natbib}
-  \fi
-
+  \RequirePackage[square,merge,numbers,sort&compress,sectionbib]{natbib}
   \bibliographystyle{apsrev4-2}
   \def\bibfont{\small}
-  \def\prebibhook{%
+  \def\bibpreamble{%
     \setlength{\bibsep}{0pt plus 0.3ex}%
     \setlength{\parskip}{10pt}%
   }
 \fi
 
-%%% Custom package-depended commands ------------------------------------------
+%%% Custom package-depended commands -----------------------------------
 
 % Commands to typeset emails/DOI links that obeys \urlstyle.
 \def\email#1{\href{mailto:#1}{\nolinkurl{#1}}}
@@ -309,19 +337,22 @@
 \def\hl#1{{\color{hlcolor}#1}}
 \newenvironment{hlblock}{\color{hlcolor}}{}
 
-% AMS packages ----------------------------------------------------------------
+%%% AMS packages -------------------------------------------------------
 
 \RequirePackage{amsthm}
 
-% Break display eqs
+% Break display equations.
 \allowdisplaybreaks
+
+% Per-section equation numbering.
+\numberwithin{equation}{section}
 
 % Theorem style with period after the theorem head removed and bold theorem
 % spec: https://tex.stackexchange.com/a/185168.
 \newtheoremstyle{ememstyle}%                      % name
   {}%                                             % space above
   {}%                                             % space below
-  {\itshape}%                                     % body font
+  {\slshape}%                                     % body font
   {}%                                             % indent amount
   {\bfseries}%                                    % theorem head font
   {.}%                                            % punctuation after theorem head
@@ -341,29 +372,37 @@
 \newtheorem*{theorem*}{Theorem}
 \newtheorem*{definition*}{Definition}
 
-% Style for problems and examples.
+%%% Problem + solution as theorem/proof style environments.
+
+% Theorem style for problems and example statements.
 \newtheoremstyle{ememstylesmall}%                 % name
   {1em}%                                          % space above
-  {1em}%                                          % space below
+  {0em}%                                          % space below
   {\small}%                                       % body font
   {}%                                             % indent amount
   {\small\bfseries}%                              % theorem head font
   {.}%                                            % punctuation after theorem head
-  {1.2em}%                                        % space after theorem head, ' ', or \newline
+  {\labelsep}%                                    % space after theorem head, ' ', or \newline
   {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%   % theorem head spec (can be left empty, meaning `normal')
 
-% Problem + solution as theorem/proof style environments.
-% \theoremstyle{definition}
+% Proof environment for solutions. (Adapted from amsthm.sty.)
+% Use a \small font with less space between "theorem" and "proof".
+\newenvironment{ememproofsmall}[1][\proofname]{\par%
+  \small\vskip 2pt plus 1pt minus 1pt\relax%
+  {\noindent\itshape#1\@addpunct{.}\hskip\labelsep}%
+  \ignorespaces%
+}{}
+\providecommand{\proofname}{Proof}
 \theoremstyle{ememstylesmall}
 \newtheorem{problem}{Problem}
 \newtheorem*{problem*}{Problem}
-\newenvironment{solution}{\proof[Solution]}{\endproof}
+\newenvironment{solution}{\ememproofsmall[Solution]}{\endproof}
 \newtheorem{example}{Example}
 \newtheorem*{example*}{Example}
 
 %%% Whitespace management ----------------------------------------------
 
-\if@fancy
+\if@draft\relax\else
   % From Section 3.5 of memoir's documentation.
   \clubpenalty=9996
   \widowpenalty=9999
@@ -376,74 +415,205 @@
   \interlinepenalty=1000
 \fi
 
-%%% Memoir customization -----------------------------------------------
+% \RequirePackage[
+%   paperheight=9in,
+%   paperwidth=7in,
+%   height=7.25in,
+%   bottom=0.75in,
+%   width=5.35in,
+%   left=0.825in,
+% ]{geometry}
 
-\providecommand{\altsf@family}{\sffamily}
-\providecommand{\altsf@family@medium}{\sffamily}
-\providecommand{\altsf@family@bold}{\bfseries\sffamily}
+% Equivalent to above import of `geometry'
+% Copied from test.log.
+\paperwidth=505.89pt
+\paperheight=650.43pt
+\textwidth=386.64493pt
+\textheight=523.95749pt
+\oddsidemargin=-12.64746pt
+\evensidemargin=-12.64746pt
+\topmargin=-36.99998pt
+\headheight=12.0pt
+\headsep=25.0pt
+\topskip=10.0pt
+\footskip=30.0pt
+\marginparwidth=65.0pt
+\marginparsep=11.0pt
+\columnsep=10.0pt
+\skip\footins=9.0pt plus 4.0pt minus 2.0pt
+\hoffset=0.0pt
+\voffset=0.0pt
+\mag=1000
+\@twocolumnfalse
+\@twosidetrue
+\@mparswitchtrue
+\@reversemarginfalse
 
-% Use smaller sans-serif fonts in chapter headings.
-\def\chapnumfont{\large\altsf@family}
-\def\chapnamefont{\large\altsf@family}
-\def\chaptitlefont{\Large\altsf@family@bold}
-\setlength{\beforechapskip}{4em}
-\setlength{\midchapskip}{0.25em}
-\setlength{\afterchapskip}{3em}
+%%% Fonts and typography -----------------------------------------------
 
-% sans-serif fonts for section titles.
-\setsecheadstyle{\large\altsf@family@bold}
-\setsubsecheadstyle{\altsf@family@bold}
-% Use a slightly smaller medium italic sans type; 10pt
-% italic sans looks somewhat bigger to me.
-\setsubsubsecheadstyle{\fontsize{9.75}{10}\selectfont\itshape\altsf@family@medium}
+\if@fonts
+  \RequirePackage{lmodern}
+  \RequirePackage{amssymb}
+  \RequirePackage{mathrsfs}
+  \RequirePackage{stmaryrd}
+  \RequirePackage{bm}
 
-% AFAIK memoir doesn't provide a direct command to customize paragraphs,
-% so we steal REVTeX's definition.
-\def\paragraph{%
-  \@startsection
-  {paragraph}%
-  {4}%
-  {\parindent}%
-  {\z@}%
-  {-1em}%
-  {\normalfont\normalsize\itshape}%
+  % Use bold non-extended instead of the default bold extended.  For most
+  % fonts, it shouldn't make a difference, but for Computer Modern and its
+  % variants, it does.  The usual CM bold is too wide in my opinion.
+  \def\bfdefault{b}
+  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
+  \DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
+  \DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
+
+  % Bold italic -- with nonextended bold and extended bold.
+  \def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
+  \def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
+
+  % Use Computer Modern Bright as the font for quotes.
+  \def\@quotefont{\fontfamily{cmbr}\selectfont}
+\fi
+
+% Command to typeset with more separation between characters and words.
+% Requires microtype for \textls: https:/tex.stackexchange.com/q/23921
+% Note also that this is not the same command as REVTeX's \widetext.
+%
+% Usage: \widetext{{ ... commands go here ... }}{{ ... text to be copied ... }}
+%
+% Note the double braces in the above example.  Without the extra brace, a
+% keyval error would result if the text has commas.
+%
+\if@draft
+  % No fancy typesetting in draft mode.
+  \def\widetext#1#2{\MakeUppercase{#1}}
+\else
+  \RequirePackage{accsupp} % to make the text copiable/searchable.
+  \def\widetext#1#2{%
+    \BeginAccSupp{method=escape,ActualText=#2}%
+      \textls[120]{%
+        \spaceskip=1.5\fontdimen2\font plus 1.5\fontdimen3\font minus 1.5\fontdimen4\font%
+        #1%
+      }%
+    \EndAccSupp{}%
+  }
+\fi
+
+%%% Section titles -----------------------------------------------------
+
+% Formatting of section number including the space following it.
+% Adapted from source2e.
+\def\@seccntformat#1{\csname the#1\endcsname.\enspace}
+
+\def\section{\@startsection{section}{1}{\z@}%
+             {-3.5ex \@plus -1ex \@minus -.2ex}%
+             {2.3ex \@plus.2ex}%
+             {\centering\normalfont\normalsize\bfseries}}
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+                {-3.25ex\@plus -1ex \@minus -.2ex}%
+                {1.5ex \@plus .2ex}%
+                {\centering\normalfont\normalsize\itshape}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                   {-3.25ex\@plus -1ex \@minus -.2ex}%
+                   {1.5ex \@plus .2ex}%
+                   {\normalfont\normalsize\itshape}}
+
+% Paragraph with a period/question mark at the end of the title.
+% https://tex.stackexchange.com/a/328358
+\def\@endpunct#1{#1\@addpunct{.}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}%
+               {3.25ex \@plus1ex \@minus.2ex}%
+               {-1em}%
+               {\normalfont\normalsize\itshape\@endpunct}}
+
+%%% Floats -------------------------------------------------------------
+
+% Per-section float numbering.
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+% Redefine captions in tables, figures, etc., to use sans-serif font and
+% a period after caption identifier (e.g., Figure, Table, etc.) instead of
+% a colon.  Adapted from article.cls.
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip\small
+  \sbox\@tempboxa{\textbf{#1.}\enspace#2}%
+  \ifdim \wd\@tempboxa >\hsize
+    \textbf{#1.}\enspace#2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+%%% Document title formatting ------------------------------------------
+
+% Patch \title to take an optional head title argument (to use in the
+% header).  Use as \title[Head Title]{Actual Title of the Document}.
+% The two titles are now accessible thru \thetitle and \theheadtitle.
+\renewcommand{\title}[2][\@nil]{
+  \def\tmp{#1}
+  \gdef\@title{#2}
+  \gdef\thetitle{#2}
+  \ifx\tmp\@nnil
+    \gdef\theheadtitle{Head title is undefined}
+  \else
+    \gdef\theheadtitle{#1}
+  \fi
 }
 
-% Table of Contents.
-\def\cftchapterfont{\altsf@family@bold}     % bold sans-serif for chapters
-\def\cftchapterpagefont{\cftchapterfont}    % also for page numbers
+% Patch \maketitle.  Note that this only works with `notitlepage' (which
+% is a default option for article.cls).
+\def\@maketitle{%
+  \newpage
+  \begin{center}%
+  \let\footnote\thanks
+    {\Large\bfseries\@title\par}%
+    \vskip 1em%
+    {\normalsize\scshape
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1em%
+    {\small\@date}%
+  \end{center}%
+  \par
+  \vskip 1.5em}
 
-% Remove dots in TOC and bring page numbers closer to
-% chapter/section titles.  Another alternative is
-% just \def\cftdotsep{1234}, which would keep the space, but
-% remove all the dots.
-\def\cftchapterleader{\quad}
-\def\cftsectionleader{\enspace}
-\def\cftsubsectionleader{\enspace}
-\def\cftchapterafterpnum{\cftparfillskip}
-\def\cftsectionafterpnum{\cftparfillskip}
-\def\cftsubsectionafterpnum{\cftparfillskip}
+%%% Headers ------------------------------------------------------------
 
-% Make captions in tables, figures, etc., to use a period after the caption
-% identifier (e.g., Figure, Table, etc.) instead of a colon.  Also use sans
-% font for the identifier.
-\captionnamefont{\altsf@family@bold\small}
-\captiondelim{.\enspace}
+% Force a two-sided layout even when `twosided' is not
+% passed as an option.
+\@twosidetrue
+\@mparswitchtrue
 
-% Title
-\captiontitlefont{\small}
+% Patch the two-sided version of the `headings' pagestyle.
+\def\ps@headings{%
+    \let\@oddfoot\@empty\let\@evenfoot\@empty
+    \def\@evenhead{%
+      \small%
+      \thepage\hfill%
+      \widetext{\MakeUppercase{\leftmark}}{\leftmark}\hfill\phantom{}%
+    }
+    \def\@oddhead{%
+      \small\hfill%
+      \widetext{\MakeUppercase{\theheadtitle}}{\theheadtitle}%
+      \hfill\thepage%
+    }
+  \def\sectionmark##1{\markboth{##1}{}}%
+  \def\subsectionmark##1{\markright{\MakeUppercase{##1}}{}}%
+}
 
-% Number everything from sections to subsections.
-\setsecnumdepth{subsection}
+\setlength{\itemsep}{0pt plus 1pt}
+\renewcommand\theenumi{\@arabic\c@enumi}
+\renewcommand\theenumii{\@alph\c@enumii}
+\renewcommand\theenumiii{\@roman\c@enumiii}
+\renewcommand\theenumiv{\@Alph\c@enumiv}
 
-\ifartopt
-  % Article-specific tweaks.
-  % Omit chapter numbers from section titles.
-  \counterwithout{section}{chapter}
-\else
-  % Number subsubsections as well.
-  \setsecnumdepth{subsubsection}
-\fi
+\renewcommand\labelenumi{\theenumi.}
+\renewcommand\labelenumii{(\theenumii)}
+\renewcommand\labelenumiii{\theenumiii.}
+\renewcommand\labelenumiv{\theenumiv.}
 
 \endinput
 
