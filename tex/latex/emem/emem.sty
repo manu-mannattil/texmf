@@ -449,6 +449,14 @@
 \@mparswitchtrue
 \@reversemarginfalse
 
+% I prefer slightly compact lists with "zero" separation between the
+% items.  But There is no way to set \itemsep globally.  So we use
+% \g@addto@macro to add the appropriate \setlength command to the
+% definition of the relevant environments.
+\g@addto@macro\itemize{\setlength{\itemsep}{0pt}}
+\g@addto@macro\enumerate{\setlength{\itemsep}{0pt}}
+\g@addto@macro\description{\setlength{\itemsep}{0pt}}
+
 %%% Fonts and typography -----------------------------------------------
 
 \if@fonts
@@ -603,17 +611,6 @@
   \def\sectionmark##1{\markboth{##1}{}}%
   \def\subsectionmark##1{\markright{\MakeUppercase{##1}}{}}%
 }
-
-\setlength{\itemsep}{0pt plus 1pt}
-\renewcommand\theenumi{\@arabic\c@enumi}
-\renewcommand\theenumii{\@alph\c@enumii}
-\renewcommand\theenumiii{\@roman\c@enumiii}
-\renewcommand\theenumiv{\@Alph\c@enumiv}
-
-\renewcommand\labelenumi{\theenumi.}
-\renewcommand\labelenumii{(\theenumii)}
-\renewcommand\labelenumiii{\theenumiii.}
-\renewcommand\labelenumiv{\theenumiv.}
 
 \endinput
 
