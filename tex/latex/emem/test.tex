@@ -14,6 +14,8 @@
 \date{1 January 1970}
 \pagestyle{headings}
 
+\def\separator{\vskip\baselineskip\hrule\vskip\baselineskip}
+
 \begin{document}
 
 \maketitle
@@ -56,6 +58,7 @@ Paragraph text.
 Paragraph text.
 Paragraph text.
 Paragraph text.
+\par
 
 
 
@@ -79,6 +82,105 @@ Side captions for figures.
 Side captions for figures.
 Side captions for figures.}
 \end{SCfigure}
+
+%\section{Fonts}
+
+%With \verb|\textrm{...}|: \textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%With \verb|\textsf{...}|: \textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%With \verb|\textbf{...}|: \textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%With \verb|\textbf{\textsf{...}}|: \textbf{\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}}
+
+%With \verb|\textit{...}|: \textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%With \verb|\emph{...}|: \emph{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%With \verb|\textsl{...}|: \textsl{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz}
+
+%\separator
+
+%\textbf{Bug:} See how the spacing between characters in \verb|\mathord{...}| is
+%too small and looks similar to \verb|\mathit{...}| when the \emph{sans version} is
+%chosen.  The \verb|sansmath| packages seems to deal with this somehow.  Beamer,
+%without loading \verb|sansmath|, also has the same issue.\\
+
+%With \verb|\mathord{...}|: $\mathord{123456789}$
+
+%With \verb|\mathord{...}|: $ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz$
+
+%With \verb| \mathit{...}|: $\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+%With \verb| \mathrm{...}|: $\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+%With \verb| \mathsf{...}|: $\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+%With \verb| \mathbf{...}|: $\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ\quad abcdefghijklmnopqrstuvwxyz}$
+
+%\separator
+
+%Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+%Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+%Misc.~Greek: $\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+
+%Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+
+%%Integrals: $\displaystyle \int \iint \iiint \oint \oiint \oiiint$
+
+%\separator
+
+%Trig.~operators: $\sin{\theta}$, $\cos{\phi}$, $\tan{\varphi}$
+
+%Misc.~operators: $\log{\theta}$, $\ln{\phi}$, $\max{a}$, $\min{b}$
+
+%\separator
+
+%After using \verb|\mathversion{bold}|\ldots\\
+
+%\mathversion{bold}
+%Lowercase Greek: $\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega$
+
+%Uppercase Greek: $\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega$
+
+%Misc.~Greek: $\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta$
+
+%Math mix: $\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C$
+%\mathversion{normal}
+
+%\separator
+
+%Using \verb|\bm|\ldots
+
+%Lowercase Greek: $\bm{\alpha \beta \gamma \delta \epsilon \zeta \eta \theta \iota \kappa \lambda \mu \nu \xi \pi \rho \sigma \tau \upsilon \phi \chi \psi \omega}$
+
+%Uppercase Greek: $\bm{\Gamma \Delta \Lambda \Phi \Pi \Psi \Sigma \Theta \Upsilon \Xi \Omega}$
+
+%Misc.~Greek: $\bm{\digamma \varepsilon \varkappa \varphi \varpi \varrho \varsigma \vartheta}$
+
+%Math mix: $\bm{\displaystyle \int \oint \sum \alpha \Delta \varphi 1a + 2A - 3b \times 4B \div 5c \nabla 6C}$
+
+%\separator
+%\verb|\mathbb{...}| capitals: $\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+%\verb|\mathbb{...}| small: $\mathbb{abcdefghijklmnopqrstuvwxyz}$
+
+%\verb|\mathcal{...}| capitals: $\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+%\verb|\mathcal{...}| small: $\mathcal{abcdefghijklmnopqrstuvwxyz}$
+
+%\separator
+
+%\subsection*{Maxwell's equations}
+
+%\begin{align*}
+%  \nabla\cdot\mathbf{E} &= \frac{\rho}{\epsilon_0}\\
+%  \nabla\cdot\mathbf{B} &= 0\\
+%  \nabla\times\mathbf{E} &= -\frac{\partial\mathbf{B}}{\partial{t}}\\
+%  \nabla\times\mathbf{B} &= \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}
+%\end{align*}
 
 \section{Mathematics}
 
@@ -130,8 +232,7 @@ fundamentally new results.  However,
 there is a pleasure in recognizing old
 things from a new point of view.
 
-\quotee{--- Richard P.~Feynman,
-Rev.~Mod.~Phys.~\textbf{20}, 367 (1948)}\par
+\quotee{--- Richard P.~Feynman, Rev.~Mod.~Phys.~\textbf{20}, 367 (1948)}
 \end{rightquote}
 
 A quote with equations...
@@ -139,7 +240,7 @@ A quote with equations...
 \begin{rightquote}
   A famous equation in physics is $E^{2} = p^{2}{c}^{2} + m^{2}c^{4}$.
 
-  \quotee{--- Doesn't switch between math and LaTeX}, 367 (1948)\par
+  \quotee{--- Math is not in the right font}
 \end{rightquote}
 
 
@@ -258,7 +359,11 @@ Side captions for figures.}
 \begin{description}
   \item[Label text] Some years ago---never mind how long precisely---
     having little or no money in my purse, and nothing particular to
-    interest me on shore, I thought I would sail about a little and see
+    interest me on shore, I thought I would sail about a little and see..
+
+    Another paragraph...  Some years ago---never mind how long precisely---
+    having little or no money in my purse, and nothing particular to
+    interest me on shore, I thought I would sail about a little and see..
    \item Call me Ishmael. (See how there's a bit of an indention because this item doesn't have a label?)
    the watery part of the world.
   \item[Label text] It is a way I have of driving off the
@@ -272,6 +377,80 @@ Side captions for figures.}
     people's hats off---then, I account it high time to get to sea as
     soon as I can.
 \end{description}
+
+Call me Ishmael.
+Some years ago---never mind how long precisely---
+having little or no money in my purse, and nothing particular to
+interest me on shore, I thought I would sail about a little and see
+the watery part of the world.
+It is a way I have of driving off the
+spleen and regulating the circulation.
+Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly
+November in my soul; whenever I find myself involuntarily pausing
+before coffin warehouses, and bringing up the rear of every funeral
+I meet; and especially whenever my hypos get such an upper hand of me,
+that it requires a strong moral principle to prevent me from
+deliberately stepping into the street, and methodically knocking
+people's hats off---then, I account it high time to get to sea as
+soon as I can.
+
+\begin{standout}
+\begin{example}[A trignometric identity]
+  Show that $\cos{2\theta} = 2\cos^{2}{\theta} - 1$.
+\end{example}
+\begin{solution}
+  We know $\cos(\theta_{1} + \theta_{2}) = \cos{\theta_{1}}\cos{\theta_{2}} - \sin{\theta_{1}}\sin{\theta_{2}}$.
+  Put $\theta_{1} = \theta_{2} = \theta$ to find
+  %
+  \begin{equation*}
+    \begin{aligned}
+      \cos{2\theta} &= \cos^{2}{\theta} - \sin^{2}{\theta}\\
+         &= \cos^{2}{\theta} - (1-\cos^{2}\theta)\\
+         &= 2\cos^{2}{\theta} - 1.
+    \end{aligned}
+  \end{equation*}
+  %
+  A similar analysis reveals that $\sin2\theta = 2\sin{\theta}\cos{\theta}$.
+  \qed
+\end{solution}
+\begin{example}[A biological question]
+  A scientist has come across a plant which he feels is a new species. How will he go about its identification, classification and nomenclature?
+\end{example}
+\begin{solution}
+  A newly identified species can be easily classified by taxonomic aids. The scientist has to do comparative studies of the morphological and anatomical features with the features of existing plants present in the taxonomical aids, and according to binomial nomenclature given by Carl Linnaeus, the species can be classified. Some of the taxonomical aids that can be used are flora, manuals, monographs, catalogues etc.
+\end{solution}
+\begin{example}
+  This is an example to test figures with transparent backgrounds.
+  Such figures should have the same background color as the standout environment.
+  \begin{center}
+    \includegraphics[width=0.1\textwidth]{example-image-a5}
+  \end{center}
+  And, as we see above, figures with transparent backgrounds do have the same color as the standout!
+\end{example}
+\end{standout}
+
+Call me Ishmael.
+Some years ago---never mind how long precisely---
+having little or no money in my purse, and nothing particular to
+interest me on shore, I thought I would sail about a little and see
+the watery part of the world.
+It is a way I have of driving off the
+spleen and regulating the circulation.
+Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly
+November in my soul; whenever I find myself involuntarily pausing
+before coffin warehouses, and bringing up the rear of every funeral
+I meet; and especially whenever my hypos get such an upper hand of me,
+that it requires a strong moral principle to prevent me from
+deliberately stepping into the street, and methodically knocking
+people's hats off---then, I account it high time to get to sea as
+soon as I can.
+
+%
+\begin{equation}
++\vcenter{\hbox{$\triangleright$}}+
++\_+
+\end{equation}
+%
 
 
 \end{document}

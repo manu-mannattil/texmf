@@ -4,26 +4,39 @@
 %
 % DESCRIPTION
 %
-%   emem.sty is an opinionated LaTeX style file meant to be used with
-%   the standard article.cls LaTeX class.  This style file monkey
-%   patches some commands to typeset things the way I want.
+%   emem.sty is an opinionated LaTeX style file meant to be
+%   used with the standard article.cls LaTeX class.  This
+%   style file monkey patches some commands to typeset
+%   things the way I want.
 %
 % USAGE
 %
-%   emem.sty can be loaded like any other package with \usepackage{emem}.
+%   emem.sty can be loaded like any other package with
+%   \usepackage{emem}.  I have only tested it with fairly
+%   recent (i.e., 2018 and later) LaTeX packages distributed
+%   with TeX Live.  YMMV with older versions of the
+%   packages.
 %
 % OPTIONS
 %
-%   cmd     --  define custom commands and load a minimum set of
-%               packages, but don't do anything else
-%   draft   --  disable loading of cosmetic/heavyweight packages and
-%               suppress aesthetic features
-%   nofonts --  do not load any fonts
-%   natbib  --  load the natbib package
+%   cmd             --  define custom commands and load a minimum set of
+%                       packages, but don't do anything else
+%   draft           --  disable loading of cosmetic/heavyweight packages
+%                       and suppress aesthetic features
+%   fonts, nofonts  --  load/do not LM Modern fonts (with customizations)
+%   lineno          --  add line numbers using the lineno package
+%   natbib          --  load the natbib package and use Phys. Rev. \bibliographystyle.
+%
+% TODO
+%
+%   1. Right now, the paper size is 9in x 7in.  Include an
+%      option to produce A4/Letter output, but keep the
+%      textwidth the same.  And another one to disable
+%      altering page size altogether.
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{emem}[2022/09/22 v0.3]
+\ProvidesPackage{emem}[2024/02/25 v0.5]
 
 %%% Option processing --------------------------------------------------
 
@@ -37,9 +50,17 @@
 \DeclareOption{natbib}\@natbibtrue
 
 \newif\if@fonts
-\@fontstrue
+\DeclareOption{fonts}\@fontstrue
 \DeclareOption{nofonts}\@fontsfalse
 
+\newif\if@margins
+\DeclareOption{margins}\@marginstrue
+\DeclareOption{nomargins}\@marginsfalse
+
+\newif\if@lineno
+\DeclareOption{lineno}\@linenotrue
+
+\ExecuteOptions{fonts,margins}
 \ProcessOptions\relax
 
 %%% Mathematics --------------------------------------------------------
@@ -64,6 +85,12 @@
 \def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
 \def\trans{\ensuremath{^\mathsf{T}}}                % transpose
 
+% Div, grad, curl, and all that.
+\def\div{\ensuremath{\boldsymbol{\nabla\cdot}}}     % divergence
+\def\grad{\ensuremath{\boldsymbol{\nabla}}}         % gradient
+\def\curl{\ensuremath{\boldsymbol{\nabla\times}}}   % curl
+\def\del{\ensuremath{\boldsymbol{\Delta}}}          % laplacian
+
 % New operators.
 \DeclareMathOperator{\coker}{coker}                 % cokernel of a matrix
 \DeclareMathOperator{\corank}{corank}               % corank of a matrix
@@ -79,11 +106,24 @@
 
 \def\id{\ensuremath\mathrm{id}}                     % identity map
 
-\DeclareMathOperator{\sech}{sech}                   % hyperbolic sec
-\DeclareMathOperator{\csch}{csch}                   % hyperbolic csc
+% Nonstandard trignometric stuff.
+\DeclareMathOperator{\acos}{acos}
+\DeclareMathOperator{\acot}{acot}
+\DeclareMathOperator{\acsc}{acsc}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\asec}{asec}
+\DeclareMathOperator{\asin}{asin}
+\DeclareMathOperator{\atan}{atan}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\sech}{sech}
 
 \DeclareMathOperator*{\argmax}{argmax}              % argmax (without space and underneath limits)
 \DeclareMathOperator*{\argmin}{argmin}              % argmin (without space and underneath limits)
+
+\def\kb{\ensuremath{k_{\mathsf{B}}}}                % Boltzmann constant
+\def\wrt{{w.r.t.\ }}                                % with respect to
 
 % Absolute value sign.  Simply using |...| results in poor spacing, e.g., see
 % the output of $|-1|$ vs $|{-1}|$.  It's the second kind of spacing that we
@@ -109,6 +149,14 @@
   \medmuskip\muexpr\medmuskip*#1%
   \thickmuskip\muexpr\thickmuskip*#1%
 }
+
+% Sometimes one needs to use the \begin{align*} ... \end{align*}
+% environment to break long display equations across two pages.
+% However, this results an equation with no equation number.  The
+% command \numberthis defined below adds an equation number to a given
+% line.
+% https://tex.stackexchange.com/a/42728
+\def\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 %%% Miscellaneous ------------------------------------------------------
 
@@ -159,15 +207,15 @@
   {\hspace{0pt}\vfill\begin{center}}
   {\end{center}\vfill\hspace{0pt}}
 
-% Environment to flush equations to the left.
-% Of course, one could pass fleqn directly to the amsmath
-% package, but in that case _all_ equations would be
-% flushed to the left.  This environment is for situations
-% where a specific equation is to be flushed to the left,
-% e.g., to fit it more tightly.
-\newenvironment{fleqn}
-  {\@fleqntrue\@mathmargin0pt}
-  {\@fleqnfalse}
+\if@draft
+  \newenvironment{standout}{\vspace{\baselineskip}}{\vspace{0.5\baselineskip}}
+\else
+  \RequirePackage{framed}
+  \newenvironment{standout}{%
+    \def\FrameCommand{\fboxsep=\FrameSep \colorbox{nord6}}%
+    \MakeFramed {\FrameRestore}}%
+  {\endMakeFramed}
+\fi
 
 %%% Git info -----------------------------------------------------------
 
@@ -268,9 +316,8 @@
 \definecolor{altred}{rgb}{0.8,0.1,0.1}
 \definecolor{altblue}{rgb}{0.1,0.1,0.8}
 
-% NOTE: Lines following this apply to the memoir LaTeX class.
-% Thus, terminate processing at this point if the `cmd' option is given
-% or if memoir is not loaded.
+% NOTE: Lines following this apply to the article LaTeX class.
+% Thus, terminate processing at this point if the `cmd' option is given.
 \if@cmd\endinput\fi
 
 %%% Package loading ----------------------------------------------------
@@ -347,6 +394,9 @@
 % Per-section equation numbering.
 \numberwithin{equation}{section}
 
+% Black square for QED.
+\def\qedsymbol{$\blacksquare$}
+
 % Theorem style with period after the theorem head removed and bold theorem
 % spec: https://tex.stackexchange.com/a/185168.
 \newtheoremstyle{ememstyle}%                      % name
@@ -375,15 +425,15 @@
 %%% Problem + solution as theorem/proof style environments.
 
 % Theorem style for problems and example statements.
-\newtheoremstyle{ememstylesmall}%                 % name
-  {1em}%                                          % space above
-  {0em}%                                          % space below
-  {\small}%                                       % body font
-  {}%                                             % indent amount
-  {\small\bfseries}%                              % theorem head font
-  {.}%                                            % punctuation after theorem head
-  {\labelsep}%                                    % space after theorem head, ' ', or \newline
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%   % theorem head spec (can be left empty, meaning `normal')
+\newtheoremstyle{ememstylesmall}%                                 % name
+  {0.25em}%                                                       % space above
+  {0em}%                                                          % space below
+  {\small}%                                                       % body font
+  {}%                                                             % indent amount
+  {\small\bfseries}%                                              % theorem head font
+  {.}%                                                            % punctuation after theorem head
+  {\labelsep}%                                                    % space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                   % theorem head spec (can be left empty, meaning `normal')
 
 % Proof environment for solutions. (Adapted from amsthm.sty.)
 % Use a \small font with less space between "theorem" and "proof".
@@ -426,44 +476,69 @@
 
 % Equivalent to above import of `geometry'
 % Copied from test.log.
-\paperwidth=505.89pt
-\paperheight=650.43pt
-\textwidth=386.64493pt
-\textheight=523.95749pt
-\oddsidemargin=-12.64746pt
-\evensidemargin=-12.64746pt
-\topmargin=-36.99998pt
-\headheight=12.0pt
-\headsep=25.0pt
-\topskip=10.0pt
-\footskip=30.0pt
-\marginparwidth=65.0pt
-\marginparsep=11.0pt
-\columnsep=10.0pt
-\skip\footins=9.0pt plus 4.0pt minus 2.0pt
-\hoffset=0.0pt
-\voffset=0.0pt
-\mag=1000
-\@twocolumnfalse
-\@twosidetrue
-\@mparswitchtrue
-\@reversemarginfalse
+\if@margins
+  \paperwidth=505.89pt
+  \paperheight=650.43pt
+  \textwidth=386.64493pt
+  \textheight=523.95749pt
+  \oddsidemargin=-12.64746pt
+  \evensidemargin=-12.64746pt
+  \topmargin=-36.99998pt
+  \headheight=12.0pt
+  \headsep=25.0pt
+  \topskip=10.0pt
+  \footskip=30.0pt
+  \marginparwidth=65.0pt
+  \marginparsep=11.0pt
+  \columnsep=10.0pt
+  \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+  \hoffset=0.0pt
+  \voffset=0.0pt
+  \mag=1000
+  \@twocolumnfalse
+  \@twosidetrue
+  \@mparswitchtrue
+  \@reversemarginfalse
+\fi
 
 % I prefer slightly compact lists with "zero" separation between the
-% items.  But There is no way to set \itemsep globally.  So we use
+% items.  But there is no way to set \itemsep globally.  So we use
 % \g@addto@macro to add the appropriate \setlength command to the
 % definition of the relevant environments.
 \g@addto@macro\itemize{\setlength{\itemsep}{0pt}}
 \g@addto@macro\enumerate{\setlength{\itemsep}{0pt}}
 \g@addto@macro\description{\setlength{\itemsep}{0pt}}
 
+%%% Line numbers -------------------------------------------------------
+
+\if@lineno
+  \RequirePackage[columnwise]{lineno}
+  \def\linenumbersep{8pt}
+  \definecolor{snow}{rgb}{0.5,0.5,0.5}
+  \def\linenumberfont{\color{snow}\normalfont\small\sffamily}
+  \linenumbers
+\fi
+
 %%% Fonts and typography -----------------------------------------------
+
+% Commands to use extended bold in math and text.
+\DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
+\DeclareMathAlphabet{\mathbx}{\encodingdefault}{\rmdefault}{bx}{n}
+\DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
+\def\textbx#1{{\fontshape{\updefault}\fontseries{bx}\selectfont#1}}
+\def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
+\def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
 
 \if@fonts
   \RequirePackage{lmodern}
   \RequirePackage{amssymb}
   \RequirePackage{mathrsfs}
+
   \RequirePackage{stmaryrd}
+  % Removes warning about nonexistent bold version of stmaryd symbols by
+  % forcing use of medium version for bold.
+  \SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
   \RequirePackage{bm}
 
   % Use bold non-extended instead of the default bold extended.  For most
@@ -471,15 +546,11 @@
   % variants, it does.  The usual CM bold is too wide in my opinion.
   \def\bfdefault{b}
   \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
-  \DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
-  \DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
-
-  % Bold italic -- with nonextended bold and extended bold.
-  \def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
-  \def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
 
   % Use Computer Modern Bright as the font for quotes.
   \def\@quotefont{\fontfamily{cmbr}\selectfont}
+\else
+  \def\@quotefont{\fontfamily{\sfdefault}\selectfont}
 \fi
 
 % Command to typeset with more separation between characters and words.
@@ -493,14 +564,14 @@
 %
 \if@draft
   % No fancy typesetting in draft mode.
-  \def\widetext#1#2{\MakeUppercase{#1}}
+  \def\widetext#1{\MakeUppercase{#1}}
 \else
   \RequirePackage{accsupp} % to make the text copiable/searchable.
-  \def\widetext#1#2{%
-    \BeginAccSupp{method=escape,ActualText=#2}%
+  \def\widetext#1{%
+    \BeginAccSupp{method=escape,ActualText=#1}%
       \textls[120]{%
         \spaceskip=1.5\fontdimen2\font plus 1.5\fontdimen3\font minus 1.5\fontdimen4\font%
-        #1%
+        \MakeUppercase{#1}%
       }%
     \EndAccSupp{}%
   }
@@ -510,7 +581,8 @@
 
 % Formatting of section number including the space following it.
 % Adapted from source2e.
-\def\@seccntformat#1{\csname the#1\endcsname.\enspace}
+\def\default@seccntformat#1{\csname the#1\endcsname.\enspace}
+\let\@seccntformat\default@seccntformat
 
 \def\section{\@startsection{section}{1}{\z@}%
              {-3.5ex \@plus -1ex \@minus -.2ex}%
@@ -532,6 +604,33 @@
                {3.25ex \@plus1ex \@minus.2ex}%
                {-1em}%
                {\normalfont\normalsize\itshape\@endpunct}}
+
+% Adds a period after section numbers in TOC.  Numbers are put (flushed
+% left) in a box of width \@tempdima.  The length \@tempdima itself is
+% set in the definition of \l@section (see article.cls's sources).
+% Definition of \numberline adapted from source2e.
+% https://tex.stackexchange.com/a/429678
+\def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}}
+
+%%% Appendices ---------------------------------------------------------
+
+% The point here is to add the word in \appendixname (by
+% default "Appendix") to \section titles but to leave
+% \subsection formatting as it is. https://tex.stackexchange.com/a/308738
+\def\section@cntformat{\thesection.\quad}%
+\def\appendix@seccntformat#1{\@ifundefined{#1@cntformat}%
+  {\default@seccntformat{#1}} % default
+  {\appendixname\ \csname the#1\endcsname:\ }} % only for \section
+
+\def\appendixname{Appendix}
+\def\appendix{\par
+  \setcounter{section}{0}%
+  \setcounter{subsection}{0}%
+  \setcounter{subsubsection}{0}%
+  \setcounter{paragraph}{0}%
+  \def\thesection{\Alph{section}}%
+  \let\@seccntformat\appendix@seccntformat%
+}
 
 %%% Floats -------------------------------------------------------------
 
@@ -558,15 +657,16 @@
 % Patch \title to take an optional head title argument (to use in the
 % header).  Use as \title[Head Title]{Actual Title of the Document}.
 % The two titles are now accessible thru \thetitle and \theheadtitle.
+\gdef\theheadtitle{}
+\gdef\thetitle{}
 \renewcommand{\title}[2][\@nil]{
-  \def\tmp{#1}
+  \def\@tmp{#1}
   \gdef\@title{#2}
   \gdef\thetitle{#2}
-  \ifx\tmp\@nnil
-    \gdef\theheadtitle{Head title is undefined}
-  \else
+  \ifx\@tmp\@nnil\relax\else
     \gdef\theheadtitle{#1}
   \fi
+  \let\@tmp\undefined
 }
 
 % Patch \maketitle.  Note that this only works with `notitlepage' (which
@@ -588,29 +688,72 @@
   \par
   \vskip 1.5em}
 
-%%% Headers ------------------------------------------------------------
+%%% Headers, footers, and abstract -------------------------------------
+
+\def\@secnumfmt{\small\S\textbx{\thesection}}
+
+% New command to format page numbers in headers as:
+% <page> of <total> (if the total pages is less than 999) or <page>.
+\def\@pagenumfmt{%
+  % The reason we check the value of \@abspage@last is because it
+  % defaults to a ridiculously large number unless a .aux file is
+  % produced during compilation.
+  \ifnum\@abspage@last>999%
+    {\small\textbx{\thepage}}%
+  \else%
+    {\small\textbx{\thepage} \textit{of} \textbx{\@abspage@last}}%
+  \fi%
+}%
+
+% Patch the two-sided version of the `headings' pagestyle.
+% The styling was partially inspired by TAOCP headers.
+\def\ps@headings{%
+    \let\@oddfoot\@empty%
+    \let\@evenfoot\@empty%
+    % Produces the following head on odd pages (except on page 1):
+    % <page #>                <doc title> §<sec #>
+    \def\@oddhead{%
+      {\@pagenumfmt}%
+      \hfill%
+      {\footnotesize\widetext{\theheadtitle}}%
+      \ifnum \c@secnumdepth >\z@%
+        \quad%
+        \@secnumfmt%
+      \fi%
+    }
+    % Produces the following head on even pages:
+    % §<sec #> <sec title>                <page #>
+    \def\@evenhead{%
+      \ifnum \c@secnumdepth >\z@%
+        \@secnumfmt%
+        \quad%
+      \fi%
+      {\footnotesize\widetext{\leftmark}}%
+      \hfill%
+      {\@pagenumfmt}%
+    }
+  \def\sectionmark##1{\markboth{##1}{}}%
+  \def\subsectionmark##1{\markright{\MakeUppercase{##1}}{}}%
+}
+
+% Patch plain pagestyle to use bold extended fonts for page numbers.
+% Adapted from source2e.
+\def\ps@plain{%
+  \let\@mkboth\@gobbletwo%
+  \let\@oddhead\@empty%
+  \let\@evenhead\@empty%
+  \def\@oddfoot{\reset@font\hfil\@pagenumfmt\hfil}%
+  \let\@evenfoot\@oddfoot%
+}
+
+% Simpler abstract, without the abstract head.
+\renewenvironment{abstract}{\small\quotation}
 
 % Force a two-sided layout even when `twosided' is not
 % passed as an option.
 \@twosidetrue
 \@mparswitchtrue
-
-% Patch the two-sided version of the `headings' pagestyle.
-\def\ps@headings{%
-    \let\@oddfoot\@empty\let\@evenfoot\@empty
-    \def\@evenhead{%
-      \small%
-      \thepage\hfill%
-      \widetext{\MakeUppercase{\leftmark}}{\leftmark}\hfill\phantom{}%
-    }
-    \def\@oddhead{%
-      \small\hfill%
-      \widetext{\MakeUppercase{\theheadtitle}}{\theheadtitle}%
-      \hfill\thepage%
-    }
-  \def\sectionmark##1{\markboth{##1}{}}%
-  \def\subsectionmark##1{\markright{\MakeUppercase{##1}}{}}%
-}
+\pagestyle{headings}
 
 \endinput
 
