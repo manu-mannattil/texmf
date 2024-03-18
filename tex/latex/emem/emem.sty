@@ -19,24 +19,36 @@
 %
 % OPTIONS
 %
-%   cmd             --  define custom commands and load a minimum set of
-%                       packages, but don't do anything else
-%   draft           --  disable loading of cosmetic/heavyweight packages
-%                       and suppress aesthetic features
-%   fonts, nofonts  --  load/do not LM Modern fonts (with customizations)
-%   lineno          --  add line numbers using the lineno package
-%   natbib          --  load the natbib package and use Phys. Rev. \bibliographystyle.
+%   43, a4, letter,     Paper size can be either 8.6in x 6.45in (= 4:3
+%     or defaultpaper   aspect ratio; default), A4 paper, US letter, or
+%                       leave unadjusted [1].
 %
-% TODO
+%   cmd                 Define custom commands and load a minimum set of
+%                       packages, but don't do anything else.
 %
-%   1. Right now, the paper size is 9in x 7in.  Include an
-%      option to produce A4/Letter output, but keep the
-%      textwidth the same.  And another one to disable
-%      altering page size altogether.
+%   draft               Disable loading of cosmetic/heavyweight packages
+%                       and suppress aesthetic features.
+%
+%   fonts, nofonts      Load/do not LM Modern fonts (with customizations).
+%
+%   lineno              Add line numbers using the lineno package.
+%
+%   natbib              Load the natbib package and use the Phys. Rev.
+%                       \bibliographystyle.
+%
+% [1] The reason why a page size with a 4:3 aspect ratio was chosen was
+%     this: I noticed that 99% of tablets/mobile devices have an aspect
+%     ratio that's larger than or equal to 4:3.  Thus, with a 4:3 page
+%     aspect ratio, on a table that is in portrait mode, the document
+%     would either perfectly fit the display or would be letterboxed
+%     (when zoomed to width).  With a document with a larger aspect
+%     ratio, you would have to scroll up/down on a tablet with a smaller
+%     aspect ratio.  Because being letterboxed is better than requiring
+%     to scroll, it is better to choose a page aspect ratio of 4:3.
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{emem}[2024/02/25 v0.5]
+\ProvidesPackage{emem}[2024/03/18 v0.6]
 
 %%% Option processing --------------------------------------------------
 
@@ -53,14 +65,27 @@
 \DeclareOption{fonts}\@fontstrue
 \DeclareOption{nofonts}\@fontsfalse
 
-\newif\if@margins
-\DeclareOption{margins}\@marginstrue
-\DeclareOption{nomargins}\@marginsfalse
+\newif\if@fourthree@paper
+\DeclareOption{43}\@fourthree@papertrue
+
+\newif\if@afour@paper
+\DeclareOption{a4}\@afour@papertrue
+
+\newif\if@letter@paper
+\DeclareOption{letter}\@letter@papertrue
+
+\newif\if@default@paper
+\DeclareOption{defaultpaper}{%
+  \@default@papertrue%
+  \@fourthree@paperfalse%
+  \@afour@paperfalse%
+  \@letter@paperfalse%
+}
 
 \newif\if@lineno
 \DeclareOption{lineno}\@linenotrue
 
-\ExecuteOptions{fonts,margins}
+\ExecuteOptions{fonts,43}
 \ProcessOptions\relax
 
 %%% Mathematics --------------------------------------------------------
@@ -452,55 +477,6 @@
 
 %%% Whitespace management ----------------------------------------------
 
-\if@draft\relax\else
-  % From Section 3.5 of memoir's documentation.
-  \clubpenalty=9996
-  \widowpenalty=9999
-  \brokenpenalty=4991
-  \predisplaypenalty=10000
-  \postdisplaypenalty=1549
-  \displaywidowpenalty=1602
-
-  % Discourage pagebreak between lines.
-  \interlinepenalty=1000
-\fi
-
-% \RequirePackage[
-%   paperheight=9in,
-%   paperwidth=7in,
-%   height=7.25in,
-%   bottom=0.75in,
-%   width=5.35in,
-%   left=0.825in,
-% ]{geometry}
-
-% Equivalent to above import of `geometry'
-% Copied from test.log.
-\if@margins
-  \paperwidth=505.89pt
-  \paperheight=650.43pt
-  \textwidth=386.64493pt
-  \textheight=523.95749pt
-  \oddsidemargin=-12.64746pt
-  \evensidemargin=-12.64746pt
-  \topmargin=-36.99998pt
-  \headheight=12.0pt
-  \headsep=25.0pt
-  \topskip=10.0pt
-  \footskip=30.0pt
-  \marginparwidth=65.0pt
-  \marginparsep=11.0pt
-  \columnsep=10.0pt
-  \skip\footins=9.0pt plus 4.0pt minus 2.0pt
-  \hoffset=0.0pt
-  \voffset=0.0pt
-  \mag=1000
-  \@twocolumnfalse
-  \@twosidetrue
-  \@mparswitchtrue
-  \@reversemarginfalse
-\fi
-
 % I prefer slightly compact lists with "zero" separation between the
 % items.  But there is no way to set \itemsep globally.  So we use
 % \g@addto@macro to add the appropriate \setlength command to the
@@ -508,6 +484,75 @@
 \g@addto@macro\itemize{\setlength{\itemsep}{0pt}}
 \g@addto@macro\enumerate{\setlength{\itemsep}{0pt}}
 \g@addto@macro\description{\setlength{\itemsep}{0pt}}
+
+% Page dimensions/margins ----------------------------------------------
+
+% The various internal *TeX lengths/dimensions were extracted from the
+% *.log file after setting them using the geometry package.  For
+% example,
+%
+%   \RequirePackage[
+%     paperwidth=465.0pt,
+%     paperheight=620.0pt,
+%     textheight=524pt,
+%     textwidth=393pt,
+%     headsep=15pt,
+%     foot=22pt,
+%     includehead,
+%     vmarginratio=3:4,
+%     hcentering,
+%   ]{geometry}
+%
+% The following sed command can be used to extract the lengths from the
+% *.log file after compilation:
+%
+% $ sed -n '/\*.*paperwidth.*/,/\*.*footskip.*/{ s/\* //; p}' *.log
+%
+% Irrespective of the paper size, the block dimensions (i.e.,
+% textwidth, textheight, etc.) must be kept the same.  This way
+% fine-tuning can be done using any paper size.
+%
+
+% NOTE: To debug uncomment the line below.
+% \RequirePackage[pass,showframe]{geometry}
+
+\if@default@paper
+  \relax
+\else
+  % Common dimensions for all three paper sizes.  The text block aspect
+  % ratio, i.e., textheight/textwidth = 4/3 for all three paper sizes.
+  % With the 43 option, the paper size would also be in 4:3 aspect ratio.
+  \textwidth=393.0pt
+  \textheight=524.0pt
+  \headheight=12.0pt
+  \headsep=15.0pt
+  \topskip=10.0pt
+  \footskip=22.0pt
+\fi
+
+\if@fourthree@paper
+  \paperwidth=465.0pt
+  \paperheight=620.0pt
+  \oddsidemargin=-36.26999pt
+  \evensidemargin=-36.26999pt
+  \topmargin=-42.6986pt
+\fi
+
+\if@afour@paper
+  \paperwidth=597.50787pt
+  \paperheight=845.04684pt
+  \oddsidemargin=29.98395pt
+  \evensidemargin=29.98395pt
+  \topmargin=53.75006pt
+\fi
+
+\if@letter@paper
+  \paperwidth=614.295pt
+  \paperheight=794.96999pt
+  \oddsidemargin=38.3775pt
+  \evensidemargin=38.3775pt
+  \topmargin=32.28854pt
+\fi
 
 %%% Line numbers -------------------------------------------------------
 
