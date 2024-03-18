@@ -452,5 +452,77 @@ soon as I can.
 \end{equation}
 %
 
+\section{test}
+
+%
+\begin{equation}
+  \nsqrt{\pi}\quad
+  \nsqrt[1]{\pi}\quad
+  \nsqrt[2]{\pi}\quad
+  \nsqrt[3]{\pi}\quad
+\end{equation}
+%
+
+\newcommand{\isqpi}[1][1]{\frac{1}{\nsqrt[#1]{2\pi}}}
+
+%
+\begin{align*}
+  \isqpi = \isqpi[1] = \frac{1}{\sqrt{2\pi}}\\
+  \isqpi[2] = \frac{1}{2\pi}\\
+  \isqpi[3] = \frac{1}{(2\pi)^{3/2}}
+\end{align*}
+%
+
+\pagebreak
+
+\begin{align*}
+  \idd{x} f(x)\\
+  \int \mathrm{d}x\, f(x)\\
+  \idd[-\infty][\infty]{x} f(x)\\
+  \int_{-\infty}^{\infty}\mathrm{d}x\, f(x)\\
+  \idd{x} f(x)\\
+  \int \mathrm{d}x\, f(x)\\
+  \idd[x \in \mathscr{U}]{x} f(x)\\
+\end{align*}
+
+text above
+text above
+text above
+text above
+text above
+text above
+text above
+text above
+text above
+Inline: $\idd[-\infty][\infty]{x} f(x)$ and $\int_{-\infty}^{\infty}\mathrm{d}x\, f(x)$.
+text below
+text below
+text below
+text below
+text below
+text below
+text below
+text below
+text below
+text below
+text below
+
+\begin{align*}
+  \oidd{x} f(x)\\
+  \oint \mathrm{d}x\, f(x)\\
+  \oidd[-\infty][\infty]{x} f(x)\\
+  \oint_{-\infty}^{\infty}\mathrm{d}x\, f(x)\\
+  \oidd{x} f(x)\\
+  \oint \mathrm{d}x\, f(x)\\
+  \oidd[x \in \mathscr{U}]{x} f(x)\\
+\end{align*}
+
+\begin{align*}
+  \idd[a][b]{x} f(x)\\
+  \iidd{x} f(x)\\
+  \iiidd{x} f(x)\\
+  \oiidd{x} f(x)
+\end{align*}
+
 
 \end{document}

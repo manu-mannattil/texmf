@@ -67,12 +67,15 @@
 
 \newif\if@fourthree@paper
 \DeclareOption{43}\@fourthree@papertrue
+\DeclareOption{43paper}\@fourthree@papertrue
 
 \newif\if@afour@paper
 \DeclareOption{a4}\@afour@papertrue
+\DeclareOption{a4paper}\@afour@papertrue
 
 \newif\if@letter@paper
 \DeclareOption{letter}\@letter@papertrue
+\DeclareOption{letterpaper}\@letter@papertrue
 
 \newif\if@default@paper
 \DeclareOption{defaultpaper}{%
@@ -105,6 +108,17 @@
 % Upright derivates and partials.
 \def\dd{\ensuremath\mathrm{d}}
 \def\Dd{\ensuremath\mathrm{D}}
+
+% Command to typeset \int_{a}^{b} \mathrm{d}x\, with ease.
+% Don't use \IntAndD directly.  Instead, use:
+%   \idd{x}           -- without limits
+%   \idd[a][b]{x}     -- with optional limits
+%   \oidd{x}          -- without limits
+%   \oidd[a][b]{x}    -- with optional limits
+\RequirePackage{xparse}
+\newcommand{\IntAndD}[4]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,}
+\NewDocumentCommand{\idd}{ O{} O{} m }{\IntAndD{\intop}{#1}{#2}{#3}}
+\NewDocumentCommand{\oidd}{ O{} O{} m }{\IntAndD{\ointop}{#1}{#2}{#3}}
 
 % Linear algebra
 \def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
@@ -155,6 +169,62 @@
 % want.  Source: https://tex.stackexchange.com/q/43008
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\Abs}{\|}{\|} % || ... || version
+
+% In physics, it is common to have radicals of the form x^(n/2), which
+% should be correctly typeset as
+%
+%   \sqrt{x}    if n = 1,
+%   x           if n = 2,
+%   x^{(n/2)}   if n > 2.
+%
+% The command below \nsqrt takes two arguments and is supposed to be
+% used as \nsqrt[n](x).  \nsqrt is not useful on its own per se as it
+% only save a few keystrokes.  But consider something like
+% \frac{1}{\sqrt{2\pi}} and it's variations.  Using \nsqrt, we can
+% define something like
+%
+%   \newcommand{\isqpi}[1][1]{\frac{1}{\nsqrt[#1]{2\pi}}}
+%
+% Using the above \isqi, we can now easily get the following variations
+% quite easily:
+%
+%   \isqpi = \isqpi[1] = \frac{1}{\sqrt{2\pi}}
+%            \isqpi[2] = \frac{1}{2\pi}
+%            \isqpi[3] = \frac{1}{(2\pi)^{3/2}}
+%
+\newcommand{\nsqrt}[2][1]{%
+  \ifnum#1=1%
+    \ensuremath\sqrt{#2}%
+  \else%
+    \ifnum#1=2%
+      \ensuremath#2%
+    \else%
+      \ensuremath(#2)^{#1/2}%
+    \fi%
+  \fi%
+}
+
+% Command to define (inverse) transformations with proper {} braces and
+% spacings for different math environments.  For example, one might
+% define the Fourier transform and its inverse as:
+%
+%   \def\FT#1{\Transform{\mathscr{F}}{#1}}
+%   \def\IFT#1{\InverseTransform{\mathscr{F}}{#1}}
+%
+\def\Transform#1#2{%
+  \mathchoice%
+  {\ensuremath{#1}\left\{#2\right\}}% display math
+  {\ensuremath{#1}\{#2\}}% inline math
+  {\ensuremath{#1}\{#2\}}% script
+  {\ensuremath{#1}\{#2\}}% superscript
+}
+\def\InverseTransform#1#2{%
+  \mathchoice%
+  {\ensuremath{#1}^{-1}\!\left\{#2\right\}}% display math
+  {\ensuremath{#1}^{-1}\!\{#2\}}% inline math
+  {\ensuremath{#1}^{-1}\!\{#2\}}% script
+  {\ensuremath{#1}^{-1}\!\{#2\}}% superscript
+}
 
 % Spacing around operators and relations in math mode are
 % governed by specific skip lengths:
@@ -578,6 +648,15 @@
   \RequirePackage{lmodern}
   \RequirePackage{amssymb}
   \RequirePackage{mathrsfs}
+
+  % We define \iint, \oiint versions of \iddx only if the esint package
+  % is loaded.  Most font packages don't define multi-integral math
+  % operators.
+  \RequirePackage{esint}
+  \NewDocumentCommand{\iidd}{ O{} O{} m }{\IntAndD{\iintop}{#1}{#2}{#3}}
+  \NewDocumentCommand{\iiidd}{ O{} O{} m }{\IntAndD{\iiintop}{#1}{#2}{#3}}
+  \NewDocumentCommand{\iiiidd}{ O{} O{} m }{\IntAndD{\iiiintop}{#1}{#2}{#3}}
+  \NewDocumentCommand{\oiidd}{ O{} O{} m }{\IntAndD{\oiintop}{#1}{#2}{#3}}
 
   \RequirePackage{stmaryrd}
   % Removes warning about nonexistent bold version of stmaryd symbols by
