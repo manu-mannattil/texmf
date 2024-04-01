@@ -14,6 +14,23 @@
 \RequirePackage{mathtools}
 \mathtoolsset{showonlyrefs}
 \RequirePackage[cmd]{emem}
+\RequirePackage{tikz}
+\usetikzlibrary{tikzmark}
+
+% \begin{cell} ... \end{cell} environment.
+% For poster making mainly.
+\RequirePackage[most]{tcolorbox}
+\newtcolorbox{cell}[2][]{
+  boxsep=0.5em,
+  colback=bg,
+  colbacktitle=bs1!25,
+  colframe=black,
+  coltitle=black,
+  enhanced,
+  fonttitle=\bfseries,
+  drop fuzzy shadow,
+  title=#2,#1
+}
 
 %%% Style ---------------------------------------------------------------------
 
@@ -76,7 +93,10 @@
   \usebeamertemplate{page number in head/foot}%
   \hspace*{1em}\vskip1em%
 }
-\setbeamertemplate{footline}[pagecount]
+% Don't put anything in the footer if we're making a poster.
+\@ifpackageloaded{beamerposter}{\relax}{%
+  \setbeamertemplate{footline}[pagecount]%
+}
 
 % Get rid of PDF navigation symbols at the bottom.
 \setbeamertemplate{navigation symbols}{}
