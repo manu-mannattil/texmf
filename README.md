@@ -1,7 +1,7 @@
 texmf
 =====
 
-My local texmf directory with custom packages and classes.
+My local texmf tree with custom packages and classes.
 
 Setup
 -----

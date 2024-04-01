@@ -16,6 +16,10 @@
 % Ask beamer to leave fonts untouched.
 \@ifclassloaded{beamer}{\beamer@suppressreplacementstrue}
 
+% For avoiding conflicts with emem.sty.
+\let\iintop\undefined
+\let\iiintop\undefined
+
 \RequirePackage{amssymb}
 \RequirePackage[widespace]{fourier}
 

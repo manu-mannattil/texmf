@@ -34,6 +34,10 @@
 % Prevent Beamer from overwriting fonts.
 \@ifclassloaded{beamer}{\beamer@suppressreplacementstrue}
 
+% For avoiding conflicts with emem.sty.
+\let\iintop\undefined
+\let\iiintop\undefined
+
 % Times for Roman, CM Typewriter for fixed-width text, and
 % Helvetica for sans serif.
 \RequirePackage{ifxetex,ifluatex}
@@ -49,6 +53,8 @@
   ]{TeX Gyre Termes}
   \setsansfont[Scale=0.92]{TeX Gyre Heros}
 \fi
+
+\RequirePackage{mathrsfs}
 
 \if@mtpro
   % MathTime Pro 2 isn't compatible with amsfonts and amssymb, and provides all
