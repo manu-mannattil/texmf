@@ -110,15 +110,35 @@
 \def\Dd{\ensuremath\mathrm{D}}
 
 % Command to typeset \int_{a}^{b} \mathrm{d}x\, with ease.
+\newcommand{\IntAndD}[4]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,}
+%
 % Don't use \IntAndD directly.  Instead, use:
 %   \idd{x}           -- without limits
 %   \idd[a][b]{x}     -- with optional limits
 %   \oidd{x}          -- without limits
 %   \oidd[a][b]{x}    -- with optional limits
-\RequirePackage{xparse}
-\newcommand{\IntAndD}[4]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,}
+\RequirePackage{xparse} % for more than 1 optional argument.
 \NewDocumentCommand{\idd}{ O{} O{} m }{\IntAndD{\intop}{#1}{#2}{#3}}
 \NewDocumentCommand{\oidd}{ O{} O{} m }{\IntAndD{\ointop}{#1}{#2}{#3}}
+
+% Many font packages don't define multi-integral math operators.  So we
+% define them here.  We adjust the spacing between integrals
+% by redefining \intkern@ from amsmath.sty; see https://tex.stackexchange.com/a/308418
+%
+% NOTE: If the font packages define custom \iint, etc., it is better to load
+% the package *before* emem.sty as errors ensue if the font package uses
+% \newcomand to define the operators.
+%
+% If custom font packages still issue an error, undefine \iintop and
+% \iiintop using: \let\iintop\undefined
+\def\intkern@{\mkern-8mu\mathchoice{\mkern-6mu}{}{}{}}
+\providecommand{\iintop}{\intop\intkern@\intop}
+\providecommand{\iiintop}{\intop\intkern@\intop\intkern@\intop}
+
+\newcommand{\IIntAndD}[5]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,\dd{#5}\,}
+\newcommand{\IIIntAndD}[6]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,\dd{#5}\,\dd{#6}\,}
+\NewDocumentCommand{\iidd}{ O{} O{} m m }{\IIntAndD{\iintop}{#1}{#2}{#3}{#4}}
+\NewDocumentCommand{\iiidd}{ O{} O{} m m m}{\IIIntAndD{\iiintop}{#1}{#2}{#3}{#4}{#5}}
 
 % Linear algebra
 \def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
@@ -178,14 +198,14 @@
 %   x^{(n/2)}   if n > 2.
 %
 % The command below \nsqrt takes two arguments and is supposed to be
-% used as \nsqrt[n](x).  \nsqrt is not useful on its own per se as it
-% only save a few keystrokes.  But consider something like
-% \frac{1}{\sqrt{2\pi}} and it's variations.  Using \nsqrt, we can
+% used as \nsqrt[n](x).  \nsqrt is not useful on its own as it only
+% saves a few keystrokes.  But consider something like
+% \frac{1}{\sqrt{2\pi}} and its variations.  Using \nsqrt, we can
 % define something like
 %
 %   \newcommand{\isqpi}[1][1]{\frac{1}{\nsqrt[#1]{2\pi}}}
 %
-% Using the above \isqi, we can now easily get the following variations
+% Using the above \isqpi, we can now easily get the following variations
 % quite easily:
 %
 %   \isqpi = \isqpi[1] = \frac{1}{\sqrt{2\pi}}
@@ -238,7 +258,6 @@
 % the textwidth and also to get rid of underfull warnings.
 %
 % Adapted from: https://groups.google.com/g/comp.text.tex/c/-COMVMhkkFo
-%
 \def\mathskips#1{%
   \thinmuskip\muexpr\thinmuskip*#1%
   \medmuskip\muexpr\medmuskip*#1%
@@ -249,8 +268,7 @@
 % environment to break long display equations across two pages.
 % However, this results an equation with no equation number.  The
 % command \numberthis defined below adds an equation number to a given
-% line.
-% https://tex.stackexchange.com/a/42728
+% line.  Source: https://tex.stackexchange.com/a/42728
 \def\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 %%% Miscellaneous ------------------------------------------------------
@@ -490,7 +508,7 @@
 \numberwithin{equation}{section}
 
 % Black square for QED.
-\def\qedsymbol{$\blacksquare$}
+% \def\qedsymbol{$\blacksquare$}
 
 % Theorem style with period after the theorem head removed and bold theorem
 % spec: https://tex.stackexchange.com/a/185168.
@@ -636,27 +654,13 @@
 
 %%% Fonts and typography -----------------------------------------------
 
-% Commands to use extended bold in math and text.
-\DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
-\DeclareMathAlphabet{\mathbx}{\encodingdefault}{\rmdefault}{bx}{n}
-\DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
-\def\textbx#1{{\fontshape{\updefault}\fontseries{bx}\selectfont#1}}
-\def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
-\def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
-
 \if@fonts
   \RequirePackage{lmodern}
   \RequirePackage{amssymb}
   \RequirePackage{mathrsfs}
 
-  % We define \iint, \oiint versions of \iddx only if the esint package
-  % is loaded.  Most font packages don't define multi-integral math
-  % operators.
+  % Better multiple integrals with Computer Modern.
   \RequirePackage{esint}
-  \NewDocumentCommand{\iidd}{ O{} O{} m }{\IntAndD{\iintop}{#1}{#2}{#3}}
-  \NewDocumentCommand{\iiidd}{ O{} O{} m }{\IntAndD{\iiintop}{#1}{#2}{#3}}
-  \NewDocumentCommand{\iiiidd}{ O{} O{} m }{\IntAndD{\iiiintop}{#1}{#2}{#3}}
-  \NewDocumentCommand{\oiidd}{ O{} O{} m }{\IntAndD{\oiintop}{#1}{#2}{#3}}
 
   \RequirePackage{stmaryrd}
   % Removes warning about nonexistent bold version of stmaryd symbols by
@@ -665,17 +669,25 @@
 
   \RequirePackage{bm}
 
-  % Use bold non-extended instead of the default bold extended.  For most
-  % fonts, it shouldn't make a difference, but for Computer Modern and its
-  % variants, it does.  The usual CM bold is too wide in my opinion.
-  \def\bfdefault{b}
-  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
-
   % Use Computer Modern Bright as the font for quotes.
   \def\@quotefont{\fontfamily{cmbr}\selectfont}
 \else
   \def\@quotefont{\fontfamily{\sfdefault}\selectfont}
 \fi
+
+% Commands to use extended bold in math and text.
+\DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
+\DeclareMathAlphabet{\mathbx}{\encodingdefault}{\rmdefault}{bx}{n}
+\DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
+\def\textbx#1{{\fontshape{\updefault}\fontseries{bx}\selectfont#1}}
+\def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
+\def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
+
+% Use bold non-extended instead of the default bold extended.  For most
+% fonts, it shouldn't make a difference, but for Computer Modern and its
+% variants, it does.  The usual CM bold is too wide in my opinion.
+\def\bfdefault{b}
+\DeclareMathAlphabet{\mathbf}{\encodingdefault}{\rmdefault}{b}{n}
 
 % Command to typeset with more separation between characters and words.
 % Requires microtype for \textls: https:/tex.stackexchange.com/q/23921

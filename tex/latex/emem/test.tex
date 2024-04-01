@@ -482,7 +482,7 @@ soon as I can.
   \int_{-\infty}^{\infty}\mathrm{d}x\, f(x)\\
   \idd{x} f(x)\\
   \int \mathrm{d}x\, f(x)\\
-  \idd[x \in \mathscr{U}]{x} f(x)\\
+  \idd[x \in \mathcal{U}]{x} f(x)\\
 \end{align*}
 
 text above
@@ -508,21 +508,12 @@ text below
 text below
 
 \begin{align*}
-  \oidd{x} f(x)\\
-  \oint \mathrm{d}x\, f(x)\\
-  \oidd[-\infty][\infty]{x} f(x)\\
-  \oint_{-\infty}^{\infty}\mathrm{d}x\, f(x)\\
-  \oidd{x} f(x)\\
-  \oint \mathrm{d}x\, f(x)\\
-  \oidd[x \in \mathscr{U}]{x} f(x)\\
+  \iidd{x}{y} f(x,y)\\
+  \iint \dd{x}\,\dd{y}\, f(x,y)\\
+  \iiidd{x}{y}{z} f(x,y,z)\\
+  \idd[a][b]{x}\!\idd[c][d]{y}\!\idd[e][f]{z} h(x, y, z)
 \end{align*}
 
-\begin{align*}
-  \idd[a][b]{x} f(x)\\
-  \iidd{x} f(x)\\
-  \iiidd{x} f(x)\\
-  \oiidd{x} f(x)
-\end{align*}
-
+Inline -- $\iidd{x}{y} f(x,y)$ -- $\iiidd{x}{y}{z} f(x,y,z)$.
 
 \end{document}
