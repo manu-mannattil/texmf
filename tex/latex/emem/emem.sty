@@ -19,7 +19,7 @@
 %
 % OPTIONS
 %
-%   43, a4, letter,     Paper size can be either 8.6in x 6.45in (= 4:3
+%   43, a4, letter,     Paper size can be either 8.6in x 6.5in (= 4:3
 %     or defaultpaper   aspect ratio; default), A4 paper, US letter, or
 %                       leave unadjusted [1].
 %
@@ -164,6 +164,11 @@
 \DeclareMathOperator{\Trace}{Trace}                 % trace of a matrix (alternate)
 
 \def\id{\ensuremath\mathrm{id}}                     % identity map
+
+% Other special functions.
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\si}{si}
+\DeclareMathOperator{\rect}{rect}
 
 % Nonstandard trignometric stuff.
 \DeclareMathOperator{\acos}{acos}
@@ -768,7 +773,7 @@
   \let\@seccntformat\appendix@seccntformat%
 }
 
-%%% Floats -------------------------------------------------------------
+%%% Floats (figures, tables, etc.) -------------------------------------
 
 % Per-section float numbering.
 \counterwithin{figure}{section}
@@ -787,6 +792,22 @@
     \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
   \fi
   \vskip\belowcaptionskip}
+
+% \wline and \wwline for tables (basically \hline and \hline\hline with
+% "better" spacing above/below).
+\def\wline@space{\vspace{3\p@ plus2\p@ minus1\p@}}
+\def\wline{\noalign{%
+  \wline@space%
+  \hrule\@height\arrayrulewidth% equivalent to \hline
+  \wline@space%
+}}
+\def\wwline{\noalign{%
+  \wline@space%
+  \hrule\@height\arrayrulewidth%
+  \vspace{\p@}%
+  \hrule\@height\arrayrulewidth%
+  \wline@space%
+}}
 
 %%% Document title formatting ------------------------------------------
 

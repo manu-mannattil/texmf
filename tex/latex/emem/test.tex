@@ -278,20 +278,19 @@ Side captions for figures.}
 \end{SCfigure}
 
 \begin{table}
+\caption{Table to test captions and labels.}
 \centering
-\begin{tabular}{|c|c|c|c|}
- \hline
- Col1 & Col2 & Col2 & Col3 \\
- \hline
- \hline
+\begin{tabular}{cccc}
+ \wwline
+ Col1 & Col2 & Col2 & Col4 \\
+ \wline
  1 & 6 & 87837 & 787 \\
  2 & 7 & 78 & 5415 \\
  3 & 545 & 778 & 7507 \\
  4 & 545 & 18744 & 7560 \\
  5 & 88 & 788 & 6344 \\
- \hline
+ \wwline
 \end{tabular}
-\caption{Table to test captions and labels.}
 \label{table:1}
 \end{table}
 
@@ -515,5 +514,40 @@ text below
 \end{align*}
 
 Inline -- $\iidd{x}{y} f(x,y)$ -- $\iiidd{x}{y}{z} f(x,y,z)$.
+
+\begin{table}
+\caption{\label{jlab1}Journals to which this document applies, and macros for the abbreviated journal names in {\tt iopart.cls}. Macros for other journal titles are listed in appendix\,A.}
+\footnotesize
+\begin{tabular}{@{}llll}
+\wwline
+Short form of journal title&Macro name&Short form of journal title&Macro name\\
+\wline
+2D Mater.&\verb"\TDM"&Mater. Res. Express&\verb"\MRE"\\
+Biofabrication&\verb"\BF"&Meas. Sci. Technol.$^c$&\verb"\MST"\\
+Bioinspir. Biomim.&\verb"\BB"&Methods Appl. Fluoresc.&\verb"\MAF"\\
+Biomed. Mater.&\verb"\BMM"&Modelling Simul. Mater. Sci. Eng.&\verb"\MSMSE"\\
+Class. Quantum Grav.&\verb"\CQG"&Nucl. Fusion&\verb"\NF"\\
+Comput. Sci. Disc.&\verb"\CSD"&New J. Phys.&\verb"\NJP"\\
+Environ. Res. Lett.&\verb"\ERL"&Nonlinearity$^{a,b}$&\verb"\NL"\\
+Eur. J. Phys.&\verb"\EJP"&Nanotechnology&\verb"\NT"\\
+Inverse Problems&\verb"\IP"&Phys. Biol.$^c$&\verb"\PB"\\
+J. Breath Res.&\verb"\JBR"&Phys. Educ.$^a$&\verb"\PED"\\
+J. Geophys. Eng.$^d$&\verb"\JGE"&Physiol. Meas.$^{c,d,e}$&\verb"\PM"\\
+J. Micromech. Microeng.&\verb"\JMM"&Phys. Med. Biol.$^{c,d,e}$&\verb"\PMB"\\
+J. Neural Eng.$^c$&\verb"\JNE"&Plasma Phys. Control. Fusion&\verb"\PPCF"\\
+J. Opt.&\verb"\JOPT"&Phys. Scr.&\verb"\PS"\\
+J. Phys. A: Math. Theor.&\verb"\jpa"&Plasma Sources Sci. Technol.&\verb"\PSST"\\
+J. Phys. B: At. Mol. Opt. Phys.&\verb"\jpb"&Rep. Prog. Phys.$^{e}$&\verb"\RPP"\\
+J. Phys: Condens. Matter&\verb"\JPCM"&Semicond. Sci. Technol.&\verb"\SST"\\
+J. Phys. D: Appl. Phys.&\verb"\JPD"&Smart Mater. Struct.&\verb"\SMS"\\
+J. Phys. G: Nucl. Part. Phys.&\verb"\jpg"&Supercond. Sci. Technol.&\verb"\SUST"\\
+J. Radiol. Prot.$^a$&\verb"\JRP"&Surf. Topogr.: Metrol. Prop.&\verb"\STMP"\\
+Metrologia&\verb"\MET"&Transl. Mater. Res.&\verb"\TMR"\\
+\wwline
+\end{tabular}\\
+$^{a}$UK spelling is required; $^{b}$MSC classification numbers are required; $^{c}$titles of articles are required in journal references; $^{d}$Harvard-style references must be used (see section \ref{except}); $^{e}$final page numbers of articles are required in journal references.
+
+\end{table}
+
 
 \end{document}
