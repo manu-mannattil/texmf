@@ -35,6 +35,10 @@
 %%% Style ---------------------------------------------------------------------
 
 \setbeamercolor{structure}{fg=bs2}
+\setbeamercolor{subtitle}{fg=bs6}
+
+% Superscripts for affiliations/institutes.
+\setbeamercolor{instsuper}{fg=bs4}
 
 \setbeamercolor{alerted text}{fg=nord11}
 \setbeamercolor{alt alerted text}{fg=C0}
@@ -65,6 +69,16 @@
 \setbeamerfont{institute}{size=\small}
 \setbeamerfont{date}{size=\small}
 
+% Colored superscripts for institutes in \author{ ... } list.
+\def\beamer@insttitle#1{\textsuperscript{\usebeamercolor[fg]{instsuper}#1}}
+% Space between different authors when \and is used.
+\def\beamer@andtitle{\qquad}
+
+% Colored superscripts for institutes in \institute{ ... } list.
+\def\beamer@instinst#1{\textsuperscript{\usebeamercolor[fg]{instsuper}#1}\ignorespaces}
+% Vertical space between different institutes when \and is used.
+\def\beamer@andinst{\\[0.125em]}
+
 % If we're using sections to organize our documents, add an outline
 % slide right after the section begins.
 \def\toctitle{Outline}
@@ -74,6 +88,45 @@
     \frametitle{\toctitle}
     \tableofcontents[currentsection]
   \end{frame}
+}
+
+% Support for title footer.
+\def\titlefooter{}
+\def\titlefoot#1{\def\titlefooter{#1}}
+
+% Title page customization.
+\setbeamertemplate{title page}
+{
+  \vbox{}
+  \vfill
+  \begingroup
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \vskip1em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \vskip1em
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=0pt,center]{footer}
+      \usebeamerfont{date}\titlefooter
+    \end{beamercolorbox}
+  \endgroup
+  \vfill
 }
 
 %%% Footer --------------------------------------------------------------------
@@ -111,6 +164,8 @@
 
 % Command to typeset emails.
 \def\email#1{\href{mailto:#1}{\usebeamercolor[fg]{structure}\usebeamerfont{alerted text}#1}}
+
+\def\colorss#1{{\large\color{bs1}$^{#1}$}}
 
 % Postit environment for a colored box without a title.
 \setbeamercolor{postit}{fg=black,bg=nord13!35}
