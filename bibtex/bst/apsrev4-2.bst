@@ -1,54 +1,19 @@
-% apsrev4-2.bst -- custom version of the original apsrev4-1.bst
+% apsrev4-2.bst -- custom version of the original apsrev4-2.bst
 %
-% By default, apsrev4-1.bst does not use the full article title in
-% bibliographies.  One can force REVTeX to use the full article title by
-% using the `longbibliography' option of REVTeX.  However, this also
-% results in the first names of the authors being expanded, which
-% I don't want.  And in any case, this is only possible if you use
-% REVTeX as your main LaTeX class.  This BST file takes care of these
-% issues [1].
+% Changes
+% -------
 %
-% [1]: https://tex.stackexchange.com/q/15677
+%   - Full article titles always; changed in the "control.init" function:
+%       https://tex.stackexchange.com/q/15677
+%   - Bug fix to remove unwanted space after preprint field.
 %
-% ------------------------------------------------------------------------
-%
-%%
-%% This is file `apsrev4-2.bst', and is a hand-edited version of apsrev4-1.bst
- % ===============================================================
- % IMPORTANT NOTICE:
- % This file can be redistributed and/or modified under the terms
- % of the LaTeX Project Public License Distributed from CTAN
- % archives in directory macros/latex/base/lppl.txt; either
- % version 1 of the License, or any later version.
- % ===============================================================
- %-------------------------------------------------------------------
- % This bibliography style file is intended for texts in ENGLISH
- % This is an author-year citation style bibliography. As such, it is
- % non-standard LaTeX, and requires a special package file to function properly.
- % Such a package is natbib.sty   by Patrick W. Daly
- % The form of the \bibitem entries is
- %   \bibitem[Jones et al.(1990)]{key}...
- %   \bibitem[Jones et al.(1990)Jones, Baker, and Smith]{key}...
- % The essential feature is that the label (the part in brackets) consists
- % of the author names, as they should appear in the citation, with the year
- % in parentheses following. There must be no space before the opening
- % parenthesis!
- % With natbib v5.3, a full list of authors may also follow the year.
- % In natbib.sty, it is possible to define the type of enclosures that is
- % really wanted (brackets or parentheses), but in either case, there must
- % be parentheses in the label.
- % The \cite command functions as follows:
- %   \citet{key} ==>>                Jones et al. (1990)
- %   \citet*{key} ==>>               Jones, Baker, and Smith (1990)
- %   \citep{key} ==>>                (Jones et al., 1990)
- %   \citep*{key} ==>>               (Jones, Baker, and Smith, 1990)
- %   \citep[chap. 2]{key} ==>>       (Jones et al., 1990, chap. 2)
- %   \citep[e.g.][]{key} ==>>        (e.g. Jones et al., 1990)
- %   \citep[e.g.][p. 32]{key} ==>>   (e.g. Jones et al., p. 32)
- %   \citeauthor{key} ==>>           Jones et al.
- %   \citeauthor*{key} ==>>          Jones, Baker, and Smith
- %   \citeyear{key} ==>>             1990
- %---------------------------------------------------------------------
+% ---------------------------------------------------------------
+% IMPORTANT NOTICE:
+% This file can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt; either
+% version 1 of the License, or any later version.
+% ---------------------------------------------------------------
 
 FUNCTION {id.bst} {"apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst"}
 ENTRY
@@ -1339,13 +1304,13 @@ FUNCTION {format.eprint.controlled}
         archive duplicate$ empty$ { pop$ archiv.base } 'skip$ if$ *
         "/" *
         swap$ *
-        "{" swap$ * "} " *
+        "{" swap$ * "}" *
       swap$
       ""
         archivePrefix duplicate$ empty$ { pop$ "" } { ":" * } if$ *
         swap$ *
         primaryClass  duplicate$ empty$ { pop$ "" } { " [" swap$ * "]" * } if$ *
-        "{" swap$ * "} " *
+        "{" swap$ * "}" *
       *
       eprint.command swap$ *
     }
@@ -1362,13 +1327,13 @@ FUNCTION {format.eprint}
         archive duplicate$ empty$ { pop$ archiv.base } 'skip$ if$ *
         "/" *
         swap$ *
-        "{" swap$ * "} " *
+        "{" swap$ * "}" *
       swap$
       ""
         archivePrefix duplicate$ empty$ { pop$ "" } { ":" * } if$ *
         swap$ *
         primaryClass  duplicate$ empty$ { pop$ "" } { " [" swap$ * "]" * } if$ *
-        "{" swap$ * "} " *
+        "{" swap$ * "}" *
       *
       eprint.command swap$ *
     }
