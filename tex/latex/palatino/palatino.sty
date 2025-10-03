@@ -1,0 +1,32 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{palatino}[2024/05/23 v0.1]
+
+% Ask beamer to leave fonts untouched.
+\@ifclassloaded{beamer}{\beamer@suppressreplacementstrue}
+
+% For avoiding conflicts with emem.sty.
+\let\iintop\undefined
+\let\iiintop\undefined
+
+\RequirePackage{amssymb}
+\RequirePackage[osf]{mathpazo}
+% osf makes \textsl use ordinary italics.
+\def\textsl#1{\bgroup\fontfamily{ppl}\selectfont\slshape{#1}\egroup}
+
+\RequirePackage{mathrsfs}
+
+\RequirePackage{stmaryrd}
+% Removes warning about nonexistent bold version of stmaryd symbols by
+% forcing use of medium version for bold.
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
+% Use TeX Gyre Heros for sans and \mathsf.
+\RequirePackage[scale=0.9]{tgheros}
+\DeclareMathAlphabet{\mathsf}{\encodingdefault}{\sfdefault}{\mddefault}{n}
+\SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{\bfdefault}{n}
+
+\RequirePackage{bm}
+
+\endinput
+
+% vim: ft=tex fdm=marker et sts=2 sw=2 nospell cole=0

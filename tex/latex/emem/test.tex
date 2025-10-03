@@ -8,6 +8,8 @@
 \usepackage{emem}
 \usepackage{lipsum}
 
+%\renewcommand*\ttdefault{lmvtt}
+
 \title[Custom Head Title Appears Here]{Example {\LaTeX} Document\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
 %\title{Example {\LaTeX} Document\thanks{A test {\LaTeX} file for testing \texttt{emem.sty}.}}
 \author{A.~Lastname\thanks{University Name, Address, State 123456, Country; \email{a.lastname@mail.zz}}}
@@ -182,13 +184,33 @@ Side captions for figures.}
 %  \nabla\times\mathbf{B} &= \mu_0\mathbf{J} + \epsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial{t}}
 %\end{align*}
 
+\begin{verbatim}
+
+Nesciunt quia officia quia neque ea dolore perfer
+id.  Consequatur ducimus voluptatem omnis velit a
+Ea rerum harum et eum optio qui.  Sit aliquid rat
+Voluptatem culpa molestiae dolor repellat.  Aut u
+tenetur harum tenetur doloremque est.Sunt dolorem
+aut voluptas amet.  Similique voluptatem vel offi
+repellat earum quam amet.  Nesciunt voluptas mini
+magnam laborum itaque.  Fuga quia et dolorem occa
+dolores aut.  Sit qui aut occaecati rerum.Neque i
+enim omnis voluptatum dolorem.  Labore cumque qui
+sit voluptatibus asperiores.  Laudantium repudian
+delectus illum molestiae nobis.  Velit odit elige
+nam quam quo explicabo.  Dolore reprehenderit qua
+quibusdam sequi adipisci veritatis.  Eius praesen
+fugiat in voluptas.
+
+\end{verbatim}
+
 \section{Mathematics}
 
 \subsection{Operators}
 
 Examples of new math operators:
 \begin{equation}
-  \tr{A}\quad \Tr{A}\quad \erf{x}\quad \Residue{f}\quad \corank{A}\quad \rank{B}
+  \tr{A}\quad \Tr{A}\quad \erf{x}\quad \Res{f}\quad \corank{A}\quad \rank{B}
 \end{equation}
 
 \subsection{Bold letters}
@@ -545,9 +567,15 @@ J. Radiol. Prot.$^a$&\verb"\JRP"&Surf. Topogr.: Metrol. Prop.&\verb"\STMP"\\
 Metrologia&\verb"\MET"&Transl. Mater. Res.&\verb"\TMR"\\
 \wwline
 \end{tabular}\\
-$^{a}$UK spelling is required; $^{b}$MSC classification numbers are required; $^{c}$titles of articles are required in journal references; $^{d}$Harvard-style references must be used (see section \ref{except}); $^{e}$final page numbers of articles are required in journal references.
+$^{a}$UK spelling is required; $^{b}$MSC classification numbers are required; $^{c}$titles of articles are required in journal references; $^{d}$Harvard-style references must be used; $^{e}$final page numbers of articles are required in journal references.
 
 \end{table}
 
+%
+\begin{equation}
+  \hess\phi
+  \Res
+\end{equation}
+%
 
 \end{document}

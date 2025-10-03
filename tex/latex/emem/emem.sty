@@ -29,7 +29,8 @@
 %   draft               Disable loading of cosmetic/heavyweight packages
 %                       and suppress aesthetic features.
 %
-%   fonts, nofonts      Load/do not LM Modern fonts (with customizations).
+%   fonts, nofonts      Load (or don't load) LM Modern fonts (with
+%                       customizations).
 %
 %   lineno              Add line numbers using the lineno package.
 %
@@ -39,7 +40,7 @@
 % [1] The reason why a page size with a 4:3 aspect ratio was chosen was
 %     this: I noticed that 99% of tablets/mobile devices have an aspect
 %     ratio that's larger than or equal to 4:3.  Thus, with a 4:3 page
-%     aspect ratio, on a table that is in portrait mode, the document
+%     aspect ratio, on a tablet that is in portrait mode, the document
 %     would either perfectly fit the display or would be letterboxed
 %     (when zoomed to width).  With a document with a larger aspect
 %     ratio, you would have to scroll up/down on a tablet with a smaller
@@ -48,7 +49,10 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{emem}[2024/03/18 v0.6]
+\def\ememVersionDate{2024/09/07}
+\def\ememVersionNumber{v0.6}
+\def\ememVersion{\ememVersionDate\space \ememVersionNumber\space a personal LaTeX style file}
+\ProvidesPackage{emem}[\ememVersion]
 
 %%% Option processing --------------------------------------------------
 
@@ -109,6 +113,12 @@
 \def\dd{\ensuremath\mathrm{d}}
 \def\Dd{\ensuremath\mathrm{D}}
 
+% Upright constants.
+\RequirePackage{textgreek}
+\def\uppi{\ensuremath\textrm{\textpi}}
+\def\upe{\ensuremath\mathrm{e}}
+\def\upi{\ensuremath\mathrm{i}}
+
 % Command to typeset \int_{a}^{b} \mathrm{d}x\, with ease.
 \newcommand{\IntAndD}[4]{\ensuremath{#1\nolimits_{#2}^{#3}}\dd{#4}\,}
 %
@@ -141,14 +151,14 @@
 \NewDocumentCommand{\iiidd}{ O{} O{} m m m}{\IIIntAndD{\iiintop}{#1}{#2}{#3}{#4}{#5}}
 
 % Linear algebra
-\def\hess{\ensuremath\nabla\nabla}                  % Hessian (two nablas)
 \def\trans{\ensuremath{^\mathsf{T}}}                % transpose
 
 % Div, grad, curl, and all that.
 \def\div{\ensuremath{\boldsymbol{\nabla\cdot}}}     % divergence
 \def\grad{\ensuremath{\boldsymbol{\nabla}}}         % gradient
 \def\curl{\ensuremath{\boldsymbol{\nabla\times}}}   % curl
-\def\del{\ensuremath{\boldsymbol{\Delta}}}          % laplacian
+\def\del{\ensuremath{{\nabla^{2}}}}                 % laplacian (must not be in bold)
+\def\hess{\ensuremath{\boldsymbol{\nabla\nabla}}}   % Hessian (two nablas)
 
 % New operators.
 \DeclareMathOperator{\coker}{coker}                 % cokernel of a matrix
@@ -157,7 +167,7 @@
 \DeclareMathOperator{\diag}{diag}                   % diagonal matrix
 \DeclareMathOperator{\im}{im}                       % image of a map
 \DeclareMathOperator{\rank}{rank}                   % rank of a matrix
-\DeclareMathOperator{\Residue}{Res}                 % residue
+\DeclareMathOperator{\Res}{Res}                     % residue
 \DeclareMathOperator{\tr}{tr}                       % trace of a matrix
 \DeclareMathOperator{\Tr}{Tr}                       % trace of a matrix (alternate)
 \DeclareMathOperator{\trace}{trace}                 % trace of a matrix
@@ -274,7 +284,8 @@
 % However, this results an equation with no equation number.  The
 % command \numberthis defined below adds an equation number to a given
 % line.  Source: https://tex.stackexchange.com/a/42728
-\def\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\def\numberthis{\ensuremath{\addtocounter{equation}{1}\tag{\theequation}}}
+\def\NN{\ensuremath{\nonumber}}
 
 %%% Miscellaneous ------------------------------------------------------
 
@@ -334,6 +345,12 @@
     \MakeFramed {\FrameRestore}}%
   {\endMakeFramed}
 \fi
+
+% Hanging paragraphs with no indent -- useful to typeset extended lists.
+\newenvironment{hangpars}{%
+  \leftskip=1.75em%
+  \parindent=-\leftskip%
+}{\par}
 
 %%% Git info -----------------------------------------------------------
 
@@ -456,7 +473,8 @@
     breaklinks,
     colorlinks,
     unicode,
-    linktocpage=true
+    linktocpage=true,
+    addtopdfcreator={emem.sty \ememVersionNumber},
   ]{hyperref}
   \urlstyle{same}
   \usepackage{microtype}
@@ -529,6 +547,7 @@
 
 % Numbered versions.
 \theoremstyle{ememstyle}
+\newtheorem{axiom}{Axiom}
 \newtheorem{claim}{Claim}
 \newtheorem{prop}{Proposition}
 \newtheorem{theorem}{Theorem}
@@ -577,6 +596,30 @@
 \g@addto@macro\itemize{\setlength{\itemsep}{0pt}}
 \g@addto@macro\enumerate{\setlength{\itemsep}{0pt}}
 \g@addto@macro\description{\setlength{\itemsep}{0pt}}
+
+\setlength{\abovecaptionskip}{3pt plus 3pt}
+\setlength{\belowcaptionskip}{3pt plus 3pt}
+\setlength{\textfloatsep}{12pt plus 4pt minus 4pt}
+\setlength{\skip\footins}{10pt plus 4pt minus 4pt}
+\setlength{\footnotesep}{10pt plus 4pt minus 4pt}
+\setlength{\parskip}{0pt}
+
+% % Reduce space before/after equations.
+% % https:/tex.stackexchange.com/a/47776
+% \g@addto@macro \normalsize {%
+%   \setlength{\abovedisplayskip}{6pt plus 1pt minus 2pt}%
+%   \setlength{\abovedisplayshortskip}{0pt minus 2pt}%
+%   \setlength{\belowdisplayskip}{6pt plus 1pt minus 2pt}%
+%   \setlength{\belowdisplayshortskip}{4pt plus 1pt minus 1pt}%
+% }
+
+% amsart.cls spacing.
+% \g@addto@macro \normalsize {%
+%   \setlength{\abovedisplayskip}{4.2pt plus 4.2pt}%
+%   \setlength{\abovedisplayshortskip}{0pt plus 4.2pt}%
+%   \setlength{\belowdisplayskip}{4.2pt plus 4.2pt}%
+%   \setlength{\belowdisplayshortskip}{2.1pt plus 4.2pt}%
+% }
 
 % Page dimensions/margins ----------------------------------------------
 
@@ -682,11 +725,19 @@
 
 % Commands to use extended bold in math and text.
 \DeclareMathAlphabet{\mathbfit}{\encodingdefault}{\rmdefault}{b}{it}
-\DeclareMathAlphabet{\mathbx}{\encodingdefault}{\rmdefault}{bx}{n}
+\DeclareMathAlphabet{\mathbx}  {\encodingdefault}{\rmdefault}{bx}{n}
 \DeclareMathAlphabet{\mathbxit}{\encodingdefault}{\rmdefault}{bx}{it}
-\def\textbx#1{{\fontshape{\updefault}\fontseries{bx}\selectfont#1}}
-\def\textbfit#1{{\fontshape{\itdefault}\fontseries{b}\selectfont#1}}
-\def\textbxit#1{{\fontshape{\itdefault}\fontseries{bx}\selectfont#1}}
+\DeclareTextFontCommand{\textbx} {\usefont{\encodingdefault}{\rmdefault}{bx}{n}}
+\DeclareTextFontCommand{\textbfi}{\usefont{\encodingdefault}{\rmdefault}{b}{it}}
+\DeclareTextFontCommand{\textbxi}{\usefont{\encodingdefault}{\rmdefault}{bx}{it}}
+
+% Bold sans math and text.
+\DeclareTextFontCommand{\textsfi} {\usefont{\encodingdefault}{\sfdefault}{m}{it}}
+\DeclareTextFontCommand{\textsfb} {\usefont{\encodingdefault}{\sfdefault}{bx}{n}}
+\DeclareTextFontCommand{\textsfbi}{\usefont{\encodingdefault}{\sfdefault}{b}{it}}
+\DeclareMathAlphabet{\mathsfi} {\encodingdefault}{\sfdefault}{m}{it}
+\DeclareMathAlphabet{\mathsfb} {\encodingdefault}{\sfdefault}{bx}{n}
+\DeclareMathAlphabet{\mathsfbi}{\encodingdefault}{\sfdefault}{b}{it}
 
 % Use bold non-extended instead of the default bold extended.  For most
 % fonts, it shouldn't make a difference, but for Computer Modern and its
@@ -908,8 +959,13 @@
 
 % Force a two-sided layout even when `twosided' is not
 % passed as an option.
-\@twosidetrue
-\@mparswitchtrue
+\if@default@paper
+  \relax
+\else
+  \@twosidetrue
+  \@mparswitchtrue
+\fi
+\flushbottom
 \pagestyle{headings}
 
 \endinput

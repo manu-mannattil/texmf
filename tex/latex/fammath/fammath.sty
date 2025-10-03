@@ -114,6 +114,11 @@
 \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{\mddefault}{n}
 \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{\bfdefault}{n}
 
+\if@sans
+  \DeclareMathAlphabet{\mathrm}{\encodingdefault}{\sfdefault}{\mddefault}{n}
+  \SetMathAlphabet{\mathrm}{bold}{\encodingdefault}{\sfdefault}{\bfdefault}{n}
+\fi
+
 % True sans-serif accents: use \@textrmsf in math mode with italic text and
 % text-based accents.  Also, insert an empty superscript ^{} to produce
 % better kerning.

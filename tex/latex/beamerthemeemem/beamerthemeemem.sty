@@ -79,6 +79,10 @@
 % Vertical space between different institutes when \and is used.
 \def\beamer@andinst{\\[0.125em]}
 
+% Commmand to highlight presenting author.
+\def\@colorul#1#2{\color{#1}\underline{{\normalcolor#2}}\normalcolor}
+\def\hlauthor#1{\texorpdfstring{\@colorul{bs4}{#1}}{#1}}
+
 % If we're using sections to organize our documents, add an outline
 % slide right after the section begins.
 \def\toctitle{Outline}
@@ -91,8 +95,7 @@
 }
 
 % Support for title footer.
-\def\titlefooter{}
-\def\titlefoot#1{\def\titlefooter{#1}}
+\def\titlefoot#1{\def\@titlefoot{#1}}
 
 % Title page customization.
 \setbeamertemplate{title page}
@@ -123,7 +126,7 @@
       \usebeamerfont{date}\insertdate
     \end{beamercolorbox}
     \begin{beamercolorbox}[sep=0pt,center]{footer}
-      \usebeamerfont{date}\titlefooter
+      \usebeamerfont{date}\@titlefoot
     \end{beamercolorbox}
   \endgroup
   \vfill
